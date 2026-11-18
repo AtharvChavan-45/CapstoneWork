@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCSA-KidneyNeXt: Interactive 3D Architecture Visualizer</title>
+    <meta name="description" content="Interactive 3D structural demonstration and clinical pipeline for PCSA-KidneyNeXt deep learning architecture.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Three.js and OrbitControls via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- TWEEN for smooth camera transitions -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-theme">
+
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo-mark">
+                <span class="pulse-dot"></span>
+                <span class="logo-icon">🧬</span>
+            </div>
+            <div class="title-group">
+                <h1 id="app-title">PCSA-KidneyNeXt <span class="badge-tag">3D Neural Visualizer</span></h1>
+                <p class="subtitle">Pyramid Channel & Spatial Attention with Multi-Receptive Group Convolutions</p>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <!-- View Mode Switcher -->
+            <div class="mode-tabs" role="tablist">
+                <button id="tab-overview" class="mode-tab active" data-mode="overview" title="Global 3D Tensor Flow">
+                    <span class="tab-icon">🌐</span> Global Architecture
+                </button>
+                <button id="tab-exploded" class="mode-tab" data-mode="exploded" title="3D Exploded PCSA Block">
+                    <span class="tab-icon">💥</span> Exploded PCSA Block
+                </button>
+                <button id="tab-pipeline" class="mode-tab" data-mode="pipeline" title="Complete Diagnostic & Surgical Workflow">
+                    <span class="tab-icon">🏥</span> Two-Stage Pipeline
+                </button>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div class="metric-pill">
+                <span class="metric-label">Test Acc</span>
+                <span class="metric-val highlight-cyan">99.92%</span>
+            </div>
+            <div class="metric-pill">
+                <span class="metric-label">Params</span>
+                <span class="metric-val highlight-violet">2.11M</span>
+            </div>
+            <button id="btn-benchmark" class="btn-benchmark" title="View Benchmark Matrix vs SOTA">
+                <span>📊</span> Benchmark vs SOTA
+            </button>
+            <button id="btn-presenter" class="btn-primary" title="Toggle Presentation Defense Mode">
+                <span class="btn-icon">🎙️</span> Presenter Mode
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Viewport Container -->
+    <main class="viewport-container" id="canvas-container">
+        <!-- Three.js Canvas injected here -->
+
+        <!-- 3D Camera Controls Floating Bar -->
+        <div class="floating-camera-bar" id="camera-controls">
+            <span class="bar-title">Camera Presets</span>
+            <button class="cam-btn active" data-view="isometric" id="cam-iso" title="Isometric Perspective">
+                <span class="icon">📐</span> Isometric
+            </button>
+            <button class="cam-btn" data-view="flow" id="cam-flow" title="Side-on Dataflow Sequence">
+                <span class="icon">➡️</span> Flow Angle
+            </button>
+            <button class="cam-btn" data-view="top" id="cam-top" title="Top-down Architectural Layout">
+                <span class="icon">⬆️</span> Top-Down
+            </button>
+            <button class="cam-btn" data-view="stage4" id="cam-stage4" title="Focus on Stage 4 Grad-CAM Layer">
+                <span class="icon">🎯</span> Stage 4 (Grad-CAM)
+            </button>
+            <button class="cam-btn" data-view="head" id="cam-head" title="Focus on Classification Head">
+                <span class="icon">📊</span> Diagnosis Head
+            </button>
+            <button class="cam-btn icon-only" id="cam-reset" title="Reset Viewport Position">
+                <span class="icon">🔄</span>
+            </button>
+        </div>
+
+        <!-- 3D Scene Controls Overlay (Top Right of Canvas) -->
+        <div class="scene-toggles">
+            <label class="toggle-switch" title="Toggle animated feature dataflow stream">
+                <input type="checkbox" id="toggle-dataflow" checked>
+                <span class="switch-slider"></span>
+                <span class="toggle-label">Dataflow Particles</span>
+            </label>
+            <label class="toggle-switch" title="Toggle wireframe bounding cages">
+                <input type="checkbox" id="toggle-wireframe" checked>
+                <span class="switch-slider"></span>
+                <span class="toggle-label">Tensor Cages</span>
+            </label>
+            <label class="toggle-switch" title="Toggle slow orbital rotation">
+                <input type="checkbox" id="toggle-autorotate">
+                <span class="switch-slider"></span>
+                <span class="toggle-label">Auto-Rotate</span>
+            </label>
+        </div>
+
+        <!-- Floating Layer Inspector HUD (Right Drawer) -->
+        <aside class="layer-inspector-hud" id="layer-hud">
+            <div class="hud-header">
+                <div class="stage-tag" id="hud-stage">Stage 4 (High-Level Semantics)</div>
+                <button class="hud-close" id="hud-close-btn" aria-label="Close Inspector">&times;</button>
+            </div>
+
+            <h2 class="hud-title" id="hud-name">Stage 4: Deepest Bottleneck</h2>
+            <div class="hud-type" id="hud-type">PCSA KidneyNeXt Block (Final Feature Map)</div>
+
+            <!-- Tensor Dimensions Card -->
+            <div class="tensor-dims-box">
+                <div class="dims-header">
+                    <span>Tensor Dimensions</span>
+                    <span class="format-badge">[B, C, H, W]</span>
+                </div>
+                <div class="dims-display" id="hud-dims">[1, 768, 7, 7]</div>
+                <div class="dims-breakdown">
+                    <div class="dim-item"><span class="dim-lbl">Channels:</span> <strong id="hud-channels">768</strong></div>
+                    <div class="dim-item"><span class="dim-lbl">Spatial:</span> <strong id="hud-spatial">7 × 7</strong></div>
+                    <div class="dim-item"><span class="dim-lbl">Params:</span> <strong id="hud-params">1,181,184</strong></div>
+                </div>
+            </div>
+
+            <!-- Mathematical Formulation -->
+            <div class="hud-section">
+                <h3 class="section-title">Mathematical Formulation</h3>
+                <div class="math-code" id="hud-math">
+                    L_{GradCAM}^c = \text{ReLU}\left(\sum_k \alpha_k^c A^k_{\text{stage4}}\right)
+                </div>
+            </div>
+
+            <!-- Layer Operational Footprint & Parameter Telemetry -->
+            <div class="hud-section">
+                <h3 class="section-title">Architectural Footprint</h3>
+                <div class="telemetry-card">
+                    <div class="telemetry-row">
+                        <span class="telemetry-lbl">Receptive Field:</span>
+                        <strong class="telemetry-val highlight-cyan" id="hud-rf">124 × 124 px</strong>
+                    </div>
+                    <div class="telemetry-row">
+                        <span class="telemetry-lbl">Resolution Downsampling:</span>
+                        <strong class="telemetry-val" id="hud-downsample">32× Spatial Compression</strong>
+                    </div>
+                    <div class="telemetry-param-bar">
+                        <div class="param-bar-header">
+                            <span class="param-lbl">Model Weight Share:</span>
+                            <span class="param-pct" id="hud-param-pct">55.8%</span>
+                        </div>
+                        <div class="param-track">
+                            <div class="param-fill" id="hud-param-fill" style="width: 55.8%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture Specifications -->
+            <div class="hud-section">
+                <h3 class="section-title">Structural Specifications</h3>
+                <p class="hud-text" id="hud-desc">
+                    The deepest hierarchical stage with 768 feature maps. Serves as the primary registration layer for clinical Grad-CAM gradient backpropagation.
+                </p>
+            </div>
+
+            <!-- Clinical Diagnostic Role -->
+            <div class="hud-section clinical-box">
+                <h3 class="section-title clinical-title">
+                    <span>🩺 Clinical Diagnostic Role</span>
+                </h3>
+                <p class="hud-text clinical-text" id="hud-clinical">
+                    Encodes high-level morphological pathology representations. Critical for distinguishing hypervascular Renal Cell Carcinoma from dense calcified calculi.
+                </p>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="hud-actions">
+                <button class="btn-secondary" id="btn-focus-layer">
+                    <span>🔍</span> Focus in 3D
+                </button>
+                <button class="btn-accent" id="btn-open-exploded">
+                    <span>💥</span> Explode Block
+                </button>
+            </div>
+        </aside>
+
+        <!-- Exploded View Overlay Legend (Visible when Exploded Mode is active) -->
+        <div class="exploded-legend" id="exploded-legend" style="display: none;">
+            <div class="legend-header">
+                <h3>PCSA-KidneyNeXt Internal Block Decomposition</h3>
+                <p>Interactive 4-Way Multi-Receptive Branching with Dual Attention</p>
+            </div>
+            <div class="legend-items">
+                <div class="legend-chip branch-max"><span class="chip-color"></span> MaxPool 3×3 (High-Density Peaks)</div>
+                <div class="legend-chip branch-avg"><span class="chip-color"></span> AvgPool 3×3 (Diffuse Parenchyma)</div>
+                <div class="legend-chip branch-conv3"><span class="chip-color"></span> GroupConv 3×3 (Micro-Lesion Margins)</div>
+                <div class="legend-chip branch-conv5"><span class="chip-color"></span> GroupConv 5×5 (Regional Context)</div>
+                <div class="legend-chip branch-compress"><span class="chip-color"></span> 1×1 Channel Fusion & Compression</div>
+                <div class="legend-chip branch-pcsa"><span class="chip-color"></span> PCSA Dual Attention Engine</div>
+                <div class="legend-chip branch-skip"><span class="chip-color"></span> Residual Shortcut Connection</div>
+            </div>
+        </div>
+
+        <!-- 3D Hover Tooltip -->
+        <div class="canvas-tooltip" id="canvas-tooltip">
+            <span class="tooltip-title">Layer Name</span>
+            <span class="tooltip-shape">[1, 96, 56, 56]</span>
+        </div>
+
+        <!-- Presenter Defense Mode Dock (Interactive Presentation Assistant) -->
+        <div class="presenter-dock" id="presenter-dock">
+            <div class="dock-header">
+                <div class="dock-step-badge" id="dock-step-badge">Slide 1 of 5</div>
+                <div class="dock-title-group">
+                    <h3 id="dock-title">1. Clinical Input Normalization</h3>
+                    <span class="dock-subtitle" id="dock-subtitle">Axial Abdominal CT Slice (224 × 224 × 3)</span>
+                </div>
+                <div class="dock-nav-controls">
+                    <button class="dock-nav-btn" id="dock-btn-prev" title="Previous Slide (← Left Arrow)">⬅ Prev</button>
+                    <button class="dock-nav-btn" id="dock-btn-next" title="Next Slide (→ Right Arrow)">Next ➔</button>
+                    <button class="dock-close-btn" id="dock-close-btn" title="Close Presenter Mode">&times;</button>
+                </div>
+            </div>
+
+            <div class="dock-content-grid">
+                <!-- Examiner Defense Card -->
+                <div class="dock-defense-box">
+                    <div class="defense-q">
+                        <span class="q-icon">❓</span> <strong>Examiner Defense:</strong> <span id="dock-defense-q">Why use Dual-Stem instead of a standard 7x7 conv?</span>
+                    </div>
+                    <div class="defense-a" id="dock-defense-a">
+                        Averaging two parallel 4x4 stride-4 convolutions stabilizes gradient variance during initial downsampling, preventing the accidental loss of sub-centimeter calculi.
+                    </div>
+                </div>
+
+                <!-- Talking Points Bullets -->
+                <div class="dock-bullets-box">
+                    <div class="bullets-title">🎙️ Key Presentation Talking Points:</div>
+                    <ul class="bullets-list" id="dock-bullets-list">
+                        <li>Axial CT slice with standard ImageNet mean-std normalization</li>
+                        <li>Preserves full soft-tissue contrast across renal cortex and medulla</li>
+                        <li>Preprocessed with data augmentation (flips, rotations ±15°, affine scaling)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dock-keyboard-hint">💡 Pro-Tip: Press <strong>←</strong> and <strong>→</strong> on your keyboard to navigate slides while presenting</div>
+        </div>
+    </main>
+
+    <!-- Bottom Interactive Inference & Clinical Pipeline Console -->
+    <footer class="bottom-console">
+        <div class="console-left">
+            <div class="console-badge">
+                <span class="pulse-indicator"></span>
+                <span>Clinical Inference Simulator</span>
+            </div>
+            <span class="console-hint">Select a patient CT case to simulate full 3D forward propagation:</span>
+        </div>
+
+        <div class="console-center">
+            <div class="sample-case-group" id="case-selector">
+                <button class="case-card active" data-case="cyst_case" id="case-cyst">
+                    <span class="case-badge cyst-badge">Cyst</span>
+                    <span class="case-name">Scan #1420</span>
+                    <span class="case-prob">99.8% Acc</span>
+                </button>
+                <button class="case-card" data-case="stone_case" id="case-stone">
+                    <span class="case-badge stone-badge">Stone</span>
+                    <span class="case-name">Scan #0892</span>
+                    <span class="case-prob">99.9% Acc</span>
+                </button>
+                <button class="case-card" data-case="tumor_case" id="case-tumor">
+                    <span class="case-badge tumor-badge">Tumor</span>
+                    <span class="case-name">Scan #2104</span>
+                    <span class="case-prob">99.7% Acc</span>
+                </button>
+                <button class="case-card misclass-alert" data-case="misclass_case" id="case-misclass" title="View the rare Cyst ➔ Stone misclassification from confusion matrix">
+                    <span class="case-badge misclass-badge">⚠️ Misclass Case</span>
+                    <span class="case-name">Cyst ➔ Stone</span>
+                    <span class="case-prob">58.4% Stone</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="console-right">
+            <button id="btn-run-inference" class="btn-run-sim">
+                <span class="play-icon">⚡</span> Run Forward Pass
+            </button>
+        </div>
+    </footer>
+
+    <!-- Clinical Inference Result Modal / Drawer -->
+    <div class="inference-modal" id="inference-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <span class="modal-badge" id="modal-status-badge">Diagnosis Predicted</span>
+                    <h2 id="modal-case-title">Patient Case: Renal Cyst (#1420)</h2>
+                </div>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+
+            <!-- Modal Sub-Navigation Tabs -->
+            <div class="modal-tab-bar" role="tablist">
+                <button class="modal-nav-tab active" id="modal-tab-btn-visual-flow" data-view="visual-flow">
+                    <span>🖼️</span> Visual Feature Pipeline (All 8 Stages)
+                </button>
+                <button class="modal-nav-tab" id="modal-tab-btn-trace" data-view="trace">
+                    <span>🧱</span> Block-by-Block Visual Trace
+                </button>
+                <button class="modal-nav-tab" id="modal-tab-btn-pcsa" data-view="pcsa">
+                    <span>💥</span> PCSA Visual Decomposition
+                </button>
+                <button class="modal-nav-tab" id="modal-tab-btn-summary" data-view="summary">
+                    <span>📊</span> Diagnostic Report
+                </button>
+            </div>
+
+            <!-- View 1: Interactive Visual Feature Pipeline (All 8 Stages with live Canvases) -->
+            <div class="modal-view-panel active" id="modal-view-visual-flow">
+                <div class="visual-pipeline-container">
+                    <!-- Top: Interactive 8-Stage Visual Strip -->
+                    <div class="pipeline-strip-header">
+                        <span class="strip-title">Interactive Forward Propagation Feature Flow:</span>
+                        <span class="strip-hint">Click any stage below to inspect its visual activation slice & multi-channel response:</span>
+                    </div>
+                    
+                    <div class="pipeline-strip" id="pipeline-strip">
+                        <div class="pipeline-strip-node active" data-step="1">
+                            <canvas class="strip-thumb-canvas" id="thumb-canvas-1" width="70" height="70"></canvas>
+                            <span class="node-num">01. CT Input</span>
+                            <span class="node-shape">224×224</span>
+                        </div>
+                        <div class="strip-arrow">➔</div>
+                        <div class="pipeline-strip-node" data-step="2">
+                            <canvas class="strip-thumb-canvas" id="thumb-canvas-2" width="70" height="70"></canvas>
+                            <span class="node-num">02. Stem</span>
+                            <span class="node-shape">56×56</span>
+                        </div>
+                        <div class="strip-arrow">➔</div>
+                        <div class="pipeline-strip-node" data-step="3">
+                            <canvas class="strip-thumb-canvas" id="thumb-canvas-3" width="70" height="70"></canvas>
+                            <span class="node-num">03. Stage 1</span>
+                            <span class="node-shape">56×56</span>
+                        </div>
+                        <div class="strip-arrow">➔</div>
+                        <div class="pipeline-strip-node" data-step="4">
+                            <canvas class="strip-thumb-canvas" id="thumb-canvas-4" width="70" height="70"></canvas>
+                            <span class="node-num">04. Stage 2</span>
+                            <span class="node-shape">28×28</span>
+                        </div>
+                        <div class="strip-arrow">➔</div>
+                        <div class="pipeline-strip-node" data-step="5">
+                            <canvas class="strip-thumb-canvas" id="thumb-canvas-5" width="70" height="70"></canvas>
+                            <span class="node-num">05. Stage 3</span>
+                            <span class="node-shape">14×14</span>
+                        </div>
+                        <div class="strip-arrow">➔</div>
+                        <div class="pipeline-strip-node" data-step="6">
+                            <canvas class="strip-thumb-canvas" id="thumb-canvas-6" width="70" height="70"></canvas>
+                            <span class="node-num">06. Stage 4 (CAM)</span>
+                            <span class="node-shape">7×7</span>
+                        </div>
+                        <div class="strip-arrow">➔</div>
+                        <div class="pipeline-strip-node" data-step="7">
+                            <canvas class="strip-thumb-canvas" id="thumb-canvas-7" width="70" height="70"></canvas>
+                            <span class="node-num">07. GAP</span>
+                            <span class="node-shape">768-D</span>
+                        </div>
+                        <div class="strip-arrow">➔</div>
+                        <div class="pipeline-strip-node" data-step="8">
+                            <canvas class="strip-thumb-canvas" id="thumb-canvas-8" width="70" height="70"></canvas>
+                            <span class="node-num">08. Decision</span>
+                            <span class="node-shape">4 Classes</span>
+                        </div>
+                    </div>
+
+                    <!-- Center: Featured Stage Visual Inspector -->
+                    <div class="stage-inspector-card">
+                        <div class="inspector-visual-left">
+                            <div class="inspector-canvas-wrap">
+                                <canvas id="pipeline-featured-canvas" width="240" height="240"></canvas>
+                                <div class="canvas-colorbar" id="pipeline-colorbar">
+                                    <span class="cb-label">High Activation</span>
+                                    <div class="cb-gradient"></div>
+                                    <span class="cb-label">Background / Zero</span>
+                                </div>
+                            </div>
+                            <div class="canvas-controls-row">
+                                <span class="canvas-tag" id="pipeline-colormap-tag">Colormap: Viridis Activation Slice</span>
+                                <span class="canvas-subtag" id="pipeline-stage-shape">[1, 96, 56, 56]</span>
+                            </div>
+                        </div>
+
+                        <div class="inspector-details-right">
+                            <div class="inspector-header">
+                                <span class="stage-step-badge" id="pipeline-step-badge">STAGE 01 OF 08</span>
+                                <h3 class="stage-title" id="pipeline-stage-title">Input CT Normalization</h3>
+                                <span class="stage-type-lbl" id="pipeline-stage-type">Image Normalization [μ, σ]</span>
+                            </div>
+
+                            <!-- Multi-Channel Visual Feature Grid -->
+                            <div class="channels-section">
+                                <div class="channels-title">🔬 Multi-Channel Activation Decomposition:</div>
+                                <div class="channel-tiles-grid" id="pipeline-channel-tiles">
+                                    <div class="channel-tile">
+                                        <canvas class="ch-canvas" id="ch-tile-0" width="72" height="72"></canvas>
+                                        <span class="ch-label">Ch #00: Outer Rim</span>
+                                    </div>
+                                    <div class="channel-tile">
+                                        <canvas class="ch-canvas" id="ch-tile-1" width="72" height="72"></canvas>
+                                        <span class="ch-label">Ch #08: Parenchyma</span>
+                                    </div>
+                                    <div class="channel-tile">
+                                        <canvas class="ch-canvas" id="ch-tile-2" width="72" height="72"></canvas>
+                                        <span class="ch-label">Ch #24: Lesion Hotspot</span>
+                                    </div>
+                                    <div class="channel-tile">
+                                        <canvas class="ch-canvas" id="ch-tile-3" width="72" height="72"></canvas>
+                                        <span class="ch-label">Ch #64: Shadow Contour</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Clinical Interpretation -->
+                            <div class="stage-clinical-box">
+                                <span class="sc-title">🩺 Visual Output Interpretation for this Patient:</span>
+                                <p class="sc-text" id="pipeline-stage-desc">
+                                    Preprocessed 224×224 axial CT scan slice. Preserves soft-tissue attenuation range across renal parenchyma while highlighting focal abnormality.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View 2: Block-by-Block Visual Trace (8 Stages with Live Canvases) -->
+            <div class="modal-view-panel" id="modal-view-trace">
+                <div class="trace-container" id="trace-cards-list">
+                    <!-- Dynamic block trace cards injected by app.js -->
+                </div>
+            </div>
+
+            <!-- View 3: Internal PCSA Visual Decomposition (All 4 Branches + Attention Canvases) -->
+            <div class="modal-view-panel" id="modal-view-pcsa">
+                <div class="pcsa-decomp-container">
+                    <div class="pcsa-decomp-header">
+                        <h3>PCSA Attention Block Internal Signal Decomposition</h3>
+                        <p>Visual output of each parallel multi-receptive pathway and attention gating engine for this patient:</p>
+                    </div>
+
+                    <div class="pcsa-cards-grid">
+                        <div class="decomp-card branch-max-card">
+                            <div class="decomp-badge">Branch 1: MaxPool 3×3</div>
+                            <h4 class="decomp-title">Peak Density Signal</h4>
+                            <div class="decomp-canvas-wrap">
+                                <canvas class="decomp-canvas" id="pcsa-canvas-max" width="140" height="140"></canvas>
+                            </div>
+                            <div class="decomp-metric" id="pcsa-max-metric">0.98</div>
+                            <p class="decomp-desc" id="pcsa-max-desc">Extracts dominant high-attenuation peaks (calcium stone frontiers).</p>
+                        </div>
+
+                        <div class="decomp-card branch-avg-card">
+                            <div class="decomp-badge">Branch 2: AvgPool 3×3</div>
+                            <h4 class="decomp-title">Background Contrast</h4>
+                            <div class="decomp-canvas-wrap">
+                                <canvas class="decomp-canvas" id="pcsa-canvas-avg" width="140" height="140"></canvas>
+                            </div>
+                            <div class="decomp-metric" id="pcsa-avg-metric">0.45</div>
+                            <p class="decomp-desc" id="pcsa-avg-desc">Preserves smooth, diffuse baseline renal parenchymal attenuation.</p>
+                        </div>
+
+                        <div class="decomp-card branch-conv3-card">
+                            <div class="decomp-badge">Branch 3: DW-Conv 3×3</div>
+                            <h4 class="decomp-title">Micro-Lesion Margins</h4>
+                            <div class="decomp-canvas-wrap">
+                                <canvas class="decomp-canvas" id="pcsa-canvas-conv3" width="140" height="140"></canvas>
+                            </div>
+                            <div class="decomp-metric" id="pcsa-c3-metric">0.92</div>
+                            <p class="decomp-desc" id="pcsa-c3-desc">Detects high-frequency local lesion curvature and acoustic boundaries.</p>
+                        </div>
+
+                        <div class="decomp-card branch-conv5-card">
+                            <div class="decomp-badge">Branch 4: DW-Conv 5×5</div>
+                            <h4 class="decomp-title">Regional Context</h4>
+                            <div class="decomp-canvas-wrap">
+                                <canvas class="decomp-canvas" id="pcsa-canvas-conv5" width="140" height="140"></canvas>
+                            </div>
+                            <div class="decomp-metric" id="pcsa-c5-metric">0.84</div>
+                            <p class="decomp-desc" id="pcsa-c5-desc">Broader receptive field capturing mass margins and renal pelvis dilatation.</p>
+                        </div>
+
+                        <div class="decomp-card comp-card">
+                            <div class="decomp-badge">1×1 Compression</div>
+                            <h4 class="decomp-title">Feature Channel Fusion</h4>
+                            <div class="decomp-canvas-wrap">
+                                <canvas class="decomp-canvas" id="pcsa-canvas-comp" width="140" height="140"></canvas>
+                            </div>
+                            <div class="decomp-desc" id="pcsa-comp-desc">Concatenates 4 parallel branches and compresses 4C channels into unified feature representation.</div>
+                        </div>
+
+                        <div class="decomp-card ca-card">
+                            <div class="decomp-badge">Channel Attention (MLP)</div>
+                            <h4 class="decomp-title">Pathology Channel Weighting</h4>
+                            <div class="decomp-canvas-wrap">
+                                <canvas class="decomp-canvas" id="pcsa-canvas-ca" width="140" height="140"></canvas>
+                            </div>
+                            <div class="decomp-desc" id="pcsa-ca-desc">Adaptive dual-pooling MLP dynamically scales disease-sensitive feature maps.</div>
+                        </div>
+
+                        <div class="decomp-card sa-card">
+                            <div class="decomp-badge">Spatial Attention (3×3+5×5)</div>
+                            <h4 class="decomp-title">2D Lesion Coordinate Mask</h4>
+                            <div class="decomp-canvas-wrap">
+                                <canvas class="decomp-canvas" id="pcsa-canvas-sa" width="140" height="140"></canvas>
+                            </div>
+                            <div class="decomp-desc" id="pcsa-sa-desc">Multiscale spatial convolutions generate focused 2D lesion attention mask.</div>
+                        </div>
+
+                        <div class="decomp-card skip-card">
+                            <div class="decomp-badge">Residual Skip Connection</div>
+                            <h4 class="decomp-title">Gradient Identity Highway</h4>
+                            <div class="decomp-canvas-wrap">
+                                <canvas class="decomp-canvas" id="pcsa-canvas-skip" width="140" height="140"></canvas>
+                            </div>
+                            <div class="decomp-desc" id="pcsa-skip-desc">Bypasses convolutional layers to guarantee unimpeded gradient flow and preserve spatial landmarks.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View 4: Diagnostic Report Summary -->
+            <div class="modal-view-panel" id="modal-view-summary">
+                <div class="modal-body">
+                    <!-- Left: Clinical CT Scan & Grad-CAM Visualizer -->
+                    <div class="modal-col-left">
+                        <div class="ct-preview-box">
+                            <div class="ct-header">
+                                <span>Computed Tomography View</span>
+                                <span class="ct-tag" id="modal-actual-tag">True: Cyst</span>
+                            </div>
+                            <div class="ct-display" id="modal-ct-display">
+                                <canvas id="ct-canvas" width="224" height="224"></canvas>
+                            </div>
+                            <div class="ct-findings" id="modal-findings">
+                                Thin-walled, fluid-density lesion in left renal cortex. Uniform low CT attenuation (-5 to 15 HU). No calcification.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Probability Distribution & Confusion Matrix Insights -->
+                    <div class="modal-col-right">
+                        <h3 class="col-title">PCSA-KidneyNeXt Diagnosis Probabilities</h3>
+
+                        <div class="prob-bars-container">
+                            <div class="prob-row">
+                                <div class="prob-labels">
+                                    <span class="class-label">Cyst</span>
+                                    <span class="prob-val" id="prob-val-cyst">99.84%</span>
+                                </div>
+                                <div class="prob-bar-track">
+                                    <div class="prob-bar-fill cyst-fill" id="prob-bar-cyst" style="width: 99.84%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="prob-row">
+                                <div class="prob-labels">
+                                    <span class="class-label">Normal</span>
+                                    <span class="prob-val" id="prob-val-normal">0.08%</span>
+                                </div>
+                                <div class="prob-bar-track">
+                                    <div class="prob-bar-fill normal-fill" id="prob-bar-normal" style="width: 0.08%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="prob-row">
+                                <div class="prob-labels">
+                                    <span class="class-label">Stone</span>
+                                    <span class="prob-val" id="prob-val-stone">0.05%</span>
+                                </div>
+                                <div class="prob-bar-track">
+                                    <div class="prob-bar-fill stone-fill" id="prob-bar-stone" style="width: 0.05%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="prob-row">
+                                <div class="prob-labels">
+                                    <span class="class-label">Tumor</span>
+                                    <span class="prob-val" id="prob-val-tumor">0.03%</span>
+                                </div>
+                                <div class="prob-bar-track">
+                                    <div class="prob-bar-fill tumor-fill" id="prob-bar-tumor" style="width: 0.03%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Confusion Matrix Context Box -->
+                        <div class="cm-insight-box" id="cm-insight">
+                            <div class="insight-title">Confusion Matrix Context</div>
+                            <p class="insight-text" id="cm-insight-text">
+                                <strong>Standard Case:</strong> Evaluated on the 2,490 test set. Matches the 740/742 correct Cyst classifications with zero confusion with Tumor or Normal tissue.
+                            </p>
+                        </div>
+
+                        <!-- Stage 2 YOLOv11 Segmenter Connection -->
+                        <div class="pipeline-next-step">
+                            <span class="next-step-title">Stage 2 Pipeline Trigger:</span>
+                            <p class="next-step-desc">Diagnosis fed into <strong>YOLOv11-Nano Specialist</strong> to generate polygonal lesion boundary masks for 3D Surgical Mesh generation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two-Stage Pipeline Full Modal -->
+    <div class="pipeline-modal" id="pipeline-modal">
+        <div class="pipeline-modal-content">
+            <div class="pipeline-modal-header">
+                <h2>Autonomous End-to-End Clinical Renal AI Architecture</h2>
+                <button class="modal-close" id="pipeline-close-btn">&times;</button>
+            </div>
+            <div class="pipeline-steps-grid">
+                <div class="pipeline-card">
+                    <div class="step-num">STAGE 01</div>
+                    <div class="step-badge-blue">The Diagnostician</div>
+                    <h3>PCSA-KidneyNeXt Classifier</h3>
+                    <p class="pipeline-card-desc">Hierarchical multi-receptive ConvNeXt with Pyramid Channel & Spatial Attention. Achieves <strong>99.92% accuracy</strong> on unseen multiclass axial CT scans.</p>
+                    <ul class="pipeline-specs">
+                        <li><strong>Parameters:</strong> 2.11 Million</li>
+                        <li><strong>Resolution:</strong> 224 × 224 × 3</li>
+                        <li><strong>Classes:</strong> Cyst, Normal, Stone, Tumor</li>
+                        <li><strong>XAI:</strong> Stage 4 Grad-CAM activation</li>
+                    </ul>
+                </div>
+
+                <div class="pipeline-arrow">➔</div>
+
+                <div class="pipeline-card">
+                    <div class="step-num">STAGE 02</div>
+                    <div class="step-badge-emerald">The Surgical Specialist</div>
+                    <h3>YOLOv11 Multi-Pathology Segmenter</h3>
+                    <p class="pipeline-card-desc">Instance segmentation model fine-tuned on pathology-specific masks. Detects lesion contours and isolates stone calculi with sub-millimeter precision.</p>
+                    <ul class="pipeline-specs">
+                        <li><strong>Architecture:</strong> YOLOv11-Nano-Seg</li>
+                        <li><strong>Output:</strong> Polygon vertices $(x, y)$</li>
+                        <li><strong>Classes:</strong> Kidney, Cyst, Stone, Tumor</li>
+                        <li><strong>Inference:</strong> ~12ms per slice</li>
+                    </ul>
+                </div>
+
+                <div class="pipeline-arrow">➔</div>
+
+                <div class="pipeline-card">
+                    <div class="step-num">STAGE 03</div>
+                    <div class="step-badge-purple">Surgical Planning Digital Twin</div>
+                    <h3>3D Volumetric Mesh Exporter</h3>
+                    <p class="pipeline-card-desc">Extrudes 2D polygonal segmentations across volumetric axial CT spacing into patient-specific 3D OBJ anatomical meshes for surgical navigation.</p>
+                    <ul class="pipeline-specs">
+                        <li><strong>Output Format:</strong> Wavefront OBJ / STL</li>
+                        <li><strong>Topology:</strong> Manifold 3D surface mesh</li>
+                        <li><strong>Target:</strong> Robotic Partial Nephrectomy</li>
+                        <li><strong>Renderer:</strong> Three.js / WebGL</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benchmark Comparison Modal -->
+    <div class="benchmark-modal" id="benchmark-modal">
+        <div class="benchmark-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <span class="modal-badge">Empirical Performance Benchmark</span>
+                    <h2>PCSA-KidneyNeXt vs. State-of-the-Art Baselines</h2>
+                </div>
+                <button class="modal-close" id="benchmark-close-btn">&times;</button>
+            </div>
+
+            <div class="benchmark-table-container">
+                <table class="benchmark-table">
+                    <thead>
+                        <tr>
+                            <th>Model Architecture</th>
+                            <th>Params (M)</th>
+                            <th>Test Acc (%)</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-Score</th>
+                            <th>Latency (ms)</th>
+                            <th>Key Architectural Property</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-row">
+                            <td><strong>PCSA-KidneyNeXt (Ours)</strong></td>
+                            <td><strong class="highlight-cyan">2.11 M</strong></td>
+                            <td><strong class="highlight-emerald">99.92%</strong></td>
+                            <td><strong>0.9992</strong></td>
+                            <td><strong>0.9992</strong></td>
+                            <td><strong>0.9992</strong></td>
+                            <td><strong class="highlight-cyan">4.8 ms</strong></td>
+                            <td>4-way multi-receptive + Dual Pyramidal Attention</td>
+                        </tr>
+                        <tr>
+                            <td>ResNet-50</td>
+                            <td>25.56 M</td>
+                            <td>97.41%</td>
+                            <td>0.9740</td>
+                            <td>0.9741</td>
+                            <td>0.9739</td>
+                            <td>9.2 ms</td>
+                            <td>Bottleneck residual blocks (Standard single scale)</td>
+                        </tr>
+                        <tr>
+                            <td>ConvNeXt-Tiny</td>
+                            <td>28.63 M</td>
+                            <td>98.12%</td>
+                            <td>0.9815</td>
+                            <td>0.9812</td>
+                            <td>0.9810</td>
+                            <td>8.4 ms</td>
+                            <td>7×7 Depthwise convolutions (Single kernel branch)</td>
+                        </tr>
+                        <tr>
+                            <td>Swin Transformer-T</td>
+                            <td>28.29 M</td>
+                            <td>97.85%</td>
+                            <td>0.9782</td>
+                            <td>0.9785</td>
+                            <td>0.9780</td>
+                            <td>14.1 ms</td>
+                            <td>Shifted window self-attention (Quadratic overhead)</td>
+                        </tr>
+                        <tr>
+                            <td>Vision Transformer (ViT-B/16)</td>
+                            <td>86.57 M</td>
+                            <td>96.30%</td>
+                            <td>0.9642</td>
+                            <td>0.9630</td>
+                            <td>0.9625</td>
+                            <td>18.5 ms</td>
+                            <td>Pure self-attention (Data-hungry, overfits on small sets)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="benchmark-footer-insights">
+                <div class="insight-pill">
+                    <span class="pill-title">Parameter Efficiency:</span>
+                    <span><strong>12.1× smaller</strong> than ResNet-50 while gaining <strong>+2.51% higher accuracy</strong></span>
+                </div>
+                <div class="insight-pill">
+                    <span class="pill-title">Inference Speed:</span>
+                    <span>Ultra-fast <strong>4.8ms</strong> latency — fully capable of real-time intraoperative surgical video streaming</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/architecture_data.js"></script>
+    <script src="js/feature_map_renderer.js"></script>
+    <script src="js/scene.js"></script>
+    <script src="js/network_builder.js"></script>
+    <script src="js/exploded_view.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
