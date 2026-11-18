@@ -1,0 +1,138 @@
+% ==============================================================================
+% TABLE: Summary of Reviewed Studies Grouped by Dataset for Implementation Paper
+% Matches exact Review Paper format: longtable, grid borders, and embedded links.
+% ==============================================================================
+
+% Ensure these packages and column definitions are in your preamble:
+% \usepackage{longtable}
+% \usepackage{array}
+% \usepackage{hyperref}
+% \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\renewcommand{\arraystretch}{1.4}  
+\setlength{\tabcolsep}{4pt}          
+\footnotesize                        
+
+\begin{longtable}{|L{2.7cm}|L{1.7cm}|L{2.4cm}|L{2.9cm}|L{3.8cm}|L{2.3cm}|}
+\caption{Summary of Reviewed Studies Grouped by Dataset for Implementation}
+\label{tab:implementation_datasets} \\
+\hline
+\textbf{Dataset Name \& Link} & \textbf{Modality} & \textbf{Target Classes} & \textbf{Sample Size \& Breakdown} & \textbf{Performance Highlights} & \textbf{Utilizing Studies} \\
+\hline
+\endfirsthead
+
+\multicolumn{6}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline
+\textbf{Dataset Name \& Link} & \textbf{Modality} & \textbf{Target Classes} & \textbf{Sample Size \& Breakdown} & \textbf{Performance Highlights} & \textbf{Utilizing Studies} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{6}{|r|}{{Continued on next page}} \\
+\hline
+\endfoot
+
+\hline
+\endlastfoot
+
+% 1. Kaggle CT Kidney Dataset
+\textbf{\href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Kaggle CT Kidney Dataset}} \newline (Dhaka Hospital) & 
+CT (Contrast \& Non-contrast) & 
+Normal, Cyst, Tumor, Stone (4 Classes) & 
+Total: 12,446 images \newline Normal: 5,077 \newline Cyst: 3,709 \newline Tumor: 2,283 \newline Stone: 1,377 & 
+Accuracies ranging from 91.47\% to 99.84\%; F1-scores up to $>0.99$; High diagnostic consistency across CNN and ViT architectures & 
+\cite{dataset_kaggle}, \cite{hossain2025detection}, \cite{macin2025kidneynext}, \cite{main23}, \cite{tawfik2026pcsa}, \cite{islam2022vision}, \cite{rathva2025ensemble}, \cite{tarul2025empirical}, \cite{pimpalkar2025fine}, \cite{khan2025multi}, \cite{hossain2024adaptive}, \cite{bhandari2023exploring}, \cite{sharma2025hybrid}, \cite{sharma22}, \cite{martin2025evaluation}, \cite{rajendran2025kidney}, \cite{verma2025automated}, \cite{verma23} \\
+\hline
+
+% 2. Roboflow Tumor & Cyst Datasets
+\textbf{\href{https://universe.roboflow.com/tezskb/kidney-tumor-uqpis}{Roboflow Tumor}} \& \textbf{\href{https://universe.roboflow.com/tezskb/kidney-cyst-6ytvf}{Cyst Datasets}} & 
+CT (Axial Slices) & 
+Renal Tumor, Renal Cyst (Bounding Boxes \& Polygons) & 
+Specialized annotated cohorts for lesion detection and instance segmentation & 
+Powers YOLOv8/v11 segmentation modules; achieves instance confidence bounds up to 0.95 (tumors) and 0.89 (cysts) & 
+\cite{dataset_roboflow_tumor}, \cite{dataset_roboflow_cyst} \\
+\hline
+
+% 3. KiTS19 Challenge
+\textbf{\href{https://github.com/neheller/kits19/tree/master/data}{KiTS19 Challenge}} \newline (Tumor Seg. 2019) & 
+Corticomedullary CT & 
+Kidney, Tumor (2 Seg. Classes) & 
+300 CT cases total \newline 210 training / 90 testing & 
+Kidney Dice: up to 0.974 \newline Tumor Dice: 0.615 to 0.846 \newline Composite Dice: 0.907 across standard U-Net/PDN baselines & 
+\cite{ji2024kits}, \cite{hatsutani2023segmentation}, \cite{abdelrahman2023efficientnet} \\
+\hline
+
+% 4. KiTS21 Challenge
+\textbf{\href{https://github.com/neheller/kits21/tree/master/kits21/data}{KiTS21 Challenge}} \newline (Tumor Seg. 2021) & 
+Corticomedullary CT & 
+Kidney, Tumor, Cyst (3 Seg. Classes) & 
+300 CT cases (Official training cohort with multi-annotator consensus) & 
+Kidney Dice: up to 0.968 \newline Tumor Dice: up to 0.829 \newline Cyst Dice: up to 0.701; establishes 3D boundary segmentation baselines & 
+\cite{heller2023kits21}, \cite{zhao2023automatic}, \cite{chen20215d}, \cite{gohil2024kits} \\
+\hline
+
+% 5. Clinical Hospital CT Sets (KAUH, Sulaimani, TCIA)
+\textbf{\href{https://github.com/DaliaAlzubi/KidneyTumor}{KAUH Dataset}} \& Clinical CT Sets & 
+CT Scans (Contrast \& Unenhanced) & 
+Kidney Stones, Masses, Tumors, Normal Tissue & 
+KAUH: 8,400 images \newline \href{https://www.kaggle.com/datasets/orvile/axial-ct-imaging-dataset-kidney-stone-detection}{Sulaimani}: 3,364 slices \newline \href{https://www.cancerimagingarchive.net/collection/ct-colonography/}{TCIA}: 551 CT scans & 
+Classification accuracy reaching 98.29\%; volumetric stone detection sensitivity reaching 88.1\% under non-contrast scans & 
+\cite{aljohani2025clinical}, \cite{alzubi2022kidney}, \cite{abdalla2025kidney}, \cite{elton2022deep} \\
+\hline
+
+% 6. FLARE Benchmark
+\textbf{\href{https://flare.grand-challenge.org/Data/}{FLARE Benchmark}} \newline (Abdominal Organ Seg.) & 
+Abdominal CT & 
+Multi-organ abdominal segmentation (Kidneys, Liver, Spleen) & 
+Multi-center abdominal CT cases optimized for low GPU memory budgets & 
+Kidney Dice: 77.8\% to 85.2\%; establishes memory-efficient, fast abdominal organ localization standards & 
+\cite{ma2022fast} \\
+\hline
+
+% 7. Multi-Center US Repository
+\textbf{\href{https://universe.roboflow.com/proyecto-1/tesis-iz9ji}{Multi-Center US Repository}} & 
+Ultrasound (US) & 
+Cysts, Stones, Tumors (3 Classes) & 
+$>10,000$ ultrasound frames from multi-center cohorts & 
+Peak F1-score of 0.95 across multi-class detection tasks; provides cross-modality comparative baseline and Grad-CAM analysis & 
+\cite{obaid2025noisy} \\
+\hline
+
+% 8. NHANES & SEER Databases
+\textbf{\href{https://www.cdc.gov/nchs/nhanes/index.htm}{NHANES}} \& \textbf{\href{https://seer.cancer.gov/}{SEER Databases}} & 
+Epidemiological Surveys, Proteomics & 
+Kidney Stones (NHANES); Renal Cell Carcinoma (SEER) & 
+NHANES: 12,110 participants \newline SEER: $>22,000$ RCC patient records & 
+NHANES: Stone prevalence 8.8\% \newline SEER: Prognostic AUC of 0.746 for RCC survival models & 
+\cite{scales2012prevalence}, \cite{wang2022web} \\
+\hline
+
+% 9. Biomedical NLP & Clinical Text
+\textbf{\href{https://huggingface.co/datasets/ncbi/pubmed}{Biomedical NLP \& Clinical Text}} & 
+Biomedical Text \& Clinical Notes (NLP) & 
+Symptoms, Diseases, Medications, NER, QA & 
+Up to 14M abstracts / 4.5B words (PubMed/PMC); clinical notes & 
+SOTA performance on biomedical QA and report generation; powers LLM diagnostic summarization & 
+\cite{gu2021domain}, \cite{lee_biobert}, \cite{fang2023bioformer}, \cite{luo2022biogpt}, \cite{liu2024bootstrapping} \\
+\hline
+
+% 10. PACS Radiation Infrastructure
+\textbf{PACS Infrastructure} \newline (CT Dose Telemetry) & 
+CT / PACS & 
+Radiation dose parameters, acquisition protocols & 
+200+ clinical abdominal CT series & 
+Real-time radiation dose monitoring and institutional protocol standardization results & 
+\cite{noorelahi2025role} \\
+\hline
+
+% 11. Survey Papers & Foundational Reviews
+\textbf{Survey Papers \& Foundational Works} \newline (No Primary Empirical Dataset) & 
+Multimodal (CT, MRI, US, X-ray) & 
+Methodological Benchmarking, Visual Explanations, Reviews & 
+Summaries of 100+ reviewed articles and foundational computer vision baselines & 
+Establishes theoretical benchmarks for CNNs, Vision Transformers (ViT, Swin), and Grad-CAM interpretability & 
+\cite{litjens2017survey}, \cite{sloan2024automated}, \cite{kumar2024comprehensive}, \cite{aburass2025vision}, \cite{lecun2015deep}, \cite{kermany2018identifying}, \cite{dosovitskiy2020image}, \cite{liu2021swin}, \cite{selvaraju2017grad}, \cite{holzinger2019causability} \\
+\hline
+
+\end{longtable}

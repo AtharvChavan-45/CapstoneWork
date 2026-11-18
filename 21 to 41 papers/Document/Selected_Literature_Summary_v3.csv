@@ -1,0 +1,18 @@
+ID,Author/Year,Performance Metrics,Imaging Modality,Dataset Details,Class Information,Total Count
+1,"M. Y. Chen, 2021",10.07% mean abs. diff.,Multimodal (CT/MRI),Private Australian clinical data,Renal masses/tumors,27 patients
+2,"S. Akhtar, 2026",60% mAP@50 overall,Microscopic,Custom urine sediment,14 urine particle classes,"7,201 images"
+3,"S. C. Sreenivas, 2025",86.6% accuracy (DiRAG),Clinical Text (NLP),MACCROBAT/AGBONNET,"Symptoms, diseases, medications",300 notes
+4,"S. Degadwala, 2024",Varies (Review paper),Multimodal,Public Kidney Stone CT,Stones (binary/multi),NA
+5,"M. Aljohani, 2025",98.29% max accuracy,CT scans,KAUH dataset,"Tumor, normal, malignant","8,400 images"
+6,"Alqahtani et al., 2025",99.76% accuracy,CT,Mixed Kaggle/KAUH/Clinical,"Normal, cyst, stone, tumor",">23,000"
+7,"Tawfik et al., 2026",96–97% accuracy,CT,Dhaka Hospital Dataset,"Normal, cyst, tumor, stone","12,446 images"
+8,"N. Ahmed, 2021",>95% accuracy,CT,Kaggle Public Repo,"Normal, cyst, tumor, stone","12,446 images"
+9,"Obaid, W., et al., 2025",F1-score: 0.95,Ultrasound (US),Multi-center repository,"Cysts, Stones, Tumors",">10,000 frames"
+10,"Tarul et al., 2025",92–94% accuracy,CT,Kaggle/Clinical,Stone vs. non-stone,NA
+11,"Khan et al., 2025",F1-score > 0.97,CT,MHC-CT Dataset,"Cysts, stones, tumors","2,884 images"
+12,"Verma & Singh, 2025",99.12% accuracy,CT,Kaggle + Clinical Repo,Stone-related structure,NA
+15,"Scales Jr, C.D., et al., 2012",Prevalence: 8.8%; OR: 1.55,Survey / Clinical Records,NHANES 2007–2010,Kidney Stones,"12,110 participants"
+16,"Wang et al., 2022",0.746 AUC,Clinical/Proteomics,SEER Database,Renal Cell Carcinoma,">22,000"
+17,"Islam et al., 2022",99.84% accuracy,CT,Riñones Dataset,"Normal, cyst, stone, tumor",NA
+18,"Rajendran et al., 2025",97.1–97.5% accuracy,CT,Kidney Stone Dataset,Kidney stones,NA
+19,"Noorelahi et al., 2025",Dose variability results,CT / PACS,KAUH Hospital Data,Radiation dose parameters,200 patients

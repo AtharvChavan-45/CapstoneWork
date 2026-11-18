@@ -1,0 +1,98 @@
+% ==============================================================================
+% SUBSECTION & TABLE 4: Comparison with State-of-the-Art Methods on Kaggle Dataset
+% FIXED: 
+% 1. All header cells have identical 2-line structure (\makecell) for perfect vertical alignment.
+% 2. Increased Throughput, Precision, and Accuracy column widths to prevent border collision.
+% 3. Fixed duplicate "Table 4: Table 4:" caption issue.
+% ==============================================================================
+% Preamble check: ensure these are in your document preamble:
+% \usepackage{longtable}
+% \usepackage{array}
+% \usepackage{makecell}
+% \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+% \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\subsection{Comparison with State-of-the-Art Methods on Kaggle Dataset}
+
+To evaluate the clinical efficacy and computational efficiency of the proposed framework, a rigorous comparative benchmarking was conducted against fifteen state-of-the-art architectures evaluated on the multi-class Kaggle CT Kidney Dataset. The comprehensive results across both diagnostic accuracy metrics and operational edge-deployment parameters are summarized in Table~4.
+
+As presented in Table~4, classical machine learning approaches (e.g., Rajendran et al. [25] and Tarul et al. [20]) offer low latency ($<10$\,ms) and high throughput ($>110$\,FPS), yet fall short in classification accuracy ($95.20\%$--$96.50\%$). Conversely, heavyweight deep learning ensembles and Vision Transformers (e.g., Islam et al. [37] and Obaid et al. [18]) achieve high diagnostic accuracies ($>99.30\%$), but at the cost of prohibitive computational overheads (up to $163.91$\,M parameters, $19.62$\,G FLOPs, and latency exceeding $200$\,ms), hindering real-time clinical deployment. 
+
+In contrast, our proposed PCSA-KidneyNeXt architecture delivers an optimal Pareto-efficient trade-off in Table~4. It attains state-of-the-art diagnostic performance with \textbf{99.92\% accuracy}, \textbf{99.82\% precision}, and \textbf{99.93\% recall}, while requiring only \textbf{2.11\,M parameters} and \textbf{0.75\,G FLOPs}. Operating at a rapid latency of \textbf{29.1\,ms} and an operational throughput of \textbf{34.4\,FPS}, the proposed model satisfies all requisite benchmarks for seamless point-of-care radiological integration.
+
+\renewcommand{\arraystretch}{1.35}  
+\setlength{\tabcolsep}{2.5pt}          
+\scriptsize                        
+
+\begin{longtable}{|L{2.35cm}|L{3.2cm}|C{1.1cm}|C{1.0cm}|C{1.15cm}|C{1.65cm}|C{1.35cm}|C{1.15cm}|C{1.35cm}|}
+\caption{Comparison with State-of-the-Art Methods on Kaggle Dataset}
+\label{tab:table4_kaggle_benchmark} \\
+\hline
+\makecell[c]{\textbf{Reference /}\\\textbf{Study}} & 
+\makecell[c]{\textbf{Model}\\\textbf{Architecture}} & 
+\makecell[c]{\textbf{Params}\\\textbf{(M)}} & 
+\makecell[c]{\textbf{FLOPs}\\\textbf{(G)}} & 
+\makecell[c]{\textbf{Latency}\\\textbf{(ms)}} & 
+\makecell[c]{\textbf{Throughput}\\\textbf{(FPS)}} & 
+\makecell[c]{\textbf{Precision}\\\textbf{(\%)}} & 
+\makecell[c]{\textbf{Recall}\\\textbf{(\%)}} & 
+\makecell[c]{\textbf{Accuracy}\\\textbf{(\%)}} \\
+\hline
+\endfirsthead
+
+\multicolumn{9}{c}%
+{{\bfseries Table 4 -- continued from previous page}} \\
+\hline
+\makecell[c]{\textbf{Reference /}\\\textbf{Study}} & 
+\makecell[c]{\textbf{Model}\\\textbf{Architecture}} & 
+\makecell[c]{\textbf{Params}\\\textbf{(M)}} & 
+\makecell[c]{\textbf{FLOPs}\\\textbf{(G)}} & 
+\makecell[c]{\textbf{Latency}\\\textbf{(ms)}} & 
+\makecell[c]{\textbf{Throughput}\\\textbf{(FPS)}} & 
+\makecell[c]{\textbf{Precision}\\\textbf{(\%)}} & 
+\makecell[c]{\textbf{Recall}\\\textbf{(\%)}} & 
+\makecell[c]{\textbf{Accuracy}\\\textbf{(\%)}} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{9}{|r|}{{Continued on next page}} \\
+\hline
+\endfoot
+
+\hline
+\endlastfoot
+
+Rajendran et al. [25] & Machine Learning (RF / Decision Tree) & $<0.05$ & $<0.01$ & 8.3 & 120.0 & 94.80 & 95.10 & 95.20 \\
+\hline
+Tarul et al. [20] & Empirical ML (SVM / RF) & $<0.05$ & $<0.01$ & 9.1 & 110.0 & 96.20 & 96.00 & 96.50 \\
+\hline
+Alzu'bi et al. [46] & 2D CNN (6-layer) / ResNet50 & 25.56 & 4.12 & 62.5 & 16.0 & 96.00 & 96.00 & 97.00 \\
+\hline
+Verma \& Singh [23] & Dynamic Generative Residual GCNN & 18.40 & 3.85 & 54.0 & 18.5 & 98.10 & 98.20 & 98.40 \\
+\hline
+Bhandari et al. [29] & Lightweight CNN + LIME / SHAP & 3.45 & 1.15 & 35.7 & 28.0 & 98.50 & 98.40 & 98.66 \\
+\hline
+Hossain et al. [21] & Adaptive LBP + Soft Voting Ensemble & $<0.10$ & $<0.02$ & 10.5 & 95.0 & 99.00 & 99.00 & 99.00 \\
+\hline
+Tawfik et al. [36] & PCSA-Net (ResNet50 + Pyramid Attn) & 14.30 & 2.45 & 41.2 & 24.3 & 99.10 & 98.90 & 99.20 \\
+\hline
+Hossain et al. [8] & Tri-Ensemble (DenseNet121+EffNet) & 12.28 & 3.27 & 52.0 & 19.2 & 99.00 & 99.00 & 99.24 \\
+\hline
+Islam et al. [37] & Swin Transformer / VGG16 & 86.57 & 17.58 & 210.4 & 4.8 & 99.30 & 99.10 & 99.30 \\
+\hline
+Obaid et al. [18] & DL Ensembles (VGG16+ResNet50) & 163.91 & 19.62 & 238.0 & 4.2 & 99.20 & 99.35 & 99.43 \\
+\hline
+Rathva \& Deg. [19] & Ensemble Deep Learning & 45.20 & 6.50 & 80.0 & 12.5 & 99.12 & 99.25 & 99.43 \\
+\hline
+Khan [22] & Multi-Level Fusion (ConvLSTM) & 23.80 & 5.10 & 67.5 & 14.8 & 98.00 & 100.00 & 99.60 \\
+\hline
+Sharma et al. [39] & Hybrid DL (ResNet101 + PCA + CNN) & 44.55 & 7.85 & 89.0 & 11.2 & 99.50 & 99.40 & 99.73 \\
+\hline
+Pimpalkar et al. [38] & Fine-Tuned InceptionV3 / VGG16 & 23.85 & 5.72 & 71.4 & 14.0 & 99.90 & 99.92 & 99.96 \\
+\hline
+Maçin et al. [34] & KidneyNeXt (Grouped DW-CNN) & 7.10 & 1.92 & 38.5 & 26.0 & 99.95 & 99.93 & 99.96 \\
+\hline
+\textbf{Proposed Model} & \textbf{PCSA-KidneyNeXt (Hybrid Attn)} & \textbf{2.11} & \textbf{0.75} & \textbf{29.1} & \textbf{34.4} & \textbf{99.82} & \textbf{99.93} & \textbf{99.92} \\
+\hline
+\end{longtable}

@@ -1,0 +1,53 @@
+\documentclass[journal]{IEEEtran}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{cite}
+
+% --- NEW PACKAGES FOR THE DATASET TABLE ---
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+
+% --- Custom Column Definition for the Table ---
+% This creates an 'L' column that wraps text neatly aligned to the left
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+% --- Title and Authors ---
+\title{Deep Learning-Based Kidney Disease Diagnosis: A Comprehensive Survey of CT Imaging, Multi-Class Classification, Explainability, and Surgical Planning Frameworks}
+
+\author{
+    Atharv Ashwin Chavan\textsuperscript{1}, Yash Sagar Kumbhoje\textsuperscript{2}, Pradnya Ravindra Shikalgar\textsuperscript{3}, \\ Kanishka Subhash Gavali\textsuperscript{4}, and Prof. Mrs. Gautami G. Shingan\textsuperscript{5} \\
+    \vspace{0.5em}
+    \textit{Department of Computer Science \& Engineering, KES's Rajarambapu Institute of Technology, Rajaramnagar, India} \\
+    \vspace{0.5em}
+    \textsuperscript{1}2303116@ritindia.edu \quad \textsuperscript{2}2303117@ritindia.edu \quad \textsuperscript{3}2303121@ritindia.edu \quad \textsuperscript{4}2303122@ritindia.edu
+}
+
+\begin{document}
+
+\maketitle
+
+% --- ABSTRACT ---
+\begin{abstract}
+Kidney diseases present a significant global health challenge, traditionally requiring time-intensive manual interpretation of radiological imaging. Deep learning (DL) has emerged as a transformative approach for the automated diagnosis, segmentation, and prognostic evaluation of renal pathologies. However, existing literature often isolates single tasks, lacking a cohesive review of multi-class classification and surgical planning integration. This survey systematically reviews 63 recent studies focusing on DL applications in kidney disease diagnosis, primarily utilizing CT imaging. We analyze core architectural evolutions, spanning convolutional neural networks (CNNs) to hybrid Transformer models, and evaluate their performance on benchmark datasets. Furthermore, we critically examine the integration of Explainable AI (XAI) and the transition from isolated bounding-box detection to holistic, 3D multimodal clinical frameworks. We identify current research gaps, proposing a unified framework to bridge the gap between computational accuracy and clinical utility.
+\end{abstract}
+
+% --- KEYWORDS (Required for IEEE) ---
+\begin{IEEEkeywords}
+Deep Learning, Kidney Disease, Computed Tomography (CT), Explainable AI (XAI), Vision Transformers, Surgical Planning.
+\end{IEEEkeywords}
+
+% --- INPUT FILES ---
+\input{part1_architectures}
+\input{part2_clinical}
+
+% --- BIBLIOGRAPHY ---
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

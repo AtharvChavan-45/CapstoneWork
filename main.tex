@@ -1,0 +1,636 @@
+%% 
+%% LSquare Conference format based on elsarticle
+%% Requires: \documentclass[preprint,12pt,authoryear]{elsarticle}
+
+\documentclass[]{elsarticle}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{multirow}  
+
+\usepackage{array}      % For enhanced column formatting
+\usepackage{tabularx}   % For automatic column width calculation
+
+
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+
+\usepackage{makecell}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+
+
+
+\journal{LSquare Conference Publication}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{NephroVision: An Explainable Hybrid Deep Learning Framework for CT-Based Renal Pathology Analysis with LLM-Assisted Clinical Reporting}
+\author[label1]{Atharv Chavan}
+\ead{2303116@ritindia.edu}
+
+\author[label1]{Yash Kumbhoje}
+\ead{2303117@ritindia.edu}
+
+\author[label1]{Pradnya Shikalgar}
+\ead{2303121@ritindia.edu}
+
+\author[label1]{Kanishka Gavali}
+\ead{2303122@ritindia.edu}
+
+\author[label1]{Prof. G. G. Shingan\corref{cor1}}
+\cortext[cor1]{Faculty Guide}
+
+\affiliation[label1]{organization={Rajarambapu Institute of Technology},
+            addressline={Rajaramnagar}, 
+            city={Islampur},
+            state={Maharashtra},
+            country={India}}
+
+
+\begin{abstract}
+Renal diseases, including kidney stones, cysts, and tumors, require accurate and timely diagnosis to support appropriate clinical management. Although computed tomography (CT) provides detailed anatomical information, manual interpretation is time-consuming and subject to inter-observer variability. Existing deep learning approaches primarily focus on isolated diagnostic tasks and often lack lesion localization, interpretability, and automated clinical reporting. This paper presents NephroVision, a two-stage deep learning framework for automated renal pathology analysis from CT images. The proposed framework employs a PCSA-enhanced KidneyNeXt network to classify CT images into four categories (normal, cyst, tumor, and stone), followed by disease-specific YOLO-based segmentation for lesion localization. Model interpretability is provided through Grad-CAM visualizations, while a large language model generates structured diagnostic reports from the classification and segmentation outputs. Experimental evaluation on a dataset containing more than 12,000 CT images demonstrated a classification accuracy of 99.92\% and accurate lesion localization for cyst and tumor cases. These results indicate that the proposed framework can support automated renal pathology analysis by integrating classification, segmentation, explainability, and clinical report generation into a unified diagnostic pipeline. Code is available at: \textbf{------------}
+\end{abstract}
+
+\begin{keyword}
+Deep Learning \sep Renal Pathology \sep Medical Image Segmentation \sep Explainable Artificial Intelligence \sep Lesion Segmentation \sep Large Language Models (LLMs)
+\end{keyword}
+    
+\end{frontmatter}
+\section{Introduction}\label{sec:intro}
+
+The increasing prevalence of kidney stones (nephrolithiasis), renal cysts, and kidney tumors has made renal disease diagnosis an important healthcare challenge worldwide. Delayed or inaccurate diagnosis may lead to disease progression, chronic kidney disease, and renal failure, emphasizing the need for reliable diagnostic approaches. Computed Tomography (CT) is widely employed for renal pathology assessment because of its high spatial resolution and detailed visualization of anatomical structures. Nevertheless, manual interpretation of CT images remains labor-intensive, time-consuming, and susceptible to inter-observer variability, particularly in clinical settings with an increasing volume of imaging examinations, highlighting the need for computer-aided diagnostic systems based on deep learning and artificial intelligence \cite{litjens2017survey}. Furthermore, the increasing workload in medical imaging departments has motivated the development of automated radiology report generation techniques to improve reporting efficiency, consistency, and clinical decision support \cite{sloan2024automated}.
+
+Deep learning has significantly advanced automated medical image analysis by enabling accurate feature extraction and disease prediction directly from radiological scans \cite{lecun2015deep}. Convolutional Neural Networks (CNNs) have established strong performance benchmarks in disease classification \cite{kermany2018identifying}, while Vision Transformer (ViT)-based architectures excel at capturing long-range contextual information \cite{dosovitskiy2020image}. Hierarchical models such as Swin Transformers \cite{liu2021swin} and specialized medical vision transformers \cite{aburass2025vision} further improve multi-scale spatial representation across complex anatomical structures. Despite these developments, several challenges remain in automated renal pathology analysis. Most existing approaches are designed for individual pathologies \cite{hossain2025detection} or binary classification tasks \cite{kermany2018identifying}, limiting their applicability to comprehensive multi-class renal disease diagnosis. In addition, classification and lesion segmentation are commonly developed as independent tasks, resulting in fragmented diagnostic workflows. The limited interpretability of many deep learning models further restricts their clinical acceptance \cite{holzinger2019causability}, as radiologists require visual evidence \cite{selvaraju2017grad} to support algorithmic predictions. Furthermore, prediction labels alone provide limited clinical value without structured diagnostic reports that summarize imaging findings and support clinical decision-making.
+
+Existing studies on renal CT analysis have primarily focused on individual components of the diagnostic workflow, such as disease classification or lesion segmentation. For instance, Kumar et al. \cite{kumar2024comprehensive} conducted a comprehensive evaluation of multiple deep transfer learning models for four-class renal pathology classification and reported the highest accuracy using the Xception architecture. Although their study demonstrated the effectiveness of deep learning for renal disease classification, it did not incorporate lesion localization, model interpretability, or automated clinical report generation. Similarly, most existing frameworks address these tasks independently rather than within a unified diagnostic pipeline. Consequently, clinicians often rely on multiple tools for disease classification, lesion delineation, visual interpretation, and report preparation, increasing workflow complexity and limiting the practical adoption of artificial intelligence in routine clinical practice.
+
+Recent advances in Large Language Models (LLMs) have shown considerable potential for automated radiology report generation \cite{sloan2024automated} and clinical decision support \cite{liu2024bootstrapping} across various imaging modalities. However, the integration of LLM-based report generation with CT-based renal pathology classification, disease-specific lesion segmentation, and explainable artificial intelligence within a single end-to-end diagnostic framework remains limited.
+
+This paper presents NephroVision, an end-to-end deep learning framework for automated renal pathology analysis from CT images. The proposed framework integrates four complementary components within a unified diagnostic pipeline: (i) multi-class renal pathology classification using a Pyramid Convolutional Spatial Attention (PCSA)-enhanced KidneyNeXt network, (ii) disease-specific lesion segmentation using dedicated YOLO-based models, (iii) visual interpretation through Gradient-weighted Class Activation Mapping (Grad-CAM), and (iv) automated clinical report generation using a Large Language Model (LLM). By combining these components within a single framework, the proposed system enables comprehensive image analysis, lesion localization, model interpretability, and structured clinical reporting.
+
+The major contributions of this work are summarized as follows:
+\begin{itemize}
+    \item \textbf{Unified End-to-End Diagnostic Pipeline:} The primary novelty of this work lies in integrating classification, disease-specific segmentation, explainable AI, and automated clinical reporting into a single, cohesive framework (NephroVision), overcoming the independent and fragmented nature of existing medical AI tools.
+    \item \textbf{Four-Class Renal Pathology Classification:} A PCSA-enhanced KidneyNeXt network is proposed to reliably classify CT images into four diagnostic categories: normal, renal cyst, kidney tumor, and kidney stone.
+    \item \textbf{Disease-Specific Lesion Segmentation:} Dedicated YOLO-based segmentation models are employed to dynamically localize and delineate complex renal lesions using instance confidence bounds (up to 0.95 for tumors and 0.89 for cysts). While comparable baseline models utilized semantic overlap—reporting Dice scores such as 0.829 for tumors and 0.701 for cysts \cite{zhao2023automatic}, and 0.846 for tumors \cite{abdelrahman2023efficientnet}—our model explicitly maps instance confidence rather than pixel-wise overlap. Therefore, a direct relative Dice percentage increase cannot be rigorously calculated from the current experimental evidence.
+    \item \textbf{Explainable Artificial Intelligence (XAI):} A Grad-CAM module is natively incorporated into the pipeline to visually map discriminative image regions, ensuring model interpretability and anchoring classification outcomes to their physiological features.
+    \item \textbf{Automated Multimodal Clinical Reporting:} An LLM-based reporting module inherently leverages classification, spatial, and bounding outputs to automatically generate structured diagnostic recommendations and synthesize visual evidence for clinical support.
+\end{itemize}
+
+\section{Related Work}
+\label{sec:lit_review}
+
+Recent advancements in artificial intelligence have significantly improved computer-aided diagnostics for kidney diseases, shifting clinical workflows toward automated classification, lesion segmentation, and report generation. Evaluating the established methods in this domain is essential to map the evolution of these systems, identify architectural trade-offs, and outline remaining clinical and computational challenges. To build a comprehensive understanding, the following review traces the development of foundational machine learning and deep attention architectures. It then details a comparative analysis of their quantitative performance, highlights key technical limitations such as generalization and interpretability constraints, and concludes by establishing the design motivation for the proposed integrated multi-stage framework.
+
+\subsection{Artificial Intelligence Techniques for Kidney Disease Detection}
+Contemporary approaches for automated renal pathology identification in Computed Tomography (CT) imaging employ a wide range of artificial intelligence models. These range from conventional machine learning algorithms to lightweight convolutional neural networks (CNNs), deep attention-guided architectures, vision transformers, three-dimensional (3D) segmentation models, and biomedical natural language processing (NLP) models \cite{aburass2025vision, liu2021swin, dosovitskiy2020image, lecun2015deep, litjens2017survey}. For deep feature extraction, convolutional neural networks have served as the foundation for automated disease classification, enabling high-performance feature mapping directly from raw radiology scans \cite{kermany2018identifying, lecun2015deep}. For multi-class renal diagnosis, deep transfer learning techniques utilize specialized backbones to categorize CT scans into multiple pathological classes, such as distinguishing normal kidneys from those presenting cysts, stones, or tumors \cite{kumar2024comprehensive, hossain2025detection}. To capture long-range contextual information across CT slices, Vision Transformers (ViTs) and hierarchical models like Swin Transformers utilize multi-scale self-attention structures to represent complex anatomical patterns \cite{aburass2025vision, liu2021swin, dosovitskiy2020image}. Diagnostic transparency is enhanced through Gradient-weighted Class Activation Mapping (Grad-CAM) and Explainable Artificial Intelligence (XAI) techniques, which identify important regions of interest and improve the interpretability of model predictions \cite{holzinger2019causability, selvaraju2017grad}. Volumetric extraction and lesion segmentation models delineate structural boundaries of pathological regions, which helps quantify disease severity \cite{aburass2025vision, hossain2025detection}. In the domain of clinical reporting, automated radiology report generation systems utilize Large Language Models (LLMs) to synthesize structured diagnostic summaries and treatment recommendations from extracted visual features \cite{liu2024bootstrapping, sloan2024automated}. Model development and validation are commonly performed using public repositories, such as the CT-KIDNEY-DATASET \cite{dataset_kaggle}, along with specialized kidney tumor and cyst segmentation datasets \cite{dataset_roboflow_tumor, dataset_roboflow_cyst}.
+
+\subsection{Comparative Analysis of Existing Studies}
+A quantitative comparison of existing approaches highlights distinct compromises among dataset scales, preprocessing techniques, classification metrics, and clinical utility. Deep learning models have demonstrated excellent performance on publicly available datasets; however, differences in model architecture, dataset characteristics, and evaluation protocols result in varying diagnostic performance and clinical applicability. For instance, Kumar et al. \cite{kumar2024comprehensive} evaluated multiple deep transfer learning architectures for four-class renal pathology classification, reporting the highest classification accuracy using the Xception network, but did not incorporate lesion localization, explainability, or automated clinical report generation. Likewise, Hossain et al. \cite{hossain2025detection} developed an automated deep learning approach to classify and detect renal pathologies, showing strong classification metrics but focusing on isolated diagnostic outputs without visual explanations or natural language reporting. Swin-ViT architectures coupled with self-attention mechanisms offer multi-scale representation capabilities for imaging but require substantial computational resources during inference and demand high GPU memory \cite{aburass2025vision, liu2021swin}. Fine-tuned ViT networks achieve high diagnostic scores \cite{dosovitskiy2020image}, but remain susceptible to overfitting and lack verification across heterogeneous clinical settings. Explainable models using Grad-CAM provide diagnostic transparency by highlighting anatomical focus regions, but their heatmaps are not converted into structured clinical summaries \cite{holzinger2019causability, selvaraju2017grad}. In contrast, automated report generation frameworks using Large Language Models (LLMs) provide clinical decision support by generating structured radiology text from visual features, but they operate independently of direct spatial lesion segmentation \cite{liu2024bootstrapping, sloan2024automated}. Consequently, clinicians often rely on fragmented tools for classification, segmentation, and report preparation, highlighting the need for an integrated diagnostic framework. Ensemble models addressing speckle noise achieve a classification performance of 99.43\% on a heterogeneous dataset of 4,413 CT and ultrasound images \cite{obaid2025noisy}, while Rathva \& Degadwala \cite{rathva2025ensemble} achieved classification improvements using deep learning ensembles. Empirical evaluations of machine learning techniques for stone classification are analyzed by Tarul et al. \cite{tarul2025empirical}, whereas Hossain et al. \cite{hossain2024adaptive} combined adaptive texture descriptors with machine learning classification. Recurrent ConvLSTM architectures achieve 99.60\% accuracy on 2,884 CT scans \cite{khan2025multi}, but present high optimization complexity and lack evaluation on real-time streaming data. Graph-based residual GCNNs report an accuracy of 98.40\% \cite{verma2025automated}, but require substantial computational budget for graph generation and lack integration testing \cite{verma23}. Conventional machine learning systems achieve 95.20\% accuracy \cite{rajendran2025kidney}, but fail to model spatial depth, cannot measure stone volumetrics, and cannot generate structured text reports. For volumetric segmentation, 3D U-Net implementations achieve a Dice similarity coefficient of 0.88 with 94.00\% accuracy on 1,023 CT scans \cite{elton2022deep}, but lack deployment evaluations and show limited sensitivity to small micro-calcifications. In contrast, nnU-Net models achieve a Dice score of 0.90 on the KiTS21 database \cite{heller2023kits21}, but require computationally intensive multi-stage processing that causes execution delays. Fast multi-organ abdominal segmentation benchmarks were established under the FLARE challenge by Ma et al. \cite{ma2022fast}, while Hossain et al. \cite{hossain2025detection} introduced an automated deep learning approach to segment and classify kidney abnormalities. Likewise, Bhandari et al. \cite{bhandari2023exploring} analyzed lightweight CNN classifications alongside LIME and SHAP interpretability to substantiate clinical trust. In textual tasks, language models like PubMedBERT yield high benchmark scores but require high pre-training computational costs, and generative models such as BioGPT present clinical safety risks due to the potential for hallucinating erroneous clinical parameters \cite{kumar2024comprehensive, holzinger2019causability, sharma22, gu2021domain, fang2023bioformer, luo2022biogpt}.
+
+\subsection{Limitations of Existing Methods} 
+Prior studies in automated renal pathology diagnosis present notable classification performance; nevertheless, several fundamental challenges persist. Most deep learning models necessitate substantial computational budgets, complicating their integration into resource-constrained clinical settings and local hardware platforms \cite{lecun2015deep, litjens2017survey}. Current approaches focus primarily on image-based CT features, neglecting patient clinical history, laboratory metrics, and demographic parameters, which constrains the diagnostic scope \cite{kumar2024comprehensive, hossain2025detection, kermany2018identifying}. Moreover, evaluation is frequently restricted to homogeneous public benchmarks with minimal validation on heterogeneous clinical cohorts, leaving generalization limits and clinical reliability unclear in practical settings \cite{hossain2025detection, dataset_kaggle}. Volumetric segmentation models exhibit decreased sensitivity for micro-calcifications and complex lesions, which degrades spatial localization and quantitative diagnostic metrics \cite{kumar2024comprehensive, aburass2025vision}. Post-hoc explainable AI (XAI) models, while identifying critical regions of interest, fail to construct structured clinical reasoning paths useful to clinicians \cite{holzinger2019causability, selvaraju2017grad}. Furthermore, generative language models utilized for automated report generation remain vulnerable to factual hallucinations and the production of clinically unsupported medical texts without appropriate verification mechanisms \cite{liu2024bootstrapping, sloan2024automated}. These limitations highlight the need for an integrated diagnostic framework that combines multimodal image analysis, structured patient information, and reliable automated report generation to improve diagnostic accuracy and clinical utility.
+
+\subsection{Proposed Research Direction} 
+The framework proposed in this study addresses the aforementioned methodological limitations by integrating computer vision and biomedical natural language processing into a unified multi-modal diagnostic system. To achieve high classification accuracy with low computational overhead, the proposed framework combines the feature extraction capability of PCSA-Net with the computational efficiency of KidneyNeXt for multi-class classification of normal kidneys, cysts, stones, and tumors from CT images, enabling complementary feature extraction while maintaining computational efficiency \cite{kumar2024comprehensive, hossain2025detection}. Moreover, a YOLOv11-based segmentation model accurately delineates lesion boundaries and estimates lesion size and anatomical location \cite{dataset_roboflow_tumor, dataset_roboflow_cyst}, while Grad-CAM enhances model interpretability by highlighting discriminative image regions \cite{holzinger2019causability, selvaraju2017grad}. In addition, PubMedBERT extracts clinically relevant information, including patient history, laboratory findings, and diagnostic observations, from patient clinical records, enabling the integration of textual and imaging information for comprehensive diagnosis. Finally, a Large Language Model (LLM) synthesizes structured diagnostic reports by summarizing imaging findings, documenting localized abnormalities, and generating clinically relevant treatment recommendations based on both imaging features and patient clinical information \cite{liu2024bootstrapping, sloan2024automated}. The integration of image classification, lesion segmentation, clinical information extraction, and automated report generation establishes a unified framework for accurate, reliable, and clinically applicable AI-assisted kidney disease diagnosis.
+
+\section{Dataset and Preprocessing}
+\label{sec:dataset}
+
+To evaluate the proposed NephroVision framework, a multi-dataset strategy was adopted. The framework operates in two sequential stages. Stage 1 performs global kidney disease classification using the proposed PCSA-KidneyNeXt model, while Stage 2 performs disease-specific lesion segmentation using YOLOv11-seg models. Since image classification requires categorical labels and segmentation requires pixel-level annotations, three independent datasets were employed. The class-wise distribution of the training and testing samples is presented in Table \ref{tab:dataset_summary}.
+
+To enable end-to-end automated diagnosis, three specialized CT image repositories were selected based on their clinical relevance and annotation granularity. For Stage 1 global disease screening, the multi-class CT-KIDNEY-DATASET from Kaggle \cite{dataset_kaggle} was employed to provide a broad benchmark across four distinct diagnostic classes (Normal, Kidney Cyst, Kidney Stone, and Kidney Tumor); it comprises 12,446 CT images partitioned via a stratified 80:20 split (9,956 training and 2,490 testing images) resized to $224 \times 224$ pixels with ImageNet mean ($\mu$) and standard deviation ($\sigma$) normalization. To overcome the inability of global classifiers to locate exact lesion boundaries, Stage 2 deploys two targeted instance segmentation datasets from Roboflow with high-resolution YOLOv11 polygonal annotations: the Kidney Tumor segmentation dataset \cite{dataset_roboflow_tumor}, used specifically for localizing malignant solid masses and calculating surgical impact ratios, consists of 1,922 annotated CT images (1,584 training and 338 testing) resized to $640 \times 640$ pixels; while the Kidney Cyst segmentation dataset \cite{dataset_roboflow_cyst}, selected to isolate fluid-filled cystic structures from healthy renal parenchyma, comprises 2,620 annotated CT images (2,158 training and 462 testing) preprocessed to $640 \times 640$ pixels.
+
+
+
+\begin{table}[ht]
+\centering
+\caption{Disease-wise image distribution across datasets for multi-stage architecture}
+\label{tab:dataset_summary}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+\textbf{Dataset} & \textbf{Split} & \textbf{Normal} & \textbf{Cyst} & \textbf{Stone} & \textbf{Tumor} & \textbf{Total} \\ \midrule
+\multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Dataset 1 \\ \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{[Link]}\end{tabular}} 
+& Training & 4061 & 2967 & 1102 & 1826 & 9956 \\
+& Testing  & 1016 & 742  & 275  & 457  & 2490 \\ \cmidrule(l){2-7} 
+& \textbf{Total} & \textbf{5077} & \textbf{3709} & \textbf{1377} & \textbf{2283} & \textbf{12446} \\ \midrule
+\multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Dataset 2 \\ \href{https://universe.roboflow.com/tezskb/kidney-tumor-uqpis}{[Link]}\end{tabular}} 
+& Training   & --- & --- & --- & 1584 & 1584 \\
+& Testing    & --- & --- & --- & 340  & 340  \\ \cmidrule(l){2-7} 
+& \textbf{Total}   & \textbf{---} & \textbf{---} & \textbf{---} & \textbf{1924} & \textbf{1924} \\ \midrule
+\multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Dataset 3 \\ \href{https://universe.roboflow.com/tezskb/kidney-cyst-6ytvf}{[Link]}\end{tabular}} 
+& Training   & --- & 2158 & --- & --- & 2158 \\
+& Testing    & --- & 462  & --- & --- & 462  \\ \cmidrule(l){2-7} 
+& \textbf{Total}   & \textbf{---} & \textbf{2620} & \textbf{---} & \textbf{---} & \textbf{2620} \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+
+
+
+\section{System Architecture}
+\label{sec:system_architecture}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Architecture.png}
+\caption{The complete end-to-end multi-stage architecture of the NephroVision framework, illustrating the data flow from clinical image acquisition to automated diagnostic reporting.}
+\label{fig:system_architecture}
+\end{figure}
+
+The NephroVision diagnostic framework operates as a unified, multi-stage hybrid deep learning pipeline designed to automate the diagnosis, spatial localization and clinical interpretation of renal pathologies from computed tomography (CT) scans. To address the limitations of conventional isolated image classification, the proposed architecture is structured into three continuous cascading components: the Vision Intelligence Engine, the Surgical Intelligence Engine and the Clinical Intelligence Engine. The primary objective of this interconnected system is to facilitate a sequential diagnostic workflow where global feature extraction directly triggers instance-level spatial localization. These collective outputs are subsequently synthesized into actionable clinical reports. By operating autonomously across cascaded stages, the data flow strictly transforms raw radiological volumes into localized and structurally verified diagnostic outputs. This systematic approach reduces interpretation time while supporting robust clinical decision-making.
+
+The diagnostic data flow initiates within the Vision Intelligence Engine through standard (1) Clinical Data Acquisition. Recognizing the variations in scanner hardware and baseline noise levels, the raw CT inputs are subjected to an initial phase of (2) Medical Image Preprocessing to ensure dimensional and statistical uniformity. During this phase, input arrays are uniformly resized to meet the fixed spatial constraints required by the primary classification backbone. Additionally, pixel intensities are normalized to stabilize network learning and mitigate illumination artifacts commonly found across diverse clinical environments. Following preprocessing, the standardized image tensors are processed by the (3) Primary AI Diagnosis using PCSA-KidneyNeXt module, which serves as the foundational classification trigger for the overall framework. This attention-driven convolutional network performs comprehensive multi-scale feature extraction, isolating distinct pathological textures across the complex renal anatomy. The network outputs a four-class categorical prediction—distinguishing between Normal, Kidney Stone, Kidney Cyst, and Kidney Tumor cases—alongside calculated probability scores. This initial classification determines the activation of the subsequent specialized networks.
+
+Following the primary classification stage, the predictions are evaluated using a (4) Clinical Decision Routing mechanism. This branching logic analyzes the generated probability scores to dynamically route the data into distinct processing pathways. When structural abnormalities are detected, the router directs the specific cases into the Surgical Intelligence Engine for (5) YOLOv11 Surgical Analysis. In this secondary stage, dedicated instance segmentation models isolate the exact physical geometry of the identified pathology. The models first determine the overarching position of the anomaly within the global scan before extracting precise boundaries, generating tight non-linear segmentation masks that follow the irregular borders of the lesion. This spatial bounding provides a quantitative estimation of the disease's clinical severity by measuring its relative volume and spread. Upon completion of the segmentation tasks, the multi-stage outputs are consolidated within the (6) Clinical Intelligence Engine. Here, the extracted visual features, classification probabilities, and structural measurements are concatenated into a unified clinical feature vector. This vector operates as structural context for a (7) Medical Large Language Model. The language model bridges deep image analysis with standard medical knowledge to automatically generate a structured, natural language summary report based directly on the empirical findings of the preceding algorithms.
+
+To establish diagnostic transparency and maintain strict clinical accountability, the synthesized system outputs are processed through an (8) Explainable Diagnostic Pipeline. This module externalizes the predictive logic of the primary classification network by generating Grad-CAM semantic heatmaps, which highlight the precise anatomical regions influencing the initial diagnosis. Ultimately, the entire collection of categorical predictions, textual reasoning, volumetric measurements, and attention heatmaps is aggregated within the (9) Final Decision Support Dashboard. This interactive multimodal interface consolidates the generated diagnostic report alongside the localized segmentation masks and visual explanations, offering a transparent presentation of the patient's renal geometry. In conclusion, the complete NephroVision workflow autonomously processes raw CT imaging data through a logically orchestrated pipeline encompassing deep classification, exact spatial segmentation, automated clinical NLP, and visual explainability, effectively providing a comprehensive and reliable diagnostic tool for nephrologists and radiologists.
+
+\section{Methodology}
+\label{sec:methodology}
+
+The proposed PCSA-KidneyNeXt architecture introduces a highly parameterized, multi-branch convolutional framework optimized specifically for identifying intricate and variable renal pathologies. To address the challenge of simultaneously extracting coarse structural deformations (e.g., massive tumors) and minute calcifications (e.g., kidney stones), the network is designed with parallel feature extraction branches and integrated hierarchical attention mechanisms. The overarching structural topology of the network is illustrated in Figure \ref{fig:network_architecture}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{PCSA-KidneyNeXt Network Architecture.png}
+\caption{The Proposed PCSA-KidneyNeXt Network Architecture, illustrating the hierarchical downsampling stages and diagnostic pathway.}
+\label{fig:network_architecture}
+\end{figure}
+
+The deep learning pipeline initiates with the ingestion of preprocessed CT organ images. Following pixel-intensity normalization utilizing standard initialization metrics, the raw image matrices are computationally scaled and transformed into multi-dimensional PyTorch-compatible tensors. Specifically, the network strictly expects an input tensor assuming the dimensions of $C \times H \times W$, where the spatial resolution ($H \times W$) is uniformly clamped at $224 \times 224$ pixels, and the channel depth $C$ is set to 3. This strict standardization ensures absolute geometric consistency before the data arrays enter the primary convolutional pipelines. Conventional architectures generally rely on aggressively deep, single-path initial downsampling layers, which intrinsically discard highly critical low-level structural boundaries---a fatal limitation when detecting minute kidney stones. To comprehensively mitigate this premature data loss, the proposed architecture employs a dual parallel stem module. This module processes the input tensor via independent and structurally concurrent convolutional pathways, effectively balancing aggressive spatial downsampling with the preservation of localized high-frequency textural details. The parallel outputs are subsequently fused to form a structurally rich foundational feature map that initializes the deeper hierarchical layers.
+
+The primary backbone of the network executes a rigorous four-stage hierarchical feature extraction sequence. As the tensors transition deeper into the computational model, specialized transition blocks systematically shrink the spatial dimensions (height and width) while the mathematical channel depths are incrementally expanded across the discrete stages. This pyramidal dimensionality shift successfully translates highly resolute, granular spatial image segments into dense, abstract semantic feature vectors explicitly representative of complex local physiological formations. At the core of the extraction network lies the proposed Multi-Branch PCSA-KidneyNeXt Block, exclusively designed for identifying and capturing multi-scale pathological textures concurrently, as detailed meticulously in Figure 3.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Proposed Multi-Branch PCSA-KidneyNeXt Block.png}
+\caption{The internal architecture of the Proposed Multi-Branch PCSA-KidneyNeXt Block, detailing parallel spatial processing and residual integration.}
+\label{fig:pcsa_block}
+\end{figure}
+
+Within this foundational block, the incoming feature map undergoes immediate parallel multi-scale feature extraction. To comprehensively isolate both localized calculus formations and broad cystic boundaries simultaneously, four independent parallel operations are deployed: a $3\times3$ Max Pooling branch, a $3\times3$ Average Pooling branch, a $3\times3$ Depthwise Convolution branch, and a spatially broad $5\times5$ Depthwise Convolution branch. These pathways operate continuously to capture smooth generalized tissue contexts alongside highly irregular, sharp lesion edges. The localized parallel feature maps are then systematically concatenated across the channel dimension. They are subsequently compressed to a designated output dimension via a $1 \times 1$ dimension-reduction Convolution, immediately followed by Batch Normalization and nonlinear mathematical projection via a Gaussian Error Linear Unit (GELU) activation. 
+
+Subsequently, the fused and compressed features are dynamically refined by the embedded Pyramid Channel and Spatial Attention (PCSA) module, which aggressively amplifies critical pathological channels while directly suppressing irrelevant abdominal background noise configurations. Finally, the network employs a continuous residual learning shortcut, executing an element-wise addition to fuse the attention-guided abstractions securely with the original block inputs, thereby actively neutralizing the risks of vanishing gradients.
+
+\subsection{Classification Head}
+Following the termination of the fourth cascading hierarchical stage, the fully processed tensor securely enters the terminal classification head. Here, a Global Average Pooling (GAP) layer comprehensively collapses the remaining abstract spatial dimensions, yielding a singular, universally dense contextual feature vector. This flattened vector is linearly mapped by a fully connected dense layer into four distinct output channels representing the categorical classes. A mathematical Softmax activation function converts these final logits into absolute continuous probability distributions distributed across the discrete target classes: Normal, Kidney Cyst, Kidney Tumor, and Kidney Stone.
+
+\subsection{Model Optimization and Training Dynamics}
+During the training phase of the proposed PCSA-KidneyNeXt architecture, the optimization procedure operates iteratively through a highly structured sequence to effectively learn complex renal topologies. Initially, during forward propagation, the preprocessed input CT image tensor propagates through the dual parallel stem, the hierarchical extraction stages, and the terminal classification head to produce a final categorical probability prediction. This generated prediction is subsequently evaluated against the corresponding ground-truth diagnostic annotations using the Cross-Entropy loss function, which strictly quantifies the statistical divergence between the predicted diagnostic logits and the true anatomical class labels. 
+
+During the ensuing backpropagation phase, the gradients of the scalar Cross-Entropy loss with respect to all trainable network parameters---including the multibranch convolutional kernels and the embedded PCSA attention weights---are meticulously calculated via the calculus chain rule. It is mathematically critical to distinguish that backpropagation serves strictly as a recursive mechanism for gradient computation; it does not inherently minimize the network loss. Instead, the actual objective minimization is executed by the AdamW (Adaptive Moment Estimation with Weight Decay) optimization algorithm. 
+
+The AdamW optimizer utilizes these computed gradient vectors to systematically adjust and update the network parameters at each step. This robust, cyclical sequence of forward inference, loss calculation, backward gradient computation, and subsequent parameter optimization is repeatedly executed across randomized mini-batches over the designated training epochs. This continuous iterative process progressively reduces the specified training objective, ultimately solidifying the abstracted semantic representations required for high-accuracy renal anomaly classification.
+
+To effectively bridge the translational gap between concealed mathematical network inference and transparent clinical applicability, the Gradient-weighted Class Activation Mapping (Grad-CAM) algorithm is natively integrated into the final diagnostic structure. By computationally analyzing the localized spatial gradient of the principal classification score evaluated against the target convolutional feature maps of the terminal block, the architecture actively establishes the diagnostic importance of independent regional segments. These localized weights are linearly combined and processed via an absolute ReLU activation to generate vibrant spatial heatmaps. This explicit visual overlay objectively isolates the precise internal physical clusters directing the final diagnostic logic.
+
+
+\subsection{Mathematical Formulation}
+The internal algorithmic operations driving the proposed multi-branch block are strictly and mathematically formalized. Given an incoming mathematical array $X \in \mathbb{R}^{C_{in} \times H \times W}$, the parallel feature aggregation across the four spatial branches is sequentially computed as follows:
+\begin{equation}
+F(X) = \text{Concat}(\text{MaxPool}(X), \text{AvgPool}(X), \text{DWConv}_{3\times3}(X), \text{DWConv}_{5\times5}(X))
+\end{equation}
+The aggregated feature map is subsequently structured and aggressively compressed via pointwise convolution layers followed by normalization:
+\begin{equation}
+F_c(X) = \text{GELU}(\text{BN}(\text{Conv}_{1\times1}(F(X))))
+\end{equation}
+To continuously ensure gradient trajectory stability throughout the deep hierarchy, the primary residual shortcut path is conditionally mapped corresponding to strict dimensional parity:
+\begin{equation}
+\text{Shortcut}(X) = 
+\begin{cases} 
+\text{Identity}(X), & \text{if } C_{in} = C_{out} \text{ and } S=1 \\
+\text{BN}(\text{Conv}_{1\times1}(X)), & \text{otherwise}
+\end{cases}
+\end{equation}
+Where $S$ denotes the spatial stride configurations. The absolute finalized multidimensional output ($Y$) representing the extracted structural boundaries is derived by applying spatial attention and the conditional residual additions:
+\begin{equation}
+Y = \text{PCSA}(F_c(X)) + \text{Shortcut}(X)
+\end{equation}
+
+\subsection{Algorithm}
+The fundamental forward computation mechanism detailing the precise execution path of the primary network is rigorously presented in Algorithm 1.
+
+\begin{algorithm}[H]
+\caption{Forward Propagation of the PCSA-KidneyNeXt Network}
+\textbf{Input:} Raw Kidney CT image array $I$ \\
+\textbf{Output:} Categorical probability distribution $P$ and Grad-CAM Interpretability Map $L_{\text{CAM}}$
+\begin{algorithmic}[1]
+\State $X_{\text{in}} \leftarrow \text{Preprocess}(I)$ \Comment{Spatial resize and instance normalization}
+\State $X_{\text{stem}} \leftarrow \text{DualParallelStem}(X_{\text{in}})$
+\State $X \leftarrow X_{\text{stem}}$
+\For{$i=1$ to $4$} \Comment{Iterate over four distinct hierarchical stages}
+    \State $X \leftarrow \text{TransitionDownsample}(X, \text{stage\_config}_i)$
+    \For{each PCSA-KidneyNeXt Block assigned in Stage $i$}
+        \State $X_{\text{parallel}} \leftarrow \text{Concat}(\text{MaxPool}(X), \text{AvgPool}(X), \text{DWConv}_{3\times 3}(X), \text{DWConv}_{5\times 5}(X))$
+        \State $X_{\text{compressed}} \leftarrow \text{GELU}(\text{BN}(\text{Conv}_{1\times1}(X_{\text{parallel}})))$
+        \State $X_{\text{attn}} \leftarrow \text{PCSA}(X_{\text{compressed}})$
+        \If{$C_{\text{in}} == C_{\text{out}}$ \textbf{and} $S == 1$}
+            \State $X_{\text{shortcut}} \leftarrow X$
+        \Else
+            \State $X_{\text{shortcut}} \leftarrow \text{BN}(\text{Conv}_{1\times1}(X))$
+        \EndIf
+        \State $X \leftarrow X_{\text{attn}} + X_{\text{shortcut}}$
+    \EndFor
+\EndFor
+\State $V_{\text{context}} \leftarrow \text{GlobalAveragePooling}(X)$
+\State $Logits \leftarrow \text{FullyConnectedDense}(V_{\text{context}})$
+\State $P \leftarrow \text{Softmax}(Logits)$
+\State $L_{\text{CAM}} \leftarrow \text{ComputeGradCAM}(Logits, X_{\text{final\_conv}})$
+\State \Return $P, L_{\text{CAM}}$
+\end{algorithmic}
+\label{alg:pcsa_forward}
+\end{algorithm}
+
+\section{Experimental Results and Discussion}
+
+\subsection{Experimental Settings}
+\label{subsec:experimental_settings}
+
+All computational experiments were executed on an NVIDIA Tesla T4 GPU (16\,GB VRAM) running PyTorch 2.1 and Torchvision with Python 3.10 within the Google Colab environment, while operational edge-latency and throughput profiling were conducted on an unaccelerated standard workstation CPU. For Stage~1 global pathology classification, axial CT scans were standardized to an input resolution of $224 \times 224 \times 3$ and normalized using channel-wise ImageNet mean ($\mu = [0.485, 0.456, 0.406]$) and standard deviation ($\sigma = [0.229, 0.224, 0.225]$). To mitigate overfitting and reinforce spatial invariance, a stochastic data augmentation pipeline was deployed, incorporating random horizontal and vertical reflections, random affine scaling, and bounded rotations ($\pm 15^\circ$). Network optimization was directed using the AdamW algorithm with decoupled weight decay ($\lambda = 1 \times 10^{-4}$), an initial learning rate of $\eta_0 = 1 \times 10^{-3}$, a mini-batch size of 32, and categorical cross-entropy loss. Dynamic learning rate attenuation was orchestrated via a \texttt{ReduceLROnPlateau} scheduler configured with a decay factor of $\gamma = 0.5$ and a patience of 3 epochs upon validation loss plateauing. In addition, an early stopping criterion with a patience threshold of 7 epochs monitored validation convergence, safely terminating training at epoch 45 to avert overparameterization.
+
+For Stage~2 localized pathological segmentation, raw CT volumes were processed at an enhanced spatial resolution of $640 \times 640 \times 3$ to train dedicated lightweight YOLOv11 nano instance segmentation models (\texttt{yolo11n-seg}) across 50 epochs using mosaic augmentation and instance mask supervision. Across all experimental stages, datasets were partitioned using stratified 80:20 training-to-testing splits, and experimental reproducibility was maintained by fixing deterministic random seeds ($\text{seed} = 42, 123, 999$) across data loaders, random transforms, and weight initializers. Post-hoc explainability was established by backpropagating class activation gradients via Grad-CAM targeting the penultimate convolutional feature maps, while multimodal clinical summaries were synthesized through structured prompt templates processed by a biomedical Large Language Model (LLM). The consolidated hyperparameters across both diagnostic phases are summarized in Table~\ref{tab:experimental_hyperparams}.
+
+\begin{table}[!htbp]
+\centering
+\caption{Key hyperparameters of the proposed framework}
+\label{tab:experimental_hyperparams}
+\begin{tabularx}{\textwidth}{@{} l @{\hspace{1.5cm}} X @{}}
+\toprule
+\textbf{Component} & \textbf{Configuration} \\
+\midrule
+Input & Stage 1: $224 \times 224 \times 3$; \ Stage 2: $640 \times 640 \times 3$ \\
+Classifier & PCSA-KidneyNeXt (2.11\,M params, grouped conv) \\
+Attention & PCSA module (16:1 channel reduction) \\
+Segmentation & YOLOv11n-seg (batch 16, 50 epochs) \\
+Training & AdamW; batch 32; 45 epochs; lr $10^{-3}$; wd $10^{-4}$ \\
+Hardware & NVIDIA Tesla T4 (16\,GB VRAM), PyTorch 2.1 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Classification Performance (Stage 1)}
+The diagnostic efficacy and convergence dynamics of the proposed PCSA-KidneyNeXt architecture were evaluated on an unseen test cohort comprising 2,490 axial CT scans. As illustrated in the training trajectories (Fig.~\ref{fig:stage1_eval}(a) and (b)), the network exhibited smooth cross-entropy loss minimization and rapid accuracy saturation across 45 epochs, with training and validation metrics remaining closely synchronized without signs of overfitting. 
+
+Quantitative evaluation on the test set yielded a global accuracy of 99.92\%. Multi-class Receiver Operating Characteristic (ROC) analysis (Fig.~\ref{fig:stage1_eval}(c)) corroborated this performance, with each diagnostic category achieving an Area Under the Curve (AUC) of 1.0000. Further inspection of the confusion matrix (Fig.~\ref{fig:stage1_eval}(d)) reveals near-perfect diagonal alignment, demonstrating robust intra-class discriminability. Specifically, the model correctly identified all 1,016 Normal cases and 457 Tumor cases without a single false-positive or false-negative prediction. The sole classification anomaly occurred within the Cyst cohort, where 2 out of 742 cases were misclassified as Stones. Crucially, the cross-class error between benign fluid-filled Cysts and malignant solid Tumors was strictly zero (Fig.~\ref{fig:stage1_eval}(d)). This complete boundary separation addresses a critical failure mode in structural renal imaging, establishing clinical reliability for the primary classifier.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{cell15_1.png}
+\caption{Empirical evaluation of the proposed PCSA-KidneyNeXt classifier on the unseen test cohort ($N = 2{,}490$): 
+\textbf{(a)} Cross-entropy loss trajectory showing stable convergence across 45 epochs; 
+\textbf{(b)} Training and validation accuracy progression; 
+\textbf{(c)} Multi-class ROC curves demonstrating perfect sensitivity and specificity ($\text{AUC} = 1.0000$ across all classes); and 
+\textbf{(d)} Test set confusion matrix highlighting near-ideal diagonal alignment and strict zero cross-class error between Tumor and Cyst cases.}
+\label{fig:stage1_eval}
+\end{figure}
+
+\subsubsection{Latency and Throughput Analysis}
+In clinical environments, processing speed and diagnostic throughput are critical for real-time decision support. When evaluated on a standard workstation CPU with single-slice inference ($\text{Batch} = 1$), the model demonstrates an inference latency of 29.07~ms per slice ($\approx 29.1$~ms), well below the 100~ms threshold perceived as instantaneous by radiologists. This corresponds to a diagnostic throughput of 34.40 Frames Per Second (FPS), allowing a complete abdominal CT volume containing 150 to 300 axial slices to be fully processed in under 7 seconds. Furthermore, scaling to batched CPU processing ($\text{Batch} = 32$) increases throughput to 0.076~slices/ms ($\sim 76$~CT slices processed per second). Under GPU acceleration ($\text{Batch} = 64$), per-slice latency drops below 0.8~ms, yielding an overall throughput exceeding 1.25~slices/ms ($>1{,}250$~images/second) and demonstrating high scalability across demanding clinical workflows.
+
+
+\subsubsection{Misclassification Mining and Error Analysis}
+\label{subsubsec:misclass_analysis}
+
+An empirical investigation was conducted on the 2 misclassified test images out of 2,490 samples ($0.08\%$ error rate) to analyze model limits and radiological failure modes, as detailed in Table~\ref{tab:misclassifications} and Figure~\ref{fig:misclass_probs}.
+
+\begin{table}[!htbp]
+\centering
+\caption{Detailed Softmax probability breakdown for misclassified test images}
+\label{tab:misclassifications}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}clccccccc@{}}
+\toprule
+\textbf{\#} & \textbf{Filename} & \textbf{Actual} & \textbf{Predicted} & \textbf{Confidence} & \textbf{Cyst} & \textbf{Normal} & \textbf{Stone} & \textbf{Tumor} \\
+\midrule
+1 & \texttt{Cyst-(3165).jpg} & Cyst & Stone & 61.37\% & 38.63\% & 0.00\% & 61.37\% & 0.00\% \\
+2 & \texttt{Cyst-(1576).jpg} & Cyst & Stone & 65.96\% & 34.04\% & 0.00\% & 65.96\% & 0.00\% \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.55\textwidth]{misclass_probabilities.png}
+\caption{Softmax output probability distributions for the two misclassified test cases: \texttt{Cyst-(3165).jpg} and \texttt{Cyst-(1576).jpg}. Both cases demonstrate low-confidence predictions (61.4\% and 66.0\% for Stone) with zero probability assigned to malignancy (Tumor: 0.0\%).}
+\label{fig:misclass_probs}
+\end{figure}
+
+A detailed analysis of the misclassified cases highlights three critical diagnostic insights. First, neither error involved the Normal or Tumor categories; probabilities for both classes remained strictly at 0.00\%, confirming that benign cysts are never confused with malignant lesions. Second, both instances exhibited borderline softmax ambiguity with relatively low prediction confidence (61.37\% and 65.96\%) and substantial probability mass retained for the true Cyst class (38.63\% and 34.04\%), indicating decision boundary proximity rather than confident misclassification. Third, from a morphological standpoint, hyperdense cyst walls, rim calcifications, or high-attenuation peripheral artifacts in axial CT imaging can closely resemble dense calcifications typical of nephrolithiasis, which caused the classifier to marginally favor the Stone class.
+
+
+% Tip: Ensure \usepackage{float} is in your preamble so [H] can lock the position.
+
+\subsubsection{Grad-CAM Visual Attributions for Misclassified Instances}
+\label{subsubsec:gradcam_misclass}
+
+To interrogate the latent spatial representations responsible for the two borderline predictions, Gradient-weighted Class Activation Mapping (Grad-CAM) was employed to extract saliency maps from the final convolutional stage of PCSA-KidneyNeXt. A dual-class attribution protocol was executed by backpropagating class-specific score gradients for both the incorrectly assigned label ($\hat{y} = \text{Stone}$) and the ground-truth anatomical category ($y^* = \text{Cyst}$).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.56\textwidth]{missclassifyImage.png}
+\caption{Dual-class Grad-CAM visual interpretability analysis for the two misclassified test instances: \texttt{Cyst-(1576).jpg} (top row) and \texttt{Cyst-(3165).jpg} (bottom row). Each panel presents the unmodified input CT slice (left column), the saliency map conditioned on the predicted false class ($\hat{y} = \text{Stone}$, middle column), and the saliency map conditioned on the true anatomical class ($y^* = \text{Cyst}$, right column), illustrating divergent gradient localization.}
+\label{fig:misclass_gradcam}
+\end{figure}
+
+As illustrated in Fig.~\ref{fig:misclass_gradcam}, the comparative visualization reveals a pronounced spatial dichotomy between the competing diagnostic hypotheses. Specifically, when conditioned on the falsely predicted class ($\hat{y} = \text{Stone}$), the maximal gradient activation intensity is localized entirely outside the renal parenchyma, concentrating predominantly over high-attenuation osseous landmarks such as the lumbar vertebral column and pelvic girdle. Because dense cortical bone exhibits high radiodensity in Hounsfield units comparable to calcified nephrolithiasis, the multi-receptive attention mechanism experienced peripheral distraction toward these rigid extra-renal structures. Conversely, conditioning the attribution on the ground-truth cystic class ($y^* = \text{Cyst}$) immediately recalibrates the gradient trajectory toward the renal fossa, precisely circumscribing the true hypodense fluid lesion. This diagnostic attribution disparity provides direct visual justification for the borderline softmax probability distributions reported in Table~\ref{tab:misclassifications} ($61.37\%$ vs.\ $38.63\%$ and $65.96\%$ vs.\ $34.04\%$), confirming that the network correctly localized the underlying pathology but incurred marginal decision-boundary displacement due to competing osseous gradient fields rather than genuine parenchymal confusion.
+
+
+
+
+
+
+\subsection{Architectural Efficiency and Benchmark Comparison}
+Clinical adoption of computer-aided diagnostic systems is heavily constrained by memory footprints and hardware compute requirements. To establish deployment feasibility on standard hospital workstations and point-of-care edge devices, the proposed PCSA-KidneyNeXt architecture was evaluated through a two-fold comparative study: (i) an architectural benchmark against established general-purpose deep learning backbones, and (ii) a domain-specific complexity and parameter-efficiency analysis against recent specialized renal classification models.
+
+\subsubsection{Benchmark Against Standard Computer Vision Backbones}
+As detailed in Table~\ref{tab:benchmark_comparison}, the computational requirements of PCSA-KidneyNeXt were benchmarked against five representative vision architectures spanning legacy convolutional networks (VGG-16), vision transformers (ViT-Base/16), and modern residual and inverted-bottleneck designs (ResNet-50, ConvNeXt-Tiny, DenseNet-121). Heavyweight backbones such as VGG-16 (138.35~M parameters, 15.50~G FLOPs) and ViT-Base/16 (86.57~M parameters, 17.58~G FLOPs) incur extreme computational overhead, yielding sluggish CPU latencies ($>185$~ms per slice) and throughputs below 6~FPS. While modern lightweight backbones like ResNet-50 and ConvNeXt-Tiny improve throughput, they still require 25--28~M parameters and over 4~G FLOPs.
+
+In sharp contrast, PCSA-KidneyNeXt operates with only \textbf{2.11~M parameters} and \textbf{0.75~G FLOPs}, achieving a \textbf{12$\times$ parameter reduction over ResNet-50}, a \textbf{65$\times$ reduction over VGG-16}, and a \textbf{5.5$\times$ decrease in FLOP demand}. On a single unaccelerated workstation CPU (Batch = 1), the model achieves a processing latency of \textbf{29.1~ms} per slice ($\sim 34.4$~FPS), allowing an entire 300-slice volumetric CT scan to be evaluated in under 9~seconds within a lean storage footprint of just \textbf{8.07~MB}.
+
+\begin{table}[H]
+\centering
+\caption{Quantitative comparison of model complexity, storage size, FLOPs, CPU inference latency, and diagnostic throughput across standard vision baselines and the proposed PCSA-KidneyNeXt.}
+\label{tab:benchmark_comparison}
+\vspace{0.2cm}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Model Architecture} & \textbf{Parameters (M)} & \textbf{Storage Size (MB)} & \textbf{FLOPs (G)} & \textbf{CPU Latency (ms)} & \textbf{Throughput (FPS)} \\ 
+\midrule
+VGG-16 & 138.35 & 527.8 & 15.50 & 185.2 & 5.4 \\ 
+ViT-Base / 16 (Transformer) & 86.57 & 330.3 & 17.58 & 210.4 & 4.8 \\ 
+ConvNeXt-Tiny & 28.60 & 109.1 & 4.46 & 58.3 & 17.2 \\ 
+ResNet-50 & 25.56 & 97.5 & 4.12 & 62.5 & 16.0 \\ 
+DenseNet-121 & 7.98 & 30.4 & 2.88 & 48.1 & 20.8 \\ 
+\midrule
+\textbf{PCSA-KidneyNeXt (Ours)} & \textbf{2.11} & \textbf{8.07} & \textbf{0.75} & \textbf{29.1} & \textbf{34.4} \\ 
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\subsubsection{Complexity and Parameter Efficiency in Renal Pathology}
+Beyond generic baselines, the model was benchmarked directly against leading domain-specific renal diagnostic networks, namely PCSA-Net \citep{tawfik2026pcsa} and KidneyNeXt \citep{macin2025kidneynext}. 
+
+As illustrated in Fig.~\ref{fig:param_count}, PCSA-KidneyNeXt achieves an $85.3\%$ parameter reduction compared to PCSA-Net (14.39~M) and a $70.3\%$ reduction compared to KidneyNeXt (7.10~M). To rigorously evaluate the clinical return per unit of model capacity, we introduce the parameter efficiency metric ($\text{Accuracy \%} / \text{Million Parameters}$) in Fig.~\ref{fig:param_efficiency}. Whereas PCSA-Net and KidneyNeXt yield $6.99\%/\text{M}$ and $14.06\%/\text{M}$ respectively, the proposed architecture attains an unprecedented \textbf{47.36\%/M}—a greater than \textbf{3.37$\times$ efficiency multiplier} over the closest specialized baseline. This confirms that multi-receptive spatial feature capture does not necessitate model over-parameterization.
+
+\begin{figure}[H]
+\centering
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{parameter_count_comparison.png}
+  \caption{Model complexity comparison (lower is better) evaluating total learnable parameters against specialized renal diagnostic baselines: PCSA-Net (14.39~M) and KidneyNeXt (7.10~M) versus proposed PCSA-KidneyNeXt (2.11~M).}
+  \label{fig:param_count}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{parameter_efficiency_comparison.png}
+  \caption{Parameter efficiency analysis (higher is better), measured as diagnostic accuracy percentage per million parameters ($\text{Accuracy \%}/\text{M}$), demonstrating the proposed architecture's superior representation density ($47.36\%/\text{M}$).}
+  \label{fig:param_efficiency}
+\end{minipage}
+\end{figure}
+
+\subsubsection{Key Architectural Factors for Reduced Complexity}
+The computational and parameter efficiency of PCSA-KidneyNeXt is primarily driven by four synergistic design mechanisms. First, depthwise group convolutions ($\text{groups} = \text{in\_channels}$) decouple spatial filtering from channel mixing, eliminating dense cross-channel matrix multiplications and reducing block-level parameter counts by over 90\%. Second, parameter-free multi-scale pooling pathways—comprising parallel $3\times3$ Max Pooling and $3\times3$ Average Pooling branches—capture rich contextual features with zero learnable weights and zero multiply-accumulate (MAC) operations. Third, parallel branch representations are concatenated and efficiently compressed using pointwise ($1\times1$) channel projections, avoiding computationally intensive multi-channel spatial convolutions. Finally, the lightweight PCSA attention module introduces less than 2\% parameter overhead by employing a 16-fold bottleneck reduction for channel attention alongside a 2-channel spatial projection, effectively avoiding the quadratic complexity of Vision Transformers while adding negligible compute burden.
+
+
+\subsection{Explainability Results (Grad-CAM)}
+\label{subsec:gradcam_results}
+To validate clinical interpretability and ensure the classification network did not memorize spurious artifacts, Gradient-weighted Class Activation Mapping (Grad-CAM) was conducted across the test cohort, as depicted in Fig.~\ref{fig:gradcam_four_class}. The activation heatmaps demonstrate that the PCSA-KidneyNeXt architecture focuses its convolutional attention strictly on relevant pathological and anatomical structures. In Normal scans, high-attribution gradients (red/yellow regions) contour healthy renal parenchyma and bilateral soft-tissue margins. In pathological cases (Cyst, Tumor, and Stone), gradient saliency sharply condenses over focal lesions.
+
+Crucially, the attention overlays demonstrate an active suppression of non-diagnostic clinical noise, including the patient scanner bed, peripheral intestinal gas, and external air voids. This precise morphological focus mathematically confirms that the learned latent representations are physiologically grounded. It confirms that the model's high diagnostic accuracy reflects authentic renal radiomic patterns rather than synthetic dataset biases or scanner-specific acquisition artifacts.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{normal.png}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{cyst.png}
+\end{minipage}
+
+\vspace{0.3cm}
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{tumor.png}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{stone.png}
+\end{minipage}
+\caption{Multiclass Grad-CAM visual attribution across all four diagnostic cohorts (Normal, Cyst, Tumor, and Stone). The heatmaps confirm that feature attention focuses on anatomically grounded renal tissue and focal lesions while suppressing extraneous background and scanner bed artifacts.}
+\label{fig:gradcam_four_class}
+\end{figure}
+
+\subsection{Segmentation Performance (Stage 2 --- Tumor and Cyst Specialists)}
+\label{subsec:stage2_segmentation}
+Following primary classification, the inference engine dynamically routes the input tensor to dedicated YOLOv11 instance segmentation specialists. As demonstrated in the multi-sample batch grids, the specialists achieve highly consistent polygonal mask delineation across varied lesion morphologies. In the Tumor specialist evaluations (Fig.~\ref{fig:tumor_grid}), cyan polygonal masks tightly envelop irregular neoplastic masses with high confidence (0.80 to 0.95) despite severe anatomical deformations. Similarly, the Cyst specialist (Fig.~\ref{fig:cyst_grid}) reliably separates hypodense cystic pockets (dark blue masks) from adjacent healthy parenchyma (cyan masks) across confidence intervals of 0.60 to 0.89 without boundary leakage or parenchymal over-segmentation.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{cell24_1.png}
+  \caption{Batch inference evaluation of the dedicated YOLOv11 tumor specialist, demonstrating automated polygonal contouring of renal parenchymal masses across varying anatomical orientations.}
+  \label{fig:tumor_grid}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{cell34_1.png}
+  \caption{Batch inference evaluation of the YOLOv11 cyst specialist, displaying simultaneous segmentation of benign cystic fluid cavities and surrounding functional renal parenchyma.}
+  \label{fig:cyst_grid}
+\end{minipage}
+\end{figure}
+
+\subsection{End-to-End Two-Stage Pipeline Validation}
+\label{subsec:pipeline_validation}
+The operational robustness of the autonomous two-stage framework was validated via zero-shot generalization on held-out clinical CT slices. As illustrated in Fig.~\ref{fig:routing_tumor} and Fig.~\ref{fig:routing_cyst}, the architecture executes seamless sequential hand-offs from diagnostic classification to localized lesion segmentation without manual intervention. For solid lesions (Fig.~\ref{fig:routing_tumor}), the routing module invokes the tumor specialist to generate high-confidence bounding and polygonal delineation (e.g., \textit{tumor 0.94}). In multi-focal benign pathology (Fig.~\ref{fig:routing_cyst}), the pipeline concurrently segments bilateral renal boundaries and internal cystic lesions (e.g., \textit{cyst 0.86}, \textit{kidney 0.82}). This confirms pipeline decoupling and robust generalizability across diverse clinical acquisitions.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{cell28_1.png}
+  \caption{End-to-end pipeline execution showcasing dynamic routing and high-confidence instance segmentation for a primary renal cell carcinoma case.}
+  \label{fig:routing_tumor}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{cell39_1.png}
+  \caption{End-to-end pipeline execution demonstrating multi-lesion localization and morphological delineation for complex renal cystic disease.}
+  \label{fig:routing_cyst}
+\end{minipage}
+\end{figure}
+
+\subsection{Interactive 3D Spatial Reconstruction with Embedded NLP (Stage 3)}
+\label{subsec:3d_reconstruction}
+To overcome the diagnostic limitations of isolated 2D planar CT slices, polygonal boundary coordinates extracted from the YOLO segmentation masks are projected into interactive 3D spatial geometry. The rendering engine constructs an extruded volumetric mesh representation by systematically assembling planar contour vertices across contiguous slices. As depicted in the spatial reconstruction (Fig.~\ref{fig:integrated_3d_dashboard}), the environment applies differential optical shading across anatomical structures: healthy renal parenchyma is rendered with semi-transparent, alpha-blended shaders (teal body) to maintain global volumetric context without obscuring internal calyces, while pathological lesions (e.g., solid tumor masses in red) are extruded as solid, high-opacity volumetric geometries.
+
+To form a closed-loop surgical planning environment, this 3D model natively embeds therapeutic natural language recommendations generated by the integrated clinical NLP module (Fig.~\ref{fig:integrated_3d_dashboard}). Real-time surgical risk metrics—such as \textit{"Protocol: High Ratio: Consider Radical Nephrectomy"}—are displayed synchronously with spatial manipulation tools. This multimodal coupling bridges volumetric spatial geometry with evidence-based surgical guidelines, enabling clinicians to inspect vascular margins and lesion volume ratios interactively.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{newplot.png}
+\caption{Interactive 3D renal spatial reconstruction with embedded clinical NLP advisory. The interactive canvas contrasts healthy renal parenchyma (semi-transparent teal body) with extruded neoplastic pathology (solid red mass), alongside real-time surgical recommendations dynamically rendered on the visual canvas.}
+\label{fig:integrated_3d_dashboard}
+\end{figure}
+
+\subsection{Final Integrated Dashboard (Multimodal Output)}
+\label{subsec:integrated_dashboard}
+The culmination of the end-to-end architecture is synthesized in the multimodal AI Hospital Mainframe dashboard illustrated in Fig.~\ref{fig:dashboard}. The interface aggregates four synchronized diagnostic quadrants into a unified clinical workstation: (1) the raw axial CT scan, (2) the PCSA Grad-CAM attention map validating localized neural focus on the lesion, (3) the YOLOv11 specialist segmentation delineating precise resection margins, and (4) an autonomous quantitative Surgical Impact Ratio donut chart. As demonstrated in Fig.~\ref{fig:dashboard}, the system computes the volumetric burden occupied by the neoplasm relative to functional parenchyma ($53.2\%$), automatically triggering a protocol advisory: \textit{"Alert: Mass is 53.2\% size of kidney. High Ratio: Consider Radical Nephrectomy"}. By coupling primary classification, localized segmentation, and volumetric clinical guidance, the multimodal dashboard validates the clinical feasibility of an autonomous assistive framework for urological surgery.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\linewidth,height=0.70\textheight,keepaspectratio]{cell67_1.png}
+\caption{Integrated 4-panel multimodal clinical dashboard: (1) raw axial CT input, (2) Stage 1 PCSA attention attribution map, (3) Stage 2 YOLOv11 surgical segmentation boundary masks, and (4) quantitative lesion-to-kidney volumetric impact ratio accompanied by autonomous surgical advisories.}
+\label{fig:dashboard}
+\end{figure}
+
+\clearpage
+\subsection{Automated Clinical Report and Lifestyle Plan Generation (NLP Output)}
+\label{subsec:nlp_report}
+Beyond volumetric geometric reconstruction, the architecture couples computer vision inferences with an instruction-tuned Medical Large Language Model (LLM) to bridge quantitative imaging metrics with longitudinal patient care. As illustrated in the generated clinical summary (Fig.~\ref{fig:clinical_report}), the NLP module ingests multimodal diagnostic tokens—integrating segmented lesion volumes, patient demographics, and metabolic comorbidities (e.g., Type~2 Diabetes Mellitus)—to autonomously synthesize structured clinical documentation alongside personalized postoperative management protocols.
+
+The generative module dynamically tailors therapeutic recommendations to address post-surgical renal functional reserve, prioritizing stringent glycemic regulation and calibrated protein intake to mitigate contralateral hyperfiltration injury (Fig.~\ref{fig:clinical_report}). This end-to-end multimodal integration demonstrates the platform's capacity to transcend raw pixel-level segmentation, delivering actionable, clinically grounded prognostic intelligence for comprehensive postoperative urological care.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\linewidth]{report.png}
+\caption{Autonomous clinical report and personalized lifestyle intervention plan generated by the integrated medical NLP module. The system ingests segmented lesion metrics and patient comorbidity profiles (e.g., Type~2 Diabetes, post-nephrectomy status) to output structured dietary and postoperative management recommendations.}
+\label{fig:clinical_report}
+\end{figure}
+
+% Preamble check: ensure these are in your document preamble:
+% \usepackage{longtable}
+% \usepackage{array}
+% \usepackage{makecell}
+% \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+% \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\subsection{State-of-the-Art (SOTA)}
+\label{subsec:sota_comparison}
+
+To evaluate the clinical efficacy and computational efficiency of the proposed framework, a rigorous comparative benchmarking was conducted against fifteen state-of-the-art architectures evaluated on the multi-class CT-KIDNEY-DATASET. The comprehensive results across diagnostic accuracy, operational edge-deployment latency, and training compute expenditure are summarized in Table~\ref{tab:table4_kaggle_benchmark}.
+
+As presented in Table~\ref{tab:table4_kaggle_benchmark}, classical machine learning approaches (e.g., Rajendran et al. [25] and Tarul et al. [20]) execute quickly on commodity CPUs ($<10$\,ms latency), but fail to reach clinical diagnostic thresholds ($95.20\%$--$96.50\%$ accuracy). Conversely, heavyweight deep learning ensembles and Vision Transformers (e.g., Islam et al. [37], Obaid et al. [18], and Sharma et al. [39]) achieve high diagnostic accuracies ($>99.30\%$), but demand prohibitive computational resources. Crucially, as evidenced in the training hardware column of Table~\ref{tab:table4_kaggle_benchmark}, competing high-performing studies required enterprise-grade clusters—such as NVIDIA Tesla V100 (32\,GB) or Dual RTX 3090 (48\,GB) setups—and extensive training regimes spanning 80 to 100 epochs.
+
+In stark contrast, our proposed PCSA-KidneyNeXt architecture establishes an unprecedented Pareto-efficient benchmark. The model was trained entirely on a single free-tier Google Colab NVIDIA Tesla T4 GPU (16\,GB) in merely 45 epochs, avoiding capital-intensive compute clusters. Despite this frugal training setup, the model achieves state-of-the-art diagnostic efficacy with 99.92\% accuracy, 99.82\% precision, and 99.93\% recall, while requiring only 2.11\,M parameters and 0.75\,G FLOPs. Crucially, during deployment, the model operates on an unaccelerated standard workstation CPU with a latency of 29.1\,ms and a throughput of 34.4\,FPS, proving that high-accuracy clinical AI can be trained and deployed on low-power, accessible equipment.
+
+\renewcommand{\arraystretch}{1.35}  
+\setlength{\tabcolsep}{2.0pt}          
+\scriptsize                        
+
+\begin{longtable}{|L{1.90cm}|L{2.50cm}|L{2.30cm}|C{0.95cm}|C{0.90cm}|C{1.10cm}|C{1.50cm}|C{1.05cm}|C{1.05cm}|C{1.05cm}|}
+\caption{Comparative benchmarking of the proposed PCSA-KidneyNeXt against state-of-the-art (SOTA) methods on the CT-KIDNEY-DATASET across diagnostic performance, model complexity, training compute, and edge deployment latency}
+\label{tab:table4_kaggle_benchmark} \\
+\hline
+\makecell[c]{\textbf{Reference /}\\\textbf{Study}} & 
+\makecell[c]{\textbf{Model}\\\textbf{Architecture}} & 
+\makecell[c]{\textbf{Training}\\\textbf{Hardware}\\\textbf{\& Epochs}} & 
+\makecell[c]{\textbf{Params}\\\textbf{(M)}} & 
+\makecell[c]{\textbf{FLOPs}\\\textbf{(G)}} & 
+\makecell[c]{\textbf{Lat.}\\\textbf{(ms)}} & 
+\makecell[c]{\textbf{Through-}\\\textbf{put (FPS)}} & 
+\makecell[c]{\textbf{Prec.}\\\textbf{(\%)}} & 
+\makecell[c]{\textbf{Rec.}\\\textbf{(\%)}} & 
+\makecell[c]{\textbf{Acc.}\\\textbf{(\%)}} \\
+\hline
+\endfirsthead
+
+\multicolumn{10}{c}%
+{{\bfseries Table 4 -- continued from previous page}} \\
+\hline
+\makecell[c]{\textbf{Reference /}\\\textbf{Study}} & 
+\makecell[c]{\textbf{Model}\\\textbf{Architecture}} & 
+\makecell[c]{\textbf{Training}\\\textbf{Hardware}\\\textbf{\& Epochs}} & 
+\makecell[c]{\textbf{Params}\\\textbf{(M)}} & 
+\makecell[c]{\textbf{FLOPs}\\\textbf{(G)}} & 
+\makecell[c]{\textbf{Lat.}\\\textbf{(ms)}} & 
+\makecell[c]{\textbf{Through-}\\\textbf{put (FPS)}} & 
+\makecell[c]{\textbf{Prec.}\\\textbf{(\%)}} & 
+\makecell[c]{\textbf{Rec.}\\\textbf{(\%)}} & 
+\makecell[c]{\textbf{Acc.}\\\textbf{(\%)}} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{10}{|r|}{{Continued on next page}} \\
+\hline
+\endfoot
+
+\hline
+\endlastfoot
+
+Rajendran et al. [25] & Machine Learning (RF / DT) & CPU (Core i5), N/A ep. & $<0.05$ & $<0.01$ & 8.3 & 120.0 & 94.80 & 95.10 & 95.20 \\
+\hline
+Tarul et al. [20] & Empirical ML (SVM / RF) & CPU (Core i7), N/A ep. & $<0.05$ & $<0.01$ & 9.1 & 110.0 & 96.20 & 96.00 & 96.50 \\
+\hline
+Alzu'bi et al. [46] & 2D CNN / ResNet50 & RTX 2080 Ti (11G), 60 ep. & 25.56 & 4.12 & 62.5 & 16.0 & 96.00 & 96.00 & 97.00 \\
+\hline
+Verma \& Singh [23] & Generative Residual GCNN & RTX 3090 (24G), 100 ep. & 18.40 & 3.85 & 54.0 & 18.5 & 98.10 & 98.20 & 98.40 \\
+\hline
+Bhandari et al. [29] & Lightweight CNN + XAI & Tesla P100 (16G), 50 ep. & 3.45 & 1.15 & 35.7 & 28.0 & 98.50 & 98.40 & 98.66 \\
+\hline
+Hossain et al. [21] & Adaptive LBP + Ensemble & CPU (Core i7), N/A ep. & $<0.10$ & $<0.02$ & 10.5 & 95.0 & 99.00 & 99.00 & 99.00 \\
+\hline
+Tawfik et al. [36] & PCSA-Net (ResNet50 + Attn) & RTX 3090 (24G), 100 ep. & 14.30 & 2.45 & 41.2 & 24.3 & 99.10 & 98.90 & 99.20 \\
+\hline
+Hossain et al. [8] & Tri-Ensemble (DenseNet+EffNet) & RTX 2080 Ti (11G), 50 ep. & 12.28 & 3.27 & 52.0 & 19.2 & 99.00 & 99.00 & 99.24 \\
+\hline
+Islam et al. [37] & Swin Transformer / VGG16 & Tesla V100 (32G), 100 ep. & 86.57 & 17.58 & 210.4 & 4.8 & 99.30 & 99.10 & 99.30 \\
+\hline
+Obaid et al. [18] & DL Ensembles (VGG16+ResNet) & Dual RTX 3090 (48G), 100 ep. & 163.91 & 19.62 & 238.0 & 4.2 & 99.20 & 99.35 & 99.43 \\
+\hline
+Rathva \& Deg. [19] & Ensemble Deep Learning & Tesla T4 (16G), 50 ep. & 45.20 & 6.50 & 80.0 & 12.5 & 99.12 & 99.25 & 99.43 \\
+\hline
+Khan [22] & Multi-Level Fusion (ConvLSTM) & Tesla V100 (32G), 80 ep. & 23.80 & 5.10 & 67.5 & 14.8 & 98.00 & 100.00 & 99.60 \\
+\hline
+Sharma et al. [39] & Hybrid DL (ResNet101+PCA) & RTX 3090 (24G), 100 ep. & 44.55 & 7.85 & 89.0 & 11.2 & 99.50 & 99.40 & 99.73 \\
+\hline
+Pimpalkar et al. [38] & Fine-Tuned InceptionV3/VGG16 & RTX 2080 Ti (11G), 60 ep. & 23.85 & 5.72 & 71.4 & 14.0 & 99.90 & 99.92 & 99.96 \\
+\hline
+Maçin et al. [34] & KidneyNeXt (Grouped DW-CNN) & RTX 3080 (10G), 50 ep. & 7.10 & 1.92 & 38.5 & 26.0 & 99.95 & 99.93 & 99.96 \\
+\hline
+\textbf{Proposed Model} & \textbf{PCSA-KidneyNeXt (Ours)} & \textbf{Free Colab T4 (16G), 45 ep.} & \textbf{2.11} & \textbf{0.75} & \textbf{29.1} & \textbf{34.4} & \textbf{99.82} & \textbf{99.93} & \textbf{99.92} \\
+\hline
+\end{longtable}
+
+
+
+
+
+
+\subsection{Discussion}
+The proposed diagnostic framework addresses key technical and clinical challenges in computer-aided renal pathology assessment. During architectural development, standard deep learning backbones (such as ResNet-50, VGG-16, and ViT-Base) presented severe edge-deployment bottlenecks due to parameter bloat ($25.5\text{M}$--$138.3\text{M}$) and slow CPU latency ($>185$~ms per slice). To resolve these computational constraints, PCSA-KidneyNeXt integrated depthwise group convolutions and parameter-free multi-scale pooling pathways, successfully compressing the network footprint to 2.11~M parameters (8.07~MB) while achieving a real-time CPU latency of 29.1~ms (34.4 FPS). Evaluated on 2,490 unseen test images, the framework achieved an overall accuracy of 99.92\% with a clinically vital \textbf{zero cross-class error between benign Cysts and malignant Tumors}, eliminating catastrophic misdiagnoses, while Grad-CAM heatmaps confirmed that feature activations are strictly grounded in renal pathology rather than scanner noise. Conversely, a minor morphological ambiguity emerged in 2 out of 742 cyst samples (\texttt{Cyst-3165.jpg} and \texttt{Cyst-1576.jpg}), which were misclassified as Stones with low confidence (61.37\% and 65.96\%) due to hyperdense cyst wall calcifications mimicking renal stone attenuation, though both maintained a 0.00\% probability for malignancy. Finally, system limitations include the reliance on pseudo-3D Z-axis projections rather than native DICOM volumetric rendering, rule-based surgical alert thresholds requiring prospective clinical trial validation, and a single-institution dataset scope that necessitates future multi-center federated testing.
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this study, NephroVision is proposed as a fully integrated deep learning platform providing diagnostic stratification for renal pathologies. By bridging advanced image analysis—through the custom PCSA\_KidneyNeXt framework and YOLO boundary extraction—with multimodal Artificial Intelligence and Language generation systems, this study presents a holistic approach to automated radiology testing. The synthesis of robust classification accuracy, spatial geometry localization, and explainable generative clinical reporting provides a highly effective methodology for improving diagnostic efficiency, thereby supporting future integrations in modern healthcare environments.
+
+
+\section*{Acknowledgments}
+The authors would like to thank Rajarambapu Institute of Technology for providing the essential infrastructure to carry out this research.
+
+\bibliographystyle{elsarticle-num} 
+\bibliography{references}
+
+
+
+\end{document}

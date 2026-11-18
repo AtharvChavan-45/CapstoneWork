@@ -1,0 +1,6 @@
+"Study/Author (Year)","Performance Metrics","Imaging Modality","Dataset","Class Information","Image Counts & Class Breakdown"
+"Tawfik, H. M., et al. (2026)","Acc: 96–97%","CT","Dhaka Hospital Dataset","4 Classes","Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377"
+"Sajid et al. (2026)","Acc: 91.47%; Tumor recall: 82.34%","CT","Kaggle CT Kidney Dataset","4 Classes (Cyst, Stone, Tumor, Normal)","Total: 12,446 images | Balanced across four pathological classes"
+"Khan, S. U. R., et al. (2025)","F1: >0.97","CT","MHC-CT Dataset","Multiclass (focus on Tumors & Normal)","Total: 2,884 images | Tumor: 1,860 | Normal: 1,024"
+"Li, D., et al. (2022)","Dice: 96.54% (kidney), 80.59% (stone)","CT","Open-source abdominal CT","Binary (Stone-positive vs. negative)","Total: 500 scans (260 annotated) | Stone-positive: 209 | Stone-negative: 51"
+"Farjad, H.M., et al. (2021)","Acc: 90%","CT","CT scan images (axial slices)","Binary (Normal vs. abnormal)","Total: 150 images | Normal: 75 | Abnormal: 75"

@@ -1,0 +1,174 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}  % Required to render | as a proper vertical bar
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{hyperref}
+\usepackage[margin=0.5in]{geometry}  % Reduced margins to fit more columns
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+\begin{document}
+
+\section*{Summary of Reviewed Studies (Papers 1--62)}
+
+This section presents the comprehensive synthesis of deep learning models, frameworks, and datasets utilized for renal disease diagnosis based on Papers 1 to 62, sorted in sequential order.
+
+\renewcommand{\arraystretch}{1.15}  % Clean padding between rows
+\setlength{\tabcolsep}{4pt}          % Tighter column padding to save space
+\footnotesize                        % Footnotesize to compress height and prevent overflow
+
+\begin{longtable}{|L{2.8cm}|L{2.5cm}|L{1.5cm}|L{3.5cm}|L{3.5cm}|L{4.5cm}|}
+\hline
+\textbf{Study/Author (Year)} & \textbf{Performance Metrics} & \textbf{Imaging Modality} & \textbf{Dataset Details \& Links} & \textbf{Class Information} & \textbf{Image Counts \& Breakdown} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Study/Author (Year)} & \textbf{Performance Metrics} & \textbf{Imaging Modality} & \textbf{Dataset Details \& Links} & \textbf{Class Information} & \textbf{Image Counts \& Breakdown} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{6}{|r|}{{Continued on next page}} \\
+\hline
+\endfoot
+
+\hline
+\endlastfoot
+
+\textbf{S. Degadwala, 2024}~[1] & Varies (Review paper) & Multimodal & Not Accessible & Stones (binary / multi) & N/A \\
+\hline
+\textbf{M. Aljohani, 2025}~[2] & 98.29\% max accuracy & CT scans & \href{https://github.com/DaliaAlzubi/KidneyTumor}{KAUH dataset} & Tumor, normal, malignant & 8,400 images \\
+\hline
+\textbf{Obaid, W., et al., 2025}~[3] & F1-score: 0.95 & Ultrasound (US) & \href{https://universe.roboflow.com/proyecto-1/tesis-iz9ji}{Multi-center repository} & Cysts, Stones, Tumors & >10,000 frames \\
+\hline
+\textbf{Khan et al., 2025}~[4] & F1-score > 0.97 & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{MHC-CT Dataset} & Cysts, stones, tumors & 2,884 images \\
+\hline
+\textbf{Verma \& Singh, 2025}~[5] & 99.12\% accuracy & CT & \href{https://github.com/VS-EYE/KidneyDiseaseDetection}{Kaggle + Clinical Repo} & Stone-related structure & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Rehman, M. U., et al. (2024)}~[6] & Acc: 90–95\% & CT & Not Accessible & Binary / Multiclass (Stones) & Total: \textasciitilde{}5,000 images \\
+\hline
+\textbf{Scales Jr, C.D., et al., 2012}~[7] & Prevalence: 8.8\%; OR: 1.55 & Survey / Clinical Records & \href{https://www.cdc.gov/nchs/nhanes/index.htm}{NHANES 2007–2010} & Kidney Stones & 12,110 participants \\
+\hline
+\textbf{Wang et al., 2022}~[8] & 0.746 AUC & Clinical / Proteomics & \href{https://seer.cancer.gov/}{SEER Database} & Renal Cell Carcinoma & >22,000 \\
+\hline
+\textbf{Rajendran et al., 2025}~[9] & 97.1–97.5\% accuracy & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Kidney Stone Dataset} & Kidney stones & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Kadhim, A.A. \& Mohammed, A.H. (2024)}~[10] & N / A (Survey) & CT, MRI, Ultrasound & Not Accessible & Kidney Cancer & N / A (Survey) \\
+\hline
+\textbf{Heller, N., et al. (2023)}~[11] & N / A & Corticomedullary CT & \href{https://github.com/neheller/kits21/tree/master/kits21/data}{KiTS21 Dataset} & Segmentation & Total: 300 cases \\
+\hline
+\textbf{M. Y. Chen, 2021}~[12] & 10.07\% mean abs. diff. & Multimodal (CT / MRI) & Not Accessible & Renal masses / tumors & 27 patients \\
+\hline
+\textbf{Liang (2025)}~[13] & Lightweight dual-branch: Dice 89.7\%; IoU 82.9\%; inference 47.9ms; Full model: Dice 90.3\%; IoU 83.6\%; F1 +3.2\% vs EfficientNet-B3 & CT multi-phase (plain scan + secretory phase CTU) & Not Accessible & Renal Cell Carcinoma; Urothelial Carcinoma; Urinary Tract Stones (3 disease categories) & 1024 cases: 326 RCC | 278 urothelial carcinoma | 420 urinary stones | 717 train / 102 val / 205 test \\
+\hline
+\textbf{Farjad, H.M., et al. (2021)}~[14] & Acc: 90\% & CT & Not Accessible & Binary (Normal vs. abnormal) & Total: 150 images | Normal: 75 | Abnormal: 75 \\
+\hline
+\textbf{Abdelrahman et al. (2022)}~[15] & Survey: aggregated results (Dice up to 0.987); No primary experiments & CT (primary); MRI; Ultrasound (survey scope) & Not Accessible & Kidney; Tumor; Cyst (survey scope) & Survey paper - NR \\
+\hline
+\textbf{Ji et al. (2024)}~[16] & Dice: 0.974 (kidney); 0.846 (tumor); HD95 reported & CT (contrast-enhanced) & \href{https://github.com/neheller/kits19/tree/master/data}{KiTS19 (Kidney Tumor Segmentation Challenge 2019)} & Kidney; Tumor (2 classes) & 300 CT cases (210 train / 90 test) \\
+\hline
+\textbf{Gohil et al. (2024)}~[17] & Dice: 0.968 (kidney); 0.829 (tumor); 0.701 (cyst); HD95 reported & CT (contrast-enhanced) & \href{https://github.com/neheller/kits21/tree/master/kits21/data}{KiTS21 (Kidney Tumor Segmentation Challenge 2021)} & Kidney; Tumor; Cyst (3 classes) & 300 training cases (KiTS21 official) \\
+\hline
+\textbf{Alzu'bi, D., et al. (2022)}~[18] & Outperformed ResNet50 baseline & CT & \href{https://github.com/DaliaAlzubi/KidneyTumor/tree/main/Dataset}{New CT Dataset} & 4 Classes & N / A \\
+\hline
+\textbf{Bhandari, M., et al. (2023)}~[19] & Competitive high accuracy & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Kaggle CT Kidney Dataset} & 3 Classes & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Rathva, V. \& Degadwala, D.S. (2025)}~[20] & Improved sensitivity \& specificity & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Abdominal CT Dataset} & Kidney Stones & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Tarul et al., 2025}~[21] & 92–94\% accuracy & CT & Not Accessible & Stone vs. non-stone & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Pimpalkar, A., et al. (2025)}~[22] & Top-tier precision and recall & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Clinical CT Repository} & Multiclass & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Abdelrahman, A. \& Viriri, S. (2023)}~[23] & Top-tier Dice scores & CT & \href{https://github.com/neheller/kits19/tree/master/data}{KiTS Dataset} & Tumor Segmentation & N / A \\
+\hline
+\textbf{Zhao, T., et al. (2023)}~[24] & Better diagnostic consistency & CT & \href{https://github.com/neheller/kits21/tree/master/kits21/data}{3D CT Dataset} & Multiclass Segmentation / Classification & N / A \\
+\hline
+\textbf{Chen, Z. \& Liu, H. (2021)}~[25] & Competitive Dice Score & CT & \href{https://github.com/neheller/kits21/tree/master/kits21/data}{KiTS21 Dataset} & Multiclass Segmentation & N / A \\
+\hline
+\textbf{Alqahtani et al., 2025}~[26] & 99.76\% accuracy & CT & Not Accessible & Normal, cyst, stone, tumor & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Islam et al., 2022}~[27] & 99.84\% accuracy & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Riñones Dataset} & Normal, cyst, stone, tumor & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{He et al. (2023)}~[28] & BUSI: Dice 78.69\%; IoU 67.94\%; BUS: Dice 79.03\%; IoU 68.28\%; Dataset B: Dice 82.34\%; IoU 72.54\% & Ultrasound (B-mode breast) & \href{https://www.sciencedirect.com/science/article/pii/S2352340919312181}{BUSI; BUS dataset; Dataset B} & Benign; Malignant; Normal (BUSI 3-class); Benign; Malignant (BUS / Dataset B 2-class) & BUSI: 780 (487 benign | 210 malignant | 133 normal) | BUS: 562 | Dataset B: 163 \\
+\hline
+\textbf{Azad et al. (2023)}~[29] & Synapse avg Dice 79.88\%; Per-organ: Aorta 86.99; Gallbladder 66.67; Spleen 93.72; L.Kidney 78.93; R.Kidney 77.83; Liver 95.11; Stomach 62.17; Pancreas 58.79; ISIC: F1 79.28\%; Jaccard 66.25\% & CT (Synapse); Dermoscopy (ISIC) & \href{https://www.synapse.org/#!Synapse:syn3193805/wiki/217789}{Synapse Multi-organ Segmentation; ISIC 2018 Skin Lesion} & Synapse: 8 abdominal organs; ISIC: lesion vs background (2 classes) & Synapse: 30 CT cases (18 train / 12 test) | ISIC 2018: 2694 images \\
+\hline
+\textbf{Lan et al. (2024)}~[30] & Synapse: Dice 85.17\%; HD95 15.57mm; ISIC-2018: Dice 85.63\%; IoU 77.15\%; CVC-ClinicDB: Dice 91.56\%; IoU 84.93\% & CT (Synapse); Dermoscopy (ISIC); Colonoscopy (CVC) & \href{https://www.synapse.org/#!Synapse:syn3193805/wiki/217789}{Synapse Multi-organ; ISIC 2018; CVC-ClinicDB} & Synapse: 8 organs; ISIC: skin lesion; CVC: polyp (2 classes) & Synapse: 30 CT (18 / 12) | ISIC: 2694 | CVC-ClinicDB: 612 \\
+\hline
+\textbf{Li et al. (2022)}~[31] & Res U-Net (proposed): Kidney Dice 96.54+ / -1.06\%; Stone Dice 80.59+ / -1.28\%; Specificity 99.99\%; Kidney Sensitivity 96.49\%; Stone Sensitivity 79.73\% & CT (unenhanced abdominal) & \href{https://zenodo.org/record/6042410}{Open-access (Zenodo): unenhanced abdominal CT; First Affiliated Hospital Guangzhou Medical University (2018-2020)} & Kidney; Kidney Stone (2 foreground classes + background) & 260 CT scans (209 with stones / 51 without) | 7:3 split | 5-fold cross-validation \\
+\hline
+\textbf{Elmaagac et al. (2026)}~[32] & AUC: 0.786; Sensitivity: 75\%; Specificity: 76\% & CT (KUB / fluoroscopy for PCNL) & Not Accessible & Stone-free vs. Non-stone-free outcomes (2 classes) & 340 patients (retrospective clinical study) \\
+\hline
+\textbf{Sajid et al. (2026)}~[33] & Acc: 91.47\%; Tumor recall: 82.34\% & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Kaggle CT Kidney Dataset} & 4 Classes (Cyst, Stone, Tumor, Normal) & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Al-Ebada et al. (2026)}~[34] & Accuracy: 98.6\%; Precision: 97.8\%; Recall: 98.9\%; F1-score: 98.3\% & CT (unenhanced) & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Kaggle CT Kidney Dataset (restructured / augmented)} & Normal; Stone; Cyst; Tumor (4 classes) & 4850 CT images total | class breakdown NR \\
+\hline
+\textbf{Hossain, T., et al. (2024)}~[35] & Superior classification vs. base LBP & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Enhanced CT Dataset} & Multiclass & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Elton, D.C., et al. (2022)}~[36] & Sensitivity: 88.1\% & Non-contrast CT & \href{https://www.cancerimagingarchive.net/collection/ct-colonography/}{Clinical Dataset} & Kidney Stones & Total: 551 scans \\
+\hline
+\textbf{Lee, J., et al. (2020)}~[37] & F1 Improvement: 0.62\% (NER) & Biomedical Text & \href{https://github.com/naver/biobert-pretrained}{PubMed + PMC} & N / A (NLP) & Total: 4.5 billion words \\
+\hline
+\textbf{Fang, L., et al. (2023)}~[38] & Matches SOTA PubMedBERT & Biomedical Text & \href{https://huggingface.co/datasets/bigbio/blurb}{BLURB Benchmark} & N / A (NLP) & Total: 13 datasets \\
+\hline
+\textbf{Luo, R., et al. (2022)}~[39] & SOTA (Biomedical QA) & Biomedical Text & \href{https://huggingface.co/datasets/ncbi/pubmed}{PubMed Abstracts} & N / A (NLP) & Total: Entire collection \\
+\hline
+\textbf{Hatsutani, T., et al. (2023)}~[40] & Dice: 0.615 & Non-contrast CT & \href{https://github.com/neheller/kits19/tree/master/data}{KiTS19 Dataset} & Kidney Tumors & Total: 108 CT images \\
+\hline
+\textbf{Sharma, K., et al. (2025)}~[41] & Acc: 99.24\%; F1: 99\% & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{CT Kidney Dataset} & 4 Classes & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Martín, Ó.A. \& Sánchez, J. (2025)}~[42] & SOTA on multimodal tasks & Multimodal & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Multimodal Dataset} & Tumor Classification & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Papanastasiou et al. (2024)}~[43] & Systematic review - no primary experiments reported & CT; MRI; Ultrasound; X-ray; PET-CT; Retinal imaging (survey scope) & Not Accessible & Multiple organ systems (survey scope) & Survey paper - no primary dataset | 112 reviewed articles \\
+\hline
+\textbf{N. Ahmed, 2021}~[44] & >95\% accuracy & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Kaggle Public Repo} & Normal, cyst, tumor, stone & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Tawfik et al., 2026}~[45] & 96–97\% accuracy & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Dhaka Hospital Dataset} & Normal, cyst, tumor, stone & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{S. Akhtar, 2026}~[46] & 60\% mAP@50 overall & Microscopic & Not Accessible & 14 urine particle classes & 7,201 images \\
+\hline
+\textbf{Gu, Y., et al. (2021)}~[47] & SOTA (BLURB benchmark) & Biomedical Text & \href{https://huggingface.co/datasets/ncbi/pubmed}{PubMed Abstracts} & N / A (NLP) & Total: 14 million abstracts \\
+\hline
+\textbf{S. C. Sreenivas, 2025}~[48] & 86.6\% accuracy (DiRAG) & Clinical Text (NLP) & \href{https://doi.org/10.6084/m9.figshare.9764942.v2}{MACCROBAT / AGBONNET} & Symptoms, diseases, medications & 300 notes \\
+\hline
+\textbf{Hossain et al. (2025)}~[49] & Accuracy: 99.30\%; Precision: 99.32\%; Recall: 99.30\%; F1-score: 99.30\%; AUC: 0.9999 & CT (unenhanced) & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{CT KIDNEY DATASET: Normal-Cyst-Tumor-Stone (Kaggle)} & Normal; Cyst; Tumor; Stone (4 classes) & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Abdalla, P.A., et al. (2025)}~[50] & N / A & CT & \href{https://www.kaggle.com/datasets/orvile/axial-ct-imaging-dataset-kidney-stone-detection}{Sulaimani / Rania Dataset} & Kidney Stones & Total: 3,364 original, 35,457 augmented \\
+\hline
+\textbf{Ma, J., et al. (2022)}~[51] & N / A & Abdomen CT & \href{https://flare.grand-challenge.org/Data/}{FLARE Dataset} & Organ Segmentation & N / A \\
+\hline
+\textbf{Maçin, G., et al. (2025)}~[52] & Acc: 99.82\% (Kaggle), 99.41\% (Clinical) & CT & \href{https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone}{Kaggle CT + External Clinical (Jordan)} & Multiclass & Total: 12,446 images | Normal: 5,077 | Cyst: 3,709 | Tumor: 2,283 | Stone: 1,377 \\
+\hline
+\textbf{Xie et al. (2020)}~[53] & Kidney Dice 0.974; Tumor Dice 0.840; Composite Dice 0.907 & CT (contrast-enhanced) & \href{https://github.com/neheller/kits19/tree/master/data}{KiTS19 (Kidney Tumor Segmentation Challenge 2019)} & Kidney; Tumor (2 classes) & 300 CT cases (210 train / 90 test) \\
+\hline
+\textbf{Nguyen et al. (2024)}~[54] & YOLOv7-R+CBAM: Precision 92.2\%; Sensitivity 87.6\%; F1 89.8\%; mAP50 91.2\%; With 2x SR (ESRGAN): mAP50 95.0\% & X-ray (KUB plain film) & Not Accessible & Kidney stone detection (binary: stone present / absent) & 152 KUB X-rays | Train: 28 (->240 augmented) | Val: 24 | Test: 100 \\
+\hline
+\textbf{Gao et al. (2026)}~[55] & Segmentation IoU: 94.23\%; Classification Accuracy: 81.8\%; Sensitivity: 82.2\%; Specificity: 80.6\%; AUC: 0.88 & Ultrasound (grayscale B-mode renal) & Not Accessible & Benign renal tumor; Malignant renal tumor (2 classes) & 345 patients (127 benign | 218 malignant) | 3504 images after augmentation \\
+\hline
+\textbf{Chen et al. (2023)}~[56] & Dice: 96.25\% (kidney), 92.9\% (parenchyma) & Ultrasound & Not Accessible & 3 Classes (Kidney organ, parenchyma, renal sinus) & Total: 1,000 images | Training: 850 | Test: 150 \\
+\hline
+\textbf{Sherryl, J.J. \& Jaya, T. (2022)}~[57] & Acc: 99.60\% & CT & \href{https://www.cancerimagingarchive.net/collection/c4kc-kits/}{C4KC-KiTS} & 11 Classes & N / A \\
+\hline
+\textbf{Ye, Y., et al. (2026)}~[58] & mAP@0.5: 0.91 & CT & Not Accessible & Kidney Stone & Total: 4,000 slices \\
+\hline
+\textbf{Almukadi et al. (2025)}~[59] & Best (70\% / 30\%): Accuracy 88.90\%; Precision 72.06\%; Recall 72.12\%; F1 72.01\%; MCC 65.14\% & Histopathology (H\&E stained images) & \href{https://drive.google.com/drive/folders/1BQZGKHKOUji9rDA5IVltlLnXLk7_Elic}{Biomedical kidney cancer histopathology dataset (Google Drive)} & Grade-0 (Non-cancerous); Grade-1; Grade-2; Grade-3; Grade-4 (5 classes) & 3000 images total | 600 per class (Grade-0 to Grade-4) \\
+\hline
+\textbf{Raj et al. (2022)}~[60] & Dice: 0.974 (kidney); 0.963 (cortex); 0.950 (medulla); Hausdorff Distance reported & MRI (T1-weighted; T2-weighted) & \href{https://www.niddkrepository.org/studies/crisp/}{NIDDK / CRISP (Consortium for Radiologic Imaging Studies of PKD)} & Kidney; Cortex; Medulla (3 classes) & \textasciitilde{}241 MRI volumes (CRISP) | split NR \\
+\hline
+\textbf{Noorelahi et al., 2025}~[61] & Dose variability results & CT / PACS & Not Accessible & Radiation dose parameters & 200 patients \\
+\hline
+\textbf{Paper 62 (Author NR)}~[62] & NR - Scanned PDF; requires OCR & N/A & Not Accessible & N / A & N/A \\
+
+\end{longtable}
+
+\end{document}

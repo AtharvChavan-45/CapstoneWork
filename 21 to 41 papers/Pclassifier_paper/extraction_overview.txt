@@ -1,0 +1,470 @@
+============================================================
+FILE: 1-s2.0-S0010482525005657-main.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+Multi-level feature fusion network for kidney disease detection
+Saif Ur Rehman Khan
+School of Computer Science and Engineering, Central South University, 932 Lushan S Rd, Yuelu District, Changsha, Hunan, China
+ARTICLE INFO
+Keywords:
+Shap visualization
+Feature fusion
+Inception block
+Recurrent neural network
+ABSTRACT
+Kidney irregularities pose a significant public health challenge, often leading to severe complications, yet the 
+limited availability of nephrologists makes early detection costly and time-consuming. To address this issue, we 
+propose a deep learning framework for automat
+
+--- DATASET MENTIONS ---
+MATCH: dataset overhead. To enhance sequential learning and capture long-term dependencies in disease progression, ConvLSTM is incorporated after feature fusion. Additionally, Inception block is employed after ConvLSTM to refine hierarchical feature extract
+MATCH: dataset, demonstrating its robustness in binary classification. Furthermore, to assess its generalization capability, we evaluate the model on a publicly available benchmark multiclass CT scan dataset, achieving 91.31 % accuracy. The superior perfor 
+MATCH: datasets enhances the diagnosis and research into these tumors. Datasets often include mo - dalities such as CT, MRI, and ultrasound, each providing unique insights into tumor characteristics. The role of deep learning-DL in the diagnosis and managem
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: patients [ 4 ]. To address this issue, computerized medical applications have been advanced to assist ne - phrologists in the early diagnosis of kidney diseases. Early detection often relies on variou
+SPLIT SNIP: patient safety as it does not involve exposure to radiation [ 5 ]. Traditional methods for tumor prediction and diagnosis in the medical field often involve the use of Computer-Aided Diagnosis-CAD sys
+SPLIT SNIP: patients with kidney stones. In the domain of DL applied to medical imaging, both prediction fusion and feature fusion play critical roles in enhancing diagnostic accuracy, but they operate at differe
+SPLIT SNIP: trained with other CNN architectures for abdominal CT scans of patients with kidney stones. Evaluating eight models with 8209 CT images, the Inception-V3 achieved 98.52 % test accuracy in detecting ki
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: Hunan, China ARTICLE INFO Keywords: Shap visualization Feature fusion Inception block Recurrent neural network ABSTRACT Kidney irregularities pose a significant public health challenge, often leading 
+PREP SNIP: hub.com/VS-EYE/KidneyDiseaseDetection.git . 1. Introduction Kidney disease is known as renal disease or nephropathy which in - volves damage to or disease of the kidneys. This impairs their ability to
+PREP SNIP: human errors. DL models are increasingly utilized in various medical domains such as skin [ 23 ], brain [ 24 ], retinal [ 25 ], and breast [ 26 , 27 ] disease detection. Similarly, DL techniques are a
+PREP SNIP: hus development more robust and applicable research outcomes in the field of CT scan analysis. Fig. 1 displays sample images from the MHC-CT scan dataset. To further boost the assessment of our propos
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy. Our study thoroughly evaluates six pretrained models under identical experimental conditions, identifying ResNet50 and VGG19 as the highly efficient models for feature extraction due to thei
+RES SNIP: accuracy on this dataset, demonstrating its robustness in binary classification. Furthermore, to assess its generalization capability, we evaluate the model on a publicly available benchmark multiclas
+RES SNIP: accuracy [ 16 ]. The necessity for feature fusion arises from the multifaceted nature of medical images, where combining fea - tures from different layers of a DL model or different imaging modalities
+RES SNIP: accuracy, but they operate at different stages of the model architecture. Feature fusion involves combining various features or characteristics extracted from the data at an early or intermediate stag
+============================================================
+FILE: 10.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+Academic Editor: Miguel Angel
+Cazorla
+Received: 16 June 2025
+Revised: 10 July 2025
+Accepted: 14 July 2025
+Published: 31 July 2025
+Citation: Obaid, W.; Hussain, A.;
+Rabie, T.; Mansoor, W. Noisy
+Ultrasound Kidney Image
+Classifications Using Deep Learning
+Ensembles and Grad-CAM Analysis.
+AI 2025, 6, 172. https://doi.org/
+10.3390/ai6080172
+Copyright: © 2025 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://creativecommons.org/
+licenses/by/4.0/).
+
+--- DATASET MENTIONS ---
+MATCH: dataset with two categories: normal kidney images and kidney images with stones. The dataset contains 1821 normal kidney images and 2592 kidney images with stones. Noisy images involve various types of noises, including salt and pepper noise, speckle
+MATCH: dataset images) and 99.21% on the dataset images with added noise. Conclusions: The experimental results confirm that the ensemble of DNNs accurately classifies most images, achieving a high classification performance compared to conventional and ind
+MATCH: datasets; ensemble learning 1. Introduction Ultrasound imaging is a non-invasive, radiation-free method for gaining real-time knowledge on kidney structure and function [1,2]. It operates at frequencies ranging from 2 MHz to 15 MHz [3]. It assists in
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: validation, data quality, and integration into clinical workflows. Continued research and ethical implementation are essential to fully realize AI’s benefits in healthcare [18]. In medical imaging, po
+SPLIT SNIP: patient size and kidney location. Scans included transverse, longitudinal, and oblique views, chosen to best visualize stone echogenicity and acoustic shadows. The selected 4413 images in this study w
+SPLIT SNIP: patient privacy. Some images were rotated, translated, or with varying view- points and projections. Moreover, the intensity and lighting of some images were low, representing significant challenges. 
+SPLIT SNIP: training configuration utilizes a mini-batch size of 10. This choice balances between convergence speed and computational efficiency. [PAGE 12] AI 2025, 6, 172 12 of 33 The initial learning rate was s
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: Hussain, A.; Rabie, T.; Mansoor, W. Noisy Ultrasound Kidney Image Classifications Using Deep Learning Ensembles and Grad-CAM Analysis. AI 2025, 6, 172. https://doi.org/ 10.3390/ai6080172 Copyright: © 
+PREP SNIP: Hussain 1,*, Tamer Rabie 2 and Wathiq Mansoor 3 1 Department of Electrical Engineering, University of Sharjah, University City Road, Sharjah P .O. Box 27272, United Arab Emirates 2 Department of Compu
+PREP SNIP: hussain@sharjah.ac.ae (A.H.) Abstract Objectives: This study introduces an automated classification system for noisy kidney ultrasound images using an ensemble of deep neural networks (DNNs) with tran
+PREP SNIP: human intelligence. It comprises tech- niques such as machine learning (ML), artificial neural networks (ANNs), and deep learning (DL), each playing a distinct role in medical data analysis. ML involv
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy of 99.43% on high-quality images (the original dataset images) and 99.21% on the dataset images with added noise. Conclusions: The experimental results confirm that the ensemble of DNNs accur
+RES SNIP: accuracy. Furthermore, our analysis using Gradient-weighted Class Activation Mapping indicated that our proposed deep learning model is capable of prediction using clinically relevant features. Keywor
+RES SNIP: accuracy. These technologies have demonstrated significant potential in various clinical applications, including imaging analysis, disease diagnosis, and treatment decision support. AI systems can imp
+RES SNIP: accuracy and was further assessed using performance metrics like kappa, specificity, and F1 score. (a) (b) Figure 1. Ultrasound images: ( a) normal kidney, ( b) kidney with stones and visible caliper 
+============================================================
+FILE: Paper27_Hybrid Deep Learning Framework for Classification of Kidney CT Images Diagnosis of Stones Cysts and Tumors.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+Hybrid Deep Learning Framework for Classification of Kidney CT
+Images: Diagnosis of Stones, Cysts, and Tumors
+Kiran Sharmaa,b, Ziya Uddina,b, Adarsh Wadala and Dhruv Guptaa
+School of Engineering & Technology, BML Munjal University, Gurugram, Haryana-122413, India
+Center for Advanced Data and Computational Science, BML Munjal University, Gurugram, Haryana-122413, India
+ARTICLE INFO
+Keywords:
+Kidney abnormalities
+Convolutional neural network
+ResNet101
+Biomedical image classification
+PCA
+ABSTRACT
+Medical image classification is a vital research area that utilizes advanced computational
+
+--- DATASET MENTIONS ---
+MATCH: datasetof12,446CTimagesandadvancedfeaturemappingtechniques,thehybridCNN modeloutperformsstandaloneResNet101. Thisarchitecturedeliversarobustandefficientsolu- tion for automated kidney disease diagnosis, providing improved precision, recall, and reduc
+MATCH: datasets. Elhoseny et al. (2019) proposed a diagnostic prediction and classification system for chronic kidney disease (CKD) that integrates density-based feature selection (DFS) with ant colony optimization (ACO). By eliminating irrelevant data befo
+MATCH: datasets to train models, ensuring robustness and generalizability across populations and clinical settings. 2. Related work Recentadvancesindeeplearningmethodshavegreatlyimprovedimageclassificationinnumerousdomains. These advancedmethodshavealsoimpr
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: patient outcomes. Correctdistinctionbetweennormalkidney,stone,cyst,andtumoriscrucialfortreatmentplanning,aseachdisorder requiresatailoredprocedure. Forinstance,asimplecystmayneedlittleornotreatment,wh
+SPLIT SNIP: trained VGG16 . 98.8 Over-reliance on pre-trained weights; lower performance on imbalanced datasets. Hossain et al. (2023a) Normal: 5,077, Stone: 1,377, tumor: 2283, and Cyst: 3709custom CNN 99.92 Wat
+SPLIT SNIP: splitted). The data set was intentionally designed to encompass various types of kidney disease, taking into account the variability in size, loca- tion, and composition. This extensive data set was d
+SPLIT SNIP: training and testing set as: training set contains (70%) and testing contains (30%) of data. Validation is performed on 20% of the testing data. 3.2. Data augmentation Data enhancement improves the qu
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: hus bettering CNN performance for detecting kidney stones by capturing more salient features. Additionally, Wu and Yi (2020) have exhibited the ability to combine CNNs through feature fusionofmorethan
+PREP SNIP: hury et al. Chowdhury et al. (2023) utilized a mutual learning algorithm comprising multiple CNN and SVM models to enhance diagnostic accuracy while addressing data limitations and privacy concerns. T
+PREP SNIP: segmentation, noise sensitivity, and detecting thin or low-contrast areas. Chowdhury et al. (2023) Normal: 5,077, Stone: 1,377, tumor: 2283, and Cyst: 3709 CNN and SVM through teacher-student interact
+PREP SNIP: resizedto 224 × 224toimprovethe model performance. The data is decomposed into training and testing set as: training set contains (70%) and testing contains (30%) of data. Validation is performed on 2
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy,achieving99.73%trainingaccuracyand100%testingaccuracy. Usingadatasetof12,446CTimagesandadvancedfeaturemappingtechniques,thehybridCNN modeloutperformsstandaloneResNet101. Thisarchitecturedeliv
+RES SNIP: accuracy and improve patient outcomes. Correctdistinctionbetweennormalkidney,stone,cyst,andtumoriscrucialfortreatmentplanning,aseachdisorder requiresatailoredprocedure. Forinstance,asimplecystmayneedl
+RES SNIP: accuracyof99%inkidneystonedetection. Similarly,themodelproposedbyÇağlayanetal.(2022)achievedanaccu- racy rate of 99. 1% to detect kidney stones. Hossain et al. (2023a) evaluated EANet with accuracy 83
+RES SNIP: accuracy and efficiency of CKD detection and management. Despite significant advances, challenges remain in the multi-modal classification of kidney conditions. Variabil- ity in image quality and the 
+============================================================
+FILE: Paper29 _ Kidney tumor detection and classification based on deep learning Approaches.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+Research Article
+Kidney Tumor Detection and Classification Based on Deep
+Learning Approaches: A New Dataset in CT Scans
+Dalia Alzu’bi,
+1 Malak Abdullah, 1 Ismail Hmeidi, 1 Rami AlAzab, 2 Maha Gharaibeh, 3
+Mwaﬀaq El-Heis, 3 Khaled H. Almotairi, 4 Agostino Forestiero , 5
+Ahmad MohdAziz Hussein, 6 and Laith Abualigah 7 , 8 , 9
+1Department of Computer Information Systems, Jordan University of Science and T echnology, Irbid 2210, Jordan
+2 Department of General Surgery and Urology, University of Science and T echnology, Irbid 22110, Jordan
+3 Department of Diagnostic and Interventional Radi
+
+--- DATASET MENTIONS ---
+MATCH: Dataset in CT Scans Dalia Alzu’bi, 1 Malak Abdullah, 1 Ismail Hmeidi, 1 Rami AlAzab, 2 Maha Gharaibeh, 3 Mwaﬀaq El-Heis, 3 Khaled H. Almotairi, 4 Agostino Forestiero , 5 Ahmad MohdAziz Hussein, 6 and Laith Abualigah 7 , 8 , 9 1Department of Computer 
+MATCH: dataset from the King Abdullah University Hospital (KAUH) has been collected that consists of 8,400 images of 120 adult patients who have performed CT scans for suspected kidney masses. /T_he dataset was divided into 80% for the training set and 20% 
+MATCH: dataset, renal CTscans, consisting of 8,400 frames. As a preliminary study on the new dataset, a convolutional neural network (CNN) framework with six layers has been proposed to diagnose tumors. )/_hen, a CNN framework with four layers has been prop
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: patients who have performed CT scans for suspected kidney masses. /T_he dataset was divided into 80% for the training set and 20% for the testing set. /T_he accuracy results for the detection models o
+SPLIT SNIP: patient conditions with high accuracy, reducing radiologist’s workload and providing them with a tool that can automatically assess the condition of the kidneys, reducing the risk of misdiagnosis. Fur
+SPLIT SNIP: patient’s life. Hindawi Journal of Healthcare Engineering Volume 2022, Article ID 3861161, 22 pages https://doi.org/10.1155/2022/3861161 [PAGE 2] 1.Introduction )/_he kidneys in the human body cleanse
+SPLIT SNIP: patient’s life preservation [2, 3]. Although around a third of KT cases are discovered after being spread to other areas, most conditionsdonotinducesymptoms.)/_heyareoftenfound when the patients are b
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: Hussein, 6 and Laith Abualigah 7 , 8 , 9 1Department of Computer Information Systems, Jordan University of Science and T echnology, Irbid 2210, Jordan 2 Department of General Surgery and Urology, Univ
+PREP SNIP: human body cleanse waste products and pollutants from the blood [1, 2]. )/_he abnormal growth of cells causes tumors (cancers), aﬀects people diﬀerently, and causes diﬀerent symptoms. )/_herefore,thee
+PREP SNIP: human intervention [10–12]. DL enabled the building of predictive models for the early diagnosis of tumor disease, and scientists used proven pattern analysis methods. DL algorithms outperformed tradi
+PREP SNIP: human performance. )/_hat is why they are recommended as the best method for dealing with images [16, 17]. It has gained at- tention in image processing, especially in the medical ﬁeld, because radiol
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy, reduce costs, and reduce the ra- diologist’s workload. In this paper, we present detection models for diagnosing the presence of KT s in computed tomography (CT) scans. Toward detecting and 
+RES SNIP: accuracy results for the detection models of 2D CNN-6 and ResNet50 reached 97%, 96%, and 60%, respectively. At the same time, the accuracy results for the classiﬁcation model of the 2D CNN-4 reached 9
+RES SNIP: accuracy, reducing radiologist’s workload and providing them with a tool that can automatically assess the condition of the kidneys, reducing the risk of misdiagnosis. Furthermore, increasing the qual
+RES SNIP: accuracy. In our study, we have applied VGG16 and ResNet50, besides two modiﬁed CNNs. Qassim et al. developed a CNN-based network model, VGG16, that achieved 92.7% top-5 test accuracy in ImageNet. Ima
+============================================================
+FILE: Paper33_Ensemble deep learning for enhanced CT-scan kidney stone classification.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+ 
+Copyright © 202 5 The Author(s): This is an open -access article distributed under the terms of the Creative 
+Commons Attribution 4.0 International License (CC BY-NC 4.0) 
+ 
+ 
+ 
+ 
+ International Journal of Scientific Research in Science and Technology 
+Available online at : www.ijsrst.com  
+Print ISSN: 2395-6011 | Online ISSN: 2395-602X                                              doi : https://doi.org/10.32628/IJSRST2512359 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+432 
+Ensemble Deep Learning for Enhanced CT-Scan Kidney Stone Classification 
+Varsha Rathva*1, Dr. Sheshang Degadwala2 
+*1Research Scholar, D
+
+--- DATASET MENTIONS ---
+MATCH: dataset of annotated CT - scan images was preprocessed using normalization and augmentation strategies to improve model performance and prevent overfitting. Experimental evaluation demonstrates a classification accuracy of 96%, significantly outperfo
+MATCH: dataset of CT -scan images categorized into the aforementioned four clas ses. The images were subjected to preprocessing techniques such as normalization and augmentation to enhance the quality of input data and improve generalization. The proposed e
+MATCH: dataset used in this study was sourced from Kaggle (https://www.kaggle.com/datasets/nazmul0087/ct- kidney-dataset-normal-cyst-tumor-and-stone), which comprises four distinct classes: normal, cyst, stone, and tumor. These images provide a comprehensiv
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: validation in clinical applications. Future work includes real -time deployment and i ntegration with radiology workflows. Keywords: Ensemble Learning, VGG -16 Fine -Tuning, Kidney CT -Scan, Medical I
+SPLIT SNIP: patient outcomes. II. LITERATURE STUDY In recent years, automated kidney stone detection using deep learning and medical imaging modalities has emerged as a promising area of research, addressing the 
+SPLIT SNIP: patient - specific anatomical differences. In a complementary study, Lopez-Tiro et al. [9] utilized a two -step transfer learning approach on endoscopic images. These studies underscore the importance
+SPLIT SNIP: training and unbiased evaluation, the dataset was split using an 80:20 ratio, where 80% of the images (1600 images) were used for training and 20% ( 400 images) were reserved for testing. This stratif
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: preprocessed using normalization and augmentation strategies to improve model performance and prevent overfitting. Experimental evaluation demonstrates a classification accuracy of 96%, significantly 
+PREP SNIP: preprocessing techniques such as normalization and augmentation to enhance the quality of input data and improve generalization. The proposed ensemble model achieved an impressive accuracy of 96%, out
+PREP SNIP: Preprocessing and feature extraction innovations, such as wavelet transforms [10], Kronecker convolutions [12], and image enhancement [11], contribute to increased diagnostic precision. Nevertheless, 
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy of 96%, significantly outperforming traditional single-model baselines. The model’s effectiveness in distinguishing among clinically relevant kidney conditions makes it a valuable tool for co
+RES SNIP: Future work includes real -time deployment and i ntegration with radiology workflows. Keywords: Ensemble Learning, VGG -16 Fine -Tuning, Kidney CT -Scan, Medical Image Classification, Kidney Stone Det
+RES SNIP: limitation, this study proposes an ensemble deep learning framework that employs a fine-tuned VGG -16 model for the classification of kidney CT -scan images into four categories: cyst, normal, stone, 
+RES SNIP: accuracy. The motivation for using an ensemble of fine -tuned VGG-16 models stems from the inherent challenges in differentiating kidney abnormalities that often present with overlapping visual charac
+============================================================
+FILE: Paper34_Hossian.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+Adaptive Local Binary Pattern: A Novel Feature Descriptor for
+Enhanced Analysis of Kidney Abnormalities in CT Scan Images using
+ensemble based Machine Learning Approach
+Tahmim Hossain
+University of Alberta
+tahmim@ualberta.ca
+Faisal Sayed
+University of Alberta
+faisalz1@ualberta.ca
+Solehin Islam
+University of Alberta
+solehin1@ualberta.ca
+Abstract
+The shortage of nephrologists and the growing public health concern over renal failure have
+spurred the demand for AI systems capable of autonomously detecting kidney abnormalities.
+Renal failure, marked by a gradual decline in kidney function
+
+--- DATASET MENTIONS ---
+MATCH: dataset, comprising 12,427 images from multiple hospitals in Dhaka, was categorized into four groups: cyst, tumor, stone, and normal. Our methodology aims to enhance CT scan image quality using Cropping, Resizing, and CALHE techniques, followed by fe
+MATCH: datasets. Building upon this, we implemented CLAHE as a preprocessing step in our methodology. Following preprocessing, we applied feature descriptors to extract relevant features from the images. Specifically, we utilized the Local Binary Pattern (L
+MATCH: datasets characteristic of kidney imaging. Moreover, Alex et al. [2] introduced a modi- fied hybrid random forest classifier specifically for predicting kidney damage, demonstrating an approach to algorithmic development. Furthermore, Islam et al. [2
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: patient anxiety, solve the global radiology and nephrology shortage, and capitalize on advances in deep learning for visual tasks [30]. The CT machine utilizes X-ray beams to scan specific areas of th
+SPLIT SNIP: patients with kidney tumors, cysts, normal conditions, or kidney stones. From contrast and non-contrast investigations of the whole abdomen and urogram protocols, both coronal and axial cuts were incl
+SPLIT SNIP: Test Accuracy Precision Recall F1 Score Local Binary Pattern (LBP) Random Forest (RF) .91 .88 .99 .93 Decision Tree (DT) .80 .83 .85 .84 Naive Bayes (NB) .53 .66 .47 .55 K-Nearest Neighbor (K-NN) .96 
+SPLIT SNIP: Test Accuracy Precision Recall F1 Score Local Binary Pattern (LBP) Random Forest (RF) .91 .98 .69 .81 Decision Tree (DT) .80 .62 .61 .62 Naive Bayes (NB) .53 .13 .27 .18 K-Nearest Neighbor (K-NN) .96 
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: Cropping, Resizing, and CALHE techniques, followed by feature extraction with our proposed Adaptive Local Binary Pattern (A- LBP) feature extraction method compared with the state-of-the-art local bin
+PREP SNIP: cropped the images to remove unwanted portions, then resized them to fit the model, and normalized the images. Subsequently, we employed the Contrast-Limited Adaptive Histogram Equalization (CLAHE) me
+PREP SNIP: hus mitigating the risk of noise over-amplification in low-contrast regions. IBy reviewing different literature, we found several papers that utilized CLAHE as an image enhancement technique for their
+PREP SNIP: preprocessing, we applied feature descriptors to extract relevant features from the images. Specifically, we utilized the Local Binary Pattern (LBP) as one fea- ture descriptor and introduced a novel 
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy using our feature descriptor and ensembling five classifiers (Random Forest, Decision Tree, Naive Bayes, K-Nearest Neighbor, Support Vector Machine) with the soft voting method. Index Terms -
+RES SNIP: accuracy, each image finding was verified by a medical technician. 3,709 photographs of cysts, 5,077 images of normal circumstances, 1,377 images of kidney stones, and 2,283 images of tumors. 5 Propos
+RES SNIP: accuracy, precision, recall, and F1 score, ALBP consistently performs better than LBP across a range of classifiers. For example, Random Forest obtained a test accuracy of 91% using the LBP descriptor
+RES SNIP: accuracy. Kidney Type: Normal Feature Descriptor Classifier Test Accuracy Precision Recall F1 Score Local Binary Pattern (LBP) Random Forest (RF) .91 .88 .99 .93 Decision Tree (DT) .80 .83 .85 .84 Nai
+============================================================
+FILE: Paper35_Fine-tuned deep learning models for early detection.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+Fine-tuned deep learning 
+models for early detection and 
+classification of kidney conditions 
+in CT imaging
+Amit Pimpalkar1, Dilip Kumar Jang Bahadur Saini2, Nilesh Shelke3, Arun Balodi4, 
+Gauri Rapate5 & Manoj Tolani6
+The kidney plays a vital role in maintaining homeostasis, but lifestyle factors and diseases can 
+lead to kidney failures. Early detection of kidney disease is crucial for effective intervention, often 
+challenging due to unnoticeable symptoms in the initial stages. Computed tomography (CT) 
+imaging aids specialists in detecting various kidney conditions. The researc
+
+--- DATASET MENTIONS ---
+MATCH: dataset uniform and robust; otherwise, the risk of overfitting might happen. Finally, a state-of-the-art comparative evaluation is provided to validate the effectiveness of the Scientific Reports | (2025) 15:10741 2| https://doi.org/10.1038/s41598-02
+MATCH: dataset. Favorably, finely tuned transfer learning models, coupled with the processing of images and hyperparameter optimization, raised the accuracy of kidney disease classification to address the urgent need for early detection in clinical settings
+MATCH: datasets. The techniques derived from MRI were shown to apply to CT images, demonstrating the flexibility of deep learning in segmentation tasks. In Gaikar et al.8, kidney segmentation was investigated using different MRI sequences with fivefold cros
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: patient outcomes in medical imaging. The methodology implements image-processing techniques to enhance classification accuracy. Feature maps are derived through data normalization and augmentation (zo
+SPLIT SNIP: patients with a previous history of kidney stones, since stone recurrence in these patients is associated with an increased risk of renal failure. Blood tests and urine collections are part of metabol
+SPLIT SNIP: tests, you can tailor strategies to individual patients and better manage the risk associated with kidney stones. Proper diagnosis and treatment of kidney stones require that they are detected and cla
+SPLIT SNIP: patient has kidney stones. Using deep learning algorithms, physicians can quickly identify kidney stones with high efficiency and undergo timely medical treatment to prevent possible risks3. Moreover,
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: segmentation and Otsu’s binarization thresholding further refine the feature maps, which are optimized and combined using the relief method. Wide neural network classifiers are employed, achieving the
+PREP SNIP: Otsu’s binarization, Watershed segmentation, Distance transform Around the world, kidney stones are a public health concern. It is a condition where things in the urine crystallize and start forming i
+PREP SNIP: segmentation is used to refine kidney structure delineation, which outperforms the accuracy of standard methods. Otsu’s binarization thresholding performs even better in improving image clarity by sep
+PREP SNIP: segmentation and Otsu’s binarization thresholding to perform Otsu’s binarization and improve feature extraction from CT images, significantly increasing classification accuracy. Our approach uses data
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy of kidney tumor classification. By applying these sophisticated techniques, the study aims to significantly improve diagnostic precision and reliability in identifying various kidney conditio
+RES SNIP: accuracy. Feature maps are derived through data normalization and augmentation (zoom, rotation, shear, brightness adjustment, horizontal/ vertical flip). Watershed segmentation and Otsu’s binarization
+RES SNIP: accuracy of 99.96% across models. This performance positions the proposed approach as a high-performance solution for automatic and accurate kidney CT image classification, significantly advancing med
+RES SNIP: accuracy. Such limitations are addressed by the study2 that applies advanced computer-aided detection techniques that increase diagnostic accuracy while harnessing the potential of CT data effectively
+============================================================
+FILE: Paper36.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+Citation: Bhandari, M.; Yogarajah, P .;
+Kavitha, M.S.; Condell, J. Exploring
+the Capabilities of a Lightweight
+CNN Model in Accurately
+Identifying Renal Abnormalities:
+Cysts, Stones, and Tumors, Using
+LIME and SHAP .Appl. Sci. 2023, 13,
+3125. https://doi.org/10.3390/
+app13053125
+Academic Editor: Jan Egger
+Received: 24 January 2023
+Revised: 15 February 2023
+Accepted: 27 February 2023
+Published: 28 February 2023
+Copyright: © 2023 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+A
+
+--- DATASET MENTIONS ---
+MATCH: material that varies in size and is formed in the kidney or urinary tract. The complex phenotype of kidney stone disease is caused by the interplay of several genes, in conjunction with dietary and environmental variables [ 7]. Another urinary proble
+MATCH: dataset for the diagnosis of COVID-19, pneumonia, tuberculosis, and healthy records. 2. Related Works 2.1. Conventional Practices Most studies on the classification of kidney abnormalities have employed aregion-of-interest (ROI) localization and conv
+MATCH: dataset of more than 200 ultrasound images, Raja et al. [43] employed k-means clustering and a histogram equalization to localize the kidney and retrieved the textural features of the segmented region for classiﬁcation, with a sensitivity of 94.60%. 
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: patients may not show any symptoms or signs of kidney abnor- malities, as they are initially benign. However, if untreated, they can develop further Appl. Sci. 2023, 13, 3125. https://doi.org/10.3390/
+SPLIT SNIP: training parameters. [PAGE 4] Appl. Sci. 2023, 13, 3125 4 of 17 3. Materials and Methods 3.1. Data Collection and Pre-Processing A publicly available dataset (3709 cysts; 5077 normal; 1377 stones; 228
+SPLIT SNIP: training-and-testing split results. Figure 1 shows the sample images for individual categories. (a) ( b) ( c) ( d) Figure 1. Sample Images from the Dataset. (a) Cyst, (b) Normal, (c) Stone, (d) Tumor.
+SPLIT SNIP: trainable and non-trainable) of the proposed CNN model. Variables F, K, S, and FLOP denote the ﬁlters, kernel size, stride, and ﬂoating-point operations, respectively. S.N. Layer Type (F, K, S) Output
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: hu Subash Kavitha 3 and Joan Condell 2 1 Department of Science and Technology, Samriddhi College, Bhaktapur 44800, Nepal 2 School of Computing, Engineering and Intelligent System, Ulster University, L
+PREP SNIP: human kidneys, a narrow-beam x-ray imaging procedure, computed tomography, is used, which creates cross-sectional slices of the kidneys. Several deep-learning models have been successfully applied to 
+PREP SNIP: hus, creating a “black box” system. Additionally, it has been difﬁcult to integrate complex deep-learning models for internet-of-medical-things devices due to demanding training parameters and memory-
+PREP SNIP: humans [37]. We noted that most of the recent research deﬁned the detection of kidney problems in terms of individual categories, including stones [ 38], tumors [ 39], and cysts [ 40]. However, the pr
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy of 99.52± 0.84% for K = 10-fold of stratiﬁed sampling. With improved results and better interpretive power, the proposed work provides clinicians with conclusive and understandable results. K
+RES SNIP: limitations, such as non-standardized image acquisition [12]; the improper labeling of data collected; and regulatory barriers [ 13], deep-learning (DL) research has show a signiﬁcant positive impact 
+RES SNIP: accuracy [ 16]. DL models have been applied for a wide range of concerns, such as COVID-19 [17], brain tumors [18], radiation therapy [19], blood clotting [ 20], heart diseases [ 21], liver cancer [ 2
+RES SNIP: accuracy, as compared to the more complex models [29–32]. Therefore, a lightweight customized DL model could be considered as an alternative approach to achieve higher accuracy. Meanwhile, explainable
+============================================================
+FILE: Paper7_ PCSA-NetPyramid channel and spatial attention networkScientific Reports.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+ARTICLE IN PRESS
+Article in Press
+PCSA-Net: pyramid channel and spatial attention 
+network for multiclass renal disease diagnosis 
+using CT images
+Scientific Reports
+Received: 12 March 2025
+Accepted: 16 July 2025
+Cite this article as: Tawfik N., Emara H.M., 
+El-Shafai W. et al. PCSA-Net: pyramid 
+channel and spatial attention network 
+for multiclass renal disease diagnosis 
+using CT images. Sci Rep (2026). https://
+doi.org/10.1038/s41598-025-12335-6
+Nahed Tawfik, Heba M. Emara, Walid El-Shafai, Naglaa F . Soliman, Abeer D. Algarni & 
+Fathi E. Abd El-Samie
+We are providing an unedited
+
+--- DATASET MENTIONS ---
+MATCH: material. You do not have permission under this licence to share adapted material derived from this article or parts of it. The images or other third party material in this article are included in the article’s Creative Commons licence, unless indica
+MATCH: datasets for kidney disease diagnosis continues to hinder large-scale investigation and model development. Existing studies have predominantly employed traditional machine learning approaches, often focusing on the classification of isolated disease 
+MATCH: datasets. Despite these advancements, CNNs continue to encounter several limitations, including inefficient fusion of interlayer features in deep architectures, high computational complexity due to large parameter counts, and a restricted capacity fo
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: patient prognosis 8. ACCEPTED MANUSCRIPT ARTICLE IN PRESSARTICLE IN PRESS [PAGE 4] However, the rising global burden of kidney diseases, coupled with the critical shortage of radiologists and nephrolo
+SPLIT SNIP: cross-validation. This work contributes to the field by addressing key limitations in existing attention-based architectures, particularly in terms of multiscale integration and dual-domain feature en
+SPLIT SNIP: patient records, which included 250 cases of CKD and 150 healthy controls. Feature selection was performed using both the chi-square test and recursive feature elimination (RFE) to identify the most s
+SPLIT SNIP: patients with suspected kidney masses, collected at King Abdullah University Hospital (KAUH) in Jordan, to classify CKD. Several deep learning models were developed for kidney cancer detection and cla
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: Huckstep Cairo, 12622, Egypt. 2Department of Electronics and Communications Engineering, High Institute of Electronic Engineering, Ministry of Higher Education, Bilbis-Sharqiya, 44621, Egypt, hoba-24@
+PREP SNIP: Hounsfield unit (HU) values ranging from 0 to 20. Nephrolithiasis, or kidney stone disease, is characterized by the formation of crystalline deposits within the renal system and affects approximately 
+PREP SNIP: preprocessing stage involved adaptive histogram equalization and edge enhancement to emphasize key structural features within the patches. Additionally, a generalized Gauss–Markov random field (GGMRF)
+PREP SNIP: huffleNet, and ResNet-101 for feature extraction. The final classification was performed using a Support Vector Machine (SVM) classifier. The model addressed a multiclass classification problem by cat
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy. To validate its effectiveness, we incorporate the PCSA module into several backbone networks and evaluate its performance. Experimental results demonstrate that PCSA-enhanced networks outper
+RES SNIP: limitations, including inefficient fusion of interlayer features in deep architectures, high computational complexity due to large parameter counts, and a restricted capacity for learning inter-channe
+RES SNIP: limitations in existing attention-based architectures, particularly in terms of multiscale integration and dual-domain feature enhancement. The proposed PCSA-Net demonstrates effective generalization 
+RES SNIP: limitations. These include poor scalability, inadequate support for multiscale feature extraction, and limited capacity to effectively integrate complex spatial and channel-wise information from medic
+============================================================
+FILE: paper 47.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+Academic Editors: Masateru
+Kawakubo and Tamás Haidegger
+Received: 17 October 2025
+Revised: 4 November 2025
+Accepted: 6 November 2025
+Published: 8 November 2025
+Citation: Hossain, M.N.; Bhuiyan, E.;
+Miah, M.B.A.; Sifat, T.A.; Muhammad,
+Z.; Masud, M.F.A. Detection and
+Classification of Kidney Disease from
+CT Images: An Automated Deep
+Learning Approach. Technologies 2025,
+13, 508. https://doi.org/10.3390/
+technologies13110508
+Copyright: © 2025 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creat
+
+--- DATASET MENTIONS ---
+MATCH: dataset may increase the probability of overfitting [13]. Traditional diagnostic methods, such as blood tests and biopsies, are often invasive, time-consuming, and may fail to accurately identify early-stage kidney diseases [14]. Traditional diagnost
+MATCH: datasets. Second, the lack of full ablation studies and thorough analyses of existing methods makes the identification of the optimal feature fusion and classification methods hard to find. These call for a more formal, interpretable, and robust hybr
+MATCH: datasets [15,20]. This study proposes a hybrid deep learning model for the accurate classification of kidney diseases from medical images. It also explores effective feature extraction tech- niques, investigates the benefits of transfer learning with
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: patient outcomes, and increase survival rates [11,12]. A deep neural network (DNN) model with a limited dataset may increase the probability of overfitting [13]. Traditional diagnostic methods, such a
+SPLIT SNIP: patient populations. A deep neural network was proposed by Cruz et al. combining AlexNet for scope reduction and U-Net for segmentation, achieving a high accuracy of 99.92% on the KiTS19 dataset; para
+SPLIT SNIP: tested Hybrid CNN–ResNet model [35] Combines strengths of CNN and ResNet; achieved 90% accuracy Lacks multi-modal data integration and interpretability CNN model [36] Achieved 99.57% accuracy Limited 
+SPLIT SNIP: tested yet [34]. A hybrid convolutional neural network (CNN) and Residual Network (ResNet) model introduced by Kumar et al. to combine the strengths of both networks achieved accuracy of 90% but lacke
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: huiyan, E.; Miah, M.B.A.; Sifat, T.A.; Muhammad, Z.; Masud, M.F.A. Detection and Classification of Kidney Disease from CT Images: An Automated Deep Learning Approach. Technologies 2025, 13, 508. https
+PREP SNIP: huiyan 1 , Mohammad Badrul Alam Miah 1,* , Tanvir Ahmmed Sifat 1 , Zia Muhammad 2 and Md Fuyad Al Masud 3,* 1 Department of Information & Communication Technology, Mawlana Bhashani Science & Technolog
+PREP SNIP: human error. To address the issue, this study proposes an effi- cient automated deep learning diagnostic system using medical imaging for kidney disease detection and classification. The framework int
+PREP SNIP: hus, this study provides a hybrid model with the following contributions: [PAGE 3] Technologies 2025, 13, 508 3 of 23 1. This study combines DenseNet121 and EfficientNetB0, both state-of-the-art convo
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy of 99.24% and an F1-score of 99%. The proposed model enables early and accurate detection of kidney disease, aiding timely treatment, especially in resource-limited settings. Keywords: kidney
+RES SNIP: accuracy [19]. Despite the great advance in CNN- based kidney disease classification, several intrinsic drawbacks are still inherited from past research. Most of the existing studies simply focus on e
+RES SNIP: limitations by synthesizing the strength of deep learning in robust feature extraction with the strengths of classical machine learning or optimization algorithms in efficient and accurate classificat
+RES SNIP: accuracy and reliability. The hybrid model with an ensemble classifier correctly classifies kidney diseases with abnormalities and achieved an outstanding performance, suggesting the effectiveness and
+============================================================
+FILE: s41598-022-15634-4.pdf
+--- FIRST 600 CHARS ---
+[PAGE 1]
+1
+Vol.:(0123456789)Scientific Reports |        (2022) 12:11440  | https://doi.org/10.1038/s41598-022-15634-4
+www.nature.com/scientificreports
+Vision transformer and explainable 
+transfer learning models for auto 
+detection of kidney cyst, stone 
+and tumor from CT‑radiography
+Md Nazmul Islam 1, Mehedi Hasan 2, Md. Kabir Hossain 3, Md. Golam Rabiul Alam 1, 
+Md Zia Uddin 4 & Ahmet Soylu 5*
+Renal failure, a public health concern, and the scarcity of nephrologists around the globe have 
+necessitated the development of an AI‑based system to auto‑diagnose kidney diseases. This research 
+dea
+
+--- DATASET MENTIONS ---
+MATCH: DATASET: Normal-Cyst-Tumor and Stone” dataset13, implemented a total of six models, and evaluated each of them to come to the conclusion which model is best suited to use in realtime. The proposed auto-detection model for the diagnosis of kidney dise
+MATCH: dataset namely “CT KIDNEY DATASET: Normal-Cyst-Tumor and Stone” is collected and annotated with 12,446 images utilizing the whole abdomen and the eurogram protocol. • Three CNN-based deep learning models (i.e., VGG16, Resnet50, and Inception v3) usin
+MATCH: dataset and the performances of the models are presented using the confusion matrix, accuracy, sensitivity, specificity, and F1 score. The rest of the paper is organized in the following manner. Section II provides background and details on utiliz- i
+
+--- SPLIT / LEAKAGE / VALIDATION MENTIONS ---
+SPLIT SNIP: splitting are among the preprocessing techniques utilized. After that, we employed six models to investigate our data, including three Visual Trans- former variants (EANet, CCT, and Swin Transformer),
+SPLIT SNIP: patients were already diagnosed with having a kidney tumor, cyst, normal or stone findings. All subjects in the dataset volunteered to take part in the research experiments, and informed consents were
+SPLIT SNIP: patient’s information and meta data from the Dicom images and converted the Dicom images to a lossless joint photographic expert group (jpeg/jpg) image format. The Philips IntelliSpace Portal 9.034 ap
+SPLIT SNIP: train the model and 20% to test the data. Within 80% of the training images, we took 20% to validate the model to avoid overfitting. The dataset is normalized using Z-normalization36 using following (
+
+--- PREPROCESSING / ROI / CROP / HU / WINDOW ---
+PREP SNIP: Hounsfield units4–6. Kidney stone disease is characterized by the formation of crystal concretions within the kidneys, which affects about 12% of the world population7. Renal cell carcinoma (RCC), oft
+PREP SNIP: human anatomy with X-ray beams to obtain a cross-sectional image which provides three-dimensional information about the desired anatomy9. CT scans in kidney examinations are ideal for study because th
+PREP SNIP: hu Sheikh Mujib Medical University, Dhaka, Bangladesh. 4Software and Service Innovation, SINTEF Digital, Oslo, Norway. 5Department of Computer Science, Norwegian University of Science and Technology, 
+PREP SNIP: preprocessing, neural network models employed in this study and the result evaluation processes. Section IV deals with the result study, and the concluding remarks are presented in Section V . Backgro
+
+--- RESULTS & LIMITATIONS ---
+RES SNIP: accuracy, with an accuracy of 99.30 percent. The F1 score and precision and recall comparison reveal that the Swin transformer outperforms all other models and that it is the quickest to train. The st
+RES SNIP: accuracy of our Swin transformer‑based model and the VGG16‑based model can both be useful in diagnosing kidney tumors, cysts, and stones. Kidney disease is a public health concern since the disease is
+RES SNIP: accuracy, sensitivity, specificity, and F1 score. The rest of the paper is organized in the following manner. Section II provides background and details on utiliz- ing deep learning to identify kidney
+RES SNIP: accuracy of 95.58%. The residual dual-attention module (RDA module) was employed for the segmentation of renal cysts in CT images in26. In27, the authors integrated the features of using conventional 

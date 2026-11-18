@@ -1,0 +1,8 @@
+"Study/Author (Year)","Performance Metrics","Imaging Modality","Dataset Details","Class Information","Image Counts & Breakdown"
+"Sania Akhtar (2026)","60% mAP@50; F1(box): 51%; Box Precision: 93%","Microscopic imagery (Urine Sediment)","Custom urine sediment dataset","14 Classes (Leukocytes, Epithelial cells, Bacteria, Mucus, RBCs, WBC-Clumps, etc.)","Total: 7,201 images (Breakdown not provided)"
+"Obaid, W., et al. (2025)","F1-score: 0.95","Ultrasound","Multi-center Repository","3 Classes (Cysts, Stones, Tumors)","Total: >10,000 frames (Breakdown not provided)"
+"Gao et al. (2026)","IoU: 94.23%; Classification Acc: 81.8%","Ultrasound","Single-center retrospective cases","Binary (Tumor segmentation & malignancy classification)","Total: 345 cases (Breakdown not provided)"
+"Chen et al. (2023)","Dice: 96.25% (kidney), 92.9% (parenchyma)","Ultrasound","Private clinical dataset","3 Classes (Kidney organ, parenchyma, renal sinus)","Total: 1,000 images | Training: 850 | Test: 150"
+"Raj, A., et al. (2022)","DSC: 0.918; R² correlation: 0.96","MRI (T2-weighted)","Clinical MRI Cohort","Polycystic Kidney Disease (Total Kidney Volume)","Total: 100 patient volumes (Breakdown not provided)"
+"Pham Nguyen et al. (2025)","mAP@50: 91.2%","X-ray (KUB)","Private clinical dataset","Kidney Stones","Total: 152 images (Breakdown not provided)"
+"Michael Y. Chen (2021)","10.07% mean abs. diff.; Lin's CCC: 0.79","Multimodal (CT and MRI)","Private clinical data (Australia)","Small renal masses/tumors","Total: 27 patients (Breakdown not provided)"

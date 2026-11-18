@@ -1,0 +1,542 @@
+================================================================================
+PAPER 1: 1-s2.0-S0010482525005657-main.pdf (Pages: 16)
+
+--- 1. METADATA ---
+Multi-level feature fusion network for kidney disease detection
+Saif Ur Rehman Khan
+School of Computer Science and Engineering, Central South University, 932 Lushan S Rd, Yuelu District, Changsha, Hunan, China
+ARTICLE INFO
+Keywords:
+Shap visualization
+Feature fusion
+Inception block
+Recurrent neural network
+ABSTRACT
+Kidney irregularities pose a significant public health challenge, often leading to severe complications, yet the 
+limited availability of nephrologists makes early detection costly and time-consuming. To address this issue, we 
+propose a deep learning framework for automated kidney disease detection, leveraging feature fusion and 
+sequential modeling techniques to enhance diagnostic accuracy. Our study thoroughly evaluates six pretrained 
+models under identical experimental conditions, identifying ResNet50 and VGG19 as the highly efficient models 
+for feature extraction due to their deep residual learning and hierarchical representations. Our proposed 
+methodology integrates feature fusion with an inception block to extract diverse feature representations while 
+maintaining imbalance dataset overhead. To enhance sequential learning and capture long-term dependencies in
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: dataset, consisting of 1860 tumor and 1024 normal kidney CT scans, meticulously 
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: Yolov7 segmentation and deep learning classification, Int. J. Intell. Syst. Appl. Eng. 
+
+--- 5. WINDOWING & HU ---
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: generalization capability, we evaluate the model on 
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: achieved an accuracy 
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: limitation due to the scarcity of authentic CT images available for 
+================================================================================
+PAPER 2: 10.pdf (Pages: 33)
+
+--- 1. METADATA ---
+Academic Editor: Miguel Angel
+Cazorla
+Received: 16 June 2025
+Revised: 10 July 2025
+Accepted: 14 July 2025
+Published: 31 July 2025
+Citation: Obaid, W.; Hussain, A.;
+Rabie, T.; Mansoor, W. Noisy
+Ultrasound Kidney Image
+Classifications Using Deep Learning
+Ensembles and Grad-CAM Analysis.
+AI 2025, 6, 172. https://doi.org/
+10.3390/ai6080172
+Copyright: © 2025 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://creativecommons.org/
+licenses/by/4.0/).
+AI 
+Article
+Noisy Ultrasound Kidney Image Classifications Using Deep
+Learning Ensembles and Grad-CAM Analysis
+Walid Obaid 1,*, Abir Hussain 1,*, Tamer Rabie 2
+ and Wathiq Mansoor 3
+1 Department of Electrical Engineering, University of Sharjah, University City Road, Sharjah P .O. Box 27272,
+United Arab Emirates
+2 Department of Computer Engineering, University of Sharjah, University City Road, Sharjah P .O. Box 27272,
+United Arab Emirates; trabie@sharjah.ac.ae
+3 CEIT Department, University of Dubai, Academic City Emirates Road, Exit 49, Dubai P .O. Box 14143,
+United Arab Emirates; wmansoor@ud.ac.ae
+* Corr
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: dataset with two categories: normal
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: cropping. An upgraded image data
+
+--- 5. WINDOWING & HU ---
+  HU/NORM SNIPPET: RGB values
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: generalization than single-model systems,
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: classification accuracy of 99.43% on high-quality images (the
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: limitations are evident, it fails to penalize
+================================================================================
+PAPER 3: Paper27_Hybrid Deep Learning Framework for Classification of Kidney CT Images Diagnosis of Stones Cysts and Tumors.pdf (Pages: 12)
+
+--- 1. METADATA ---
+Hybrid Deep Learning Framework for Classification of Kidney CT
+Images: Diagnosis of Stones, Cysts, and Tumors
+Kiran Sharmaa,b, Ziya Uddina,b, Adarsh Wadala and Dhruv Guptaa
+School of Engineering & Technology, BML Munjal University, Gurugram, Haryana-122413, India
+Center for Advanced Data and Computational Science, BML Munjal University, Gurugram, Haryana-122413, India
+ARTICLE INFO
+Keywords:
+Kidney abnormalities
+Convolutional neural network
+ResNet101
+Biomedical image classification
+PCA
+ABSTRACT
+Medical image classification is a vital research area that utilizes advanced computational tech-
+niques to improve disease diagnosis and treatment planning. Deep learning models, especially
+ConvolutionalNeuralNetworks(CNNs),havetransformedthisfieldbyprovidingautomatedand
+preciseanalysisofcomplexmedicalimages. Thisstudyintroducesahybriddeeplearningmodel
+that integrates a pre-trained ResNet101 with a custom CNN to classify kidney CT images into
+four categories: normal, stone, cyst, and tumor. The proposed model leverages feature fusion to
+enhanceclassificationaccuracy,achieving99.73%trainingaccuracyand100%testingaccuracy.
+Usingadatasetof12,446CTimagesandadvancedfeaturemappingtechniques,thehybri
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: datasetof12,446CTimagesandadvancedfeaturemappingtechniques,thehybridCNN
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+  SPLIT SNIPPET: training and testing set as: training set contains (70%) and testing
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: YOLOv8modelwasapplied
+
+--- 5. WINDOWING & HU ---
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: generalization to new
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: accuracy of 94.5%.
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: limitations and privacy concerns. This method
+================================================================================
+PAPER 4: Paper29 _ Kidney tumor detection and classification based on deep learning Approaches.pdf (Pages: 22)
+
+--- 1. METADATA ---
+Research Article
+Kidney Tumor Detection and Classification Based on Deep
+Learning Approaches: A New Dataset in CT Scans
+Dalia Alzu’bi,
+1 Malak Abdullah, 1 Ismail Hmeidi, 1 Rami AlAzab, 2 Maha Gharaibeh, 3
+Mwaﬀaq El-Heis, 3 Khaled H. Almotairi, 4 Agostino Forestiero , 5
+Ahmad MohdAziz Hussein, 6 and Laith Abualigah 7 , 8 , 9
+1Department of Computer Information Systems, Jordan University of Science and T echnology, Irbid 2210, Jordan
+2 Department of General Surgery and Urology, University of Science and T echnology, Irbid 22110, Jordan
+3 Department of Diagnostic and Interventional Radiology, Faculty of Medicine, Jordan University of Science and T echnology,
+Irbid 2210, Jordan
+4 Computer Engineering Department, Computer and Information Systems College, Umm Al-Qura University,
+Makkah 21955, Saudi Arabia
+5 Department of Computer Engineering, Computer and Information Systems College, Umm Al-Qura University,
+Makkah 21955, Saudi Arabia
+6 Deanship of E-Learning and Distance Education, Umm Al-Qura University, Makkah 21955, Saudi Arabia
+7 Hourani Center for Applied Scientiﬁc Research, Al-Ahliyya Amman University, Amman 19328, Jordan
+8 Faculty of Information Technology, Middle East University,
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: datasets for kidney tumors.
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: segmentation on non-
+
+--- 5. WINDOWING & HU ---
+  HU/NORM SNIPPET: RGB
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: KAUH) has been collected that consists of 8,400 images of 120 adult patients who have performed
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: test accuracy, reduce costs, and reduce the ra-
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: limitations of the studies. Because of the
+================================================================================
+PAPER 5: Paper33_Ensemble deep learning for enhanced CT-scan kidney stone classification.pdf (Pages: 8)
+
+--- 1. METADATA ---
+Copyright © 202 5 The Author(s): This is an open -access article distributed under the terms of the Creative 
+Commons Attribution 4.0 International License (CC BY-NC 4.0) 
+ 
+ 
+ 
+ 
+ International Journal of Scientific Research in Science and Technology 
+Available online at : www.ijsrst.com  
+Print ISSN: 2395-6011 | Online ISSN: 2395-602X                                              doi : https://doi.org/10.32628/IJSRST2512359 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+432 
+Ensemble Deep Learning for Enhanced CT-Scan Kidney Stone Classification 
+Varsha Rathva*1, Dr. Sheshang Degadwala2 
+*1Research Scholar, Department of Computer Engineering, Sigma University, Vadodara, Gujarat, India 
+2Professor and Head, Department of Computer Engineering, Sigma University, Vadodara, Gujarat, India 
+A R T I C L E I N F O  A B S T R A C T 
+Article History: 
+Accepted : 18 May 2025 
+Published: 22 May 2025 
+ 
+ Accurate classification of kidney conditions from CT-scan images is critical 
+for timely diagnosis and treatment. This study presents an ensemble deep 
+learning approach leveraging fine -tuned VGG -16 architecture for 
+enhanced classification of kidney CT scans  into four distinct categories: 
+cyst, normal, stone, and t
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: dataset-normal-cyst-tumor-and-stone), which 
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+  SPLIT SNIPPET: training and unbiased evaluation, the dataset was split 
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+
+--- 5. WINDOWING & HU ---
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: generalization. A dataset of annotated CT -
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: classification accuracy of 96%, 
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: Future work includes real -time deployment and i ntegration 
+================================================================================
+PAPER 6: Paper34_Hossian.pdf (Pages: 17)
+
+--- 1. METADATA ---
+Adaptive Local Binary Pattern: A Novel Feature Descriptor for
+Enhanced Analysis of Kidney Abnormalities in CT Scan Images using
+ensemble based Machine Learning Approach
+Tahmim Hossain
+University of Alberta
+tahmim@ualberta.ca
+Faisal Sayed
+University of Alberta
+faisalz1@ualberta.ca
+Solehin Islam
+University of Alberta
+solehin1@ualberta.ca
+Abstract
+The shortage of nephrologists and the growing public health concern over renal failure have
+spurred the demand for AI systems capable of autonomously detecting kidney abnormalities.
+Renal failure, marked by a gradual decline in kidney function, can result from factors like cysts,
+stones, and tumors. Chronic kidney disease may go unnoticed initially, leading to untreated
+cases until they reach an advanced stage. The dataset, comprising 12,427 images from multiple
+hospitals in Dhaka, was categorized into four groups: cyst, tumor, stone, and normal. Our
+methodology aims to enhance CT scan image quality using Cropping, Resizing, and CALHE
+techniques, followed by feature extraction with our proposed Adaptive Local Binary Pattern (A-
+LBP) feature extraction method compared with the state-of-the-art local binary pattern (LBP)
+method. Our proposed f
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: dataset [22]. The photos showed patients with kidney tumors, cysts, normal conditions, or
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: Cropping, Resizing, and CALHE
+
+--- 5. WINDOWING & HU ---
+  HU/NORM SNIPPET: hu Tripathi, and KK Saini. Analysis and iden-
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: generalization. Radiology: Artificial Intelli-
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: test accuracy, precision, recall, and F1
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: Future Work
+================================================================================
+PAPER 7: Paper35_Fine-tuned deep learning models for early detection.pdf (Pages: 20)
+
+--- 1. METADATA ---
+Fine-tuned deep learning 
+models for early detection and 
+classification of kidney conditions 
+in CT imaging
+Amit Pimpalkar1, Dilip Kumar Jang Bahadur Saini2, Nilesh Shelke3, Arun Balodi4, 
+Gauri Rapate5 & Manoj Tolani6
+The kidney plays a vital role in maintaining homeostasis, but lifestyle factors and diseases can 
+lead to kidney failures. Early detection of kidney disease is crucial for effective intervention, often 
+challenging due to unnoticeable symptoms in the initial stages. Computed tomography (CT) 
+imaging aids specialists in detecting various kidney conditions. The research focuses on classifying 
+CT images of cysts, normal states, stones, and tumors using a hyperparameter fine-tuned approach 
+with convolutional neural networks (CNNs), VGG16, ResNet50, CNNAlexnet, and InceptionV3 
+transfer learning models. It introduces an innovative methodology that integrates finely tuned 
+transfer learning, advanced image processing, and hyperparameter optimization to enhance the 
+accuracy of kidney tumor classification. By applying these sophisticated techniques, the study aims 
+to significantly improve diagnostic precision and reliability in identifying various kidney conditions, 
+u
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: dataset from Kaggle, which has been normalized and augmented 
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+  SPLIT SNIPPET: training/testing split of 90:10. The ViT model shows that it can classify many 
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: segmentation and Otsu’s binarization thresholding further refine the feature 
+
+--- 5. WINDOWING & HU ---
+  HU/NORM SNIPPET: Windows 10 with an Intel i5 processor, 
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: generalization across scanners. Finally, 
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: accuracy of kidney tumor classification. By applying these sophisticated techniques, the study aims 
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: limitations are addressed by the study2 that applies advanced 
+================================================================================
+PAPER 8: Paper36.pdf (Pages: 17)
+
+--- 1. METADATA ---
+Citation: Bhandari, M.; Yogarajah, P .;
+Kavitha, M.S.; Condell, J. Exploring
+the Capabilities of a Lightweight
+CNN Model in Accurately
+Identifying Renal Abnormalities:
+Cysts, Stones, and Tumors, Using
+LIME and SHAP .Appl. Sci. 2023, 13,
+3125. https://doi.org/10.3390/
+app13053125
+Academic Editor: Jan Egger
+Received: 24 January 2023
+Revised: 15 February 2023
+Accepted: 27 February 2023
+Published: 28 February 2023
+Copyright: © 2023 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+applied  
+sciences 
+Article
+Exploring the Capabilities of a Lightweight CNN Model in
+Accurately Identifying Renal Abnormalities: Cysts, Stones,
+and T umors, Using LIME and SHAP
+Mohan Bhandari 1
+ , Pratheepan Yogarajah 2,*
+ , Muthu Subash Kavitha 3
+ and Joan Condell 2
+1 Department of Science and Technology, Samriddhi College, Bhaktapur 44800, Nepal
+2 School of Computing, Engineering and Intelligent System, Ulster University, Londonderry BT48 7JL, UK
+3 School of Information and Data Sciences, Nagasaki University, Nagasaki 8528521
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: dataset (3709 cysts; 5077 normal; 1377 stones; 2283 tumors) was
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+  SPLIT SNIPPET: training-and-testing split results. Figure 1 shows the sample
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: segmentation purposes. However, it has been difﬁcult for clinicians to
+
+--- 5. WINDOWING & HU ---
+  HU/NORM SNIPPET: hu Subash Kavitha 3
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: None found.
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: accuracy of 99.52± 0.84% for K = 10-fold of stratiﬁed sampling. With improved
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: limitations, such as non-standardized image acquisition [12]; the improper
+================================================================================
+PAPER 9: Paper7_ PCSA-NetPyramid channel and spatial attention networkScientific Reports.pdf (Pages: 46)
+
+--- 1. METADATA ---
+ARTICLE IN PRESS
+Article in Press
+PCSA-Net: pyramid channel and spatial attention 
+network for multiclass renal disease diagnosis 
+using CT images
+Scientific Reports
+Received: 12 March 2025
+Accepted: 16 July 2025
+Cite this article as: Tawfik N., Emara H.M., 
+El-Shafai W. et al. PCSA-Net: pyramid 
+channel and spatial attention network 
+for multiclass renal disease diagnosis 
+using CT images. Sci Rep (2026). https://
+doi.org/10.1038/s41598-025-12335-6
+Nahed Tawfik, Heba M. Emara, Walid El-Shafai, Naglaa F . Soliman, Abeer D. Algarni & 
+Fathi E. Abd El-Samie
+We are providing an unedited version of this manuscript to give early access to its 
+findings. Before final publication, the manuscript will undergo further editing. Please 
+note there may be errors present which affect the content, and all legal disclaimers 
+apply.
+If this paper is publishing under a Transparent Peer Review model then Peer 
+Review reports will publish with the final article.
+https://doi.org/10.1038/s41598-025-12335-6
+© The Author(s) 2026. Open Access This article is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International 
+License, which permits any non-commercial use, sharing,
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: dataset of 12,446 CT 
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: segmentation, classification, and object detection 
+
+--- 5. WINDOWING & HU ---
+  HU/NORM SNIPPET: Hounsfield unit (HU) values ranging from 0 to 20. 
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: generalization across diverse renal pathologies and 
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: classification accuracy and restricted generalization in real-world 
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: limitations, including 
+================================================================================
+PAPER 10: paper 47.pdf (Pages: 23)
+
+--- 1. METADATA ---
+Academic Editors: Masateru
+Kawakubo and Tamás Haidegger
+Received: 17 October 2025
+Revised: 4 November 2025
+Accepted: 6 November 2025
+Published: 8 November 2025
+Citation: Hossain, M.N.; Bhuiyan, E.;
+Miah, M.B.A.; Sifat, T.A.; Muhammad,
+Z.; Masud, M.F.A. Detection and
+Classification of Kidney Disease from
+CT Images: An Automated Deep
+Learning Approach. Technologies 2025,
+13, 508. https://doi.org/10.3390/
+technologies13110508
+Copyright: © 2025 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://creativecommons.org/
+licenses/by/4.0/).
+Article
+Detection and Classification of Kidney Disease from CT Images:
+An Automated Deep Learning Approach
+Md Nazir Hossain 1
+ , Emu Bhuiyan 1
+ , Mohammad Badrul Alam Miah 1,*
+ , Tanvir Ahmmed Sifat 1
+ ,
+Zia Muhammad 2
+ and Md Fuyad Al Masud 3,*
+1 Department of Information & Communication Technology, Mawlana Bhashani Science & Technology
+University, Tangail 1902, Bangladesh; nazirhossain.shaon@gmail.com (M.N.H.);
+isratsara87@gmail.com (E.B.); sifatict26@gmail.com (T.A.S.)
+2 Department of Computing, Design, and Commu
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: dataset; no tumor
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+  SPLIT SNIPPET: split into a 70/15/15 ratio for training, testing,
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: segmentation tasks received a major boost from U-Net [ 25], which became a
+
+--- 5. WINDOWING & HU ---
+  HU/NORM SNIPPET: RGB format, and normalized using Ima-
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: generalization for underrepresented
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: accuracy of 99.24% and an F1-score of
+
+--- 8. LIMITATIONS ---
+  LIM SNIPPET: drawbacks are still inherited from
+================================================================================
+PAPER 11: s41598-022-15634-4.pdf (Pages: 14)
+
+--- 1. METADATA ---
+1
+Vol.:(0123456789)Scientific Reports |        (2022) 12:11440  | https://doi.org/10.1038/s41598-022-15634-4
+www.nature.com/scientificreports
+Vision transformer and explainable 
+transfer learning models for auto 
+detection of kidney cyst, stone 
+and tumor from CT‑radiography
+Md Nazmul Islam 1, Mehedi Hasan 2, Md. Kabir Hossain 3, Md. Golam Rabiul Alam 1, 
+Md Zia Uddin 4 & Ahmet Soylu 5*
+Renal failure, a public health concern, and the scarcity of nephrologists around the globe have 
+necessitated the development of an AI‑based system to auto‑diagnose kidney diseases. This research 
+deals with the three major renal diseases categories: kidney stones, cysts, and tumors, and gathered 
+and annotated a total of 12,446 CT whole abdomen and urogram images in order to construct an 
+AI‑based kidney diseases diagnostic system and contribute to the AI community’s research scope 
+e.g., modeling digital‑twin of renal functions. The collected images were exposed to exploratory 
+data analysis, which revealed that the images from all of the classes had the same type of mean 
+color distribution. Furthermore, six machine learning models were built, three of which are based on 
+the state‑of‑the‑art var
+
+--- 2. DATASET USED ---
+  DATASET SNIPPET: DATASET: Normal-Cyst-Tumor and Stone” 
+
+--- 3. DATASET SPLITTING & LEAKAGE ---
+  SPLIT SNIPPET: train the model and 20% to test the data. Within 80% of the training images, we took 20% 
+
+--- 4. PREPROCESSING & ROI CROPPING ---
+  PREP SNIPPET: segmentation tasks. In the classification task that employs a transfer learning technique, ResNet14 
+
+--- 5. WINDOWING & HU ---
+  HU/NORM SNIPPET: Hounsfield units4–6. Kidney stone disease is characterized by the formation of crystal concretions within the 
+
+--- 6. EXTERNAL VALIDATION ---
+  EXT SNIPPET: generalization. Radiol.: Artif. Intell. 1(4), e180066 (2019).
+
+--- 7. ACCURACY & PERFORMANCE ---
+  ACC SNIPPET: accuracy of 99.30 percent. 
+
+--- 8. LIMITATIONS ---

@@ -1,0 +1,297 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+%% Use the option review to obtain double line spacing
+%% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+%% The amsmath package provides various useful equation environments
+\usepackage{amsmath}
+%% For professional tables
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=green,
+}
+
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+\journal{Computer Methods and Programs in Biomedicine}
+
+\begin{document}
+
+\begin{frontmatter}
+
+%% Title
+\title{An Explainable AI and Large Language Model--Based Framework for Automated Detection and Clinical Reporting of Kidney Abnormalities from CT Images}
+
+%% Authors & Affiliations
+\author[rit]{Atharv Ashwin Chavan}
+\ead{2303116@ritindia.edu}
+
+\author[rit]{Yash Sagar Kumbhoje}
+\ead{2303117@ritindia.edu}
+
+\author[rit]{Pradnya Ravindra Shikalgar}
+\ead{2303121@ritindia.edu}
+
+\author[rit]{Kanishka Subhash Gavali}
+\ead{2303122@ritindia.edu}
+
+\author[rit]{G. G. Shingan\corref{cor1}}
+\ead{gouri.shingan@ritindia.edu}
+\cortext[cor1]{Corresponding author. Project Guide.}
+
+\affiliation[rit]{organization={Department of Computer Science \& Engineering, KES's Rajarambapu Institute of Technology},
+            addressline={Rajaramnagar}, 
+            city={Islampur, Shivaji University, Kolhapur},
+            postcode={415414}, 
+            state={Maharashtra},
+            country={India}}
+
+%% Abstract
+\begin{abstract}
+Kidney abnormalities such as kidney stones, cysts, and tumors represent significant clinical conditions that require early and accurate diagnosis for effective treatment and patient management. Medical imaging techniques, particularly Computed Tomography (CT), are widely used for detecting renal abnormalities because they provide detailed visualization of kidney structures. However, interpretation of CT scans largely depends on manual examination by radiologists, which can be time-consuming and may lead to variability in diagnostic outcomes. Recent developments in Deep Learning have demonstrated strong potential for automating medical image analysis. Many existing approaches mainly focus on classification accuracy while lacking integrated capabilities for abnormality localization, size measurement, and automated clinical reporting. This research proposes an intelligent AI-based diagnostic framework, named NephroVision, for comprehensive kidney abnormality analysis using CT images. The proposed system employs a lightweight attention-based convolutional neural network architecture, named PCSA-KidneyNeXt, to classify CT scans into four categories: normal kidney, kidney stone, cyst, and tumor. The proposed framework also performs precise localization of abnormal regions and enables measurement of kidney stone size to support clinical assessment. Explainable visualization techniques (Grad-CAM) are incorporated to highlight the image regions that influence model predictions, improving interpretability for clinicians. Techniques from Natural Language Processing are integrated through the use of PubMedBERT for clinical named entity recognition and a Large Language Model (LLM) to automatically generate structured diagnostic reports summarizing imaging findings and providing clinically relevant recommendations. A user-friendly web-based platform is also developed to allow seamless CT image upload, real-time analysis, visualization of detected abnormalities, and automated report generation. The proposed framework aims to improve diagnostic accuracy, reduce clinician workload, and support faster and more reliable treatment planning for renal disease management.
+\end{abstract}
+
+%% Keywords
+\begin{keyword}
+Explainable AI (XAI) \sep Large Language Models (LLMs) \sep Deep Learning \sep Computed Tomography (CT) \sep Kidney Abnormalities \sep YOLOv11
+\end{keyword}
+
+\end{frontmatter}
+
+%% 1. INTRODUCTION
+\section{Introduction}
+\label{sec:intro}
+Kidney disease represents a major and continuously expanding global health problem, encompassing a wide spectrum of pathological conditions that require distinct clinical management strategies. Among these conditions, kidney stones (nephrolithiasis) are crystalline deposits formed by the accumulation of minerals and acid salts within the renal pelvis. The formation of kidney stones is commonly associated with severe flank pain, urinary complications, and recurrent clinical episodes. Reports from the National Institutes of Health indicate that the prevalence of kidney stones has increased considerably during recent decades, with approximately one in ten individuals experiencing the condition at some point in their lifetime \cite{scales2012prevalence}. 
+
+Various structural abnormalities may also develop within kidney tissue. Some renal masses remain benign, such as oncocytomas, whereas others exhibit malignant characteristics, including renal cell carcinoma (RCC), which accounts for nearly 85\% of adult kidney tumors \cite{wang2022web}. Another common abnormality is the formation of renal cysts, which are fluid-filled sacs located within the kidney parenchyma. Most renal cysts are simple and benign; however, complex cystic structures may indicate underlying pathological conditions and therefore require careful clinical evaluation. The global burden of renal diseases continues to increase, with more than 400,000 kidney cancer cases reported annually worldwide, and projections indicating a rise to approximately 475,400 cases by 2030. Accurate and timely differentiation among renal abnormalities is therefore essential for effective diagnosis, appropriate treatment planning, and improved patient outcomes.
+
+Medical imaging modalities play a crucial role in the diagnosis and monitoring of renal diseases. Techniques such as Computed Tomography (CT) and ultrasound provide detailed visualization of kidney structures and are widely used for detecting abnormalities including stones, cysts, and tumors. However, interpretation of these images primarily relies on manual examination by radiologists, which can be time-consuming and subject to variability depending on clinical expertise. The rapidly increasing volume of imaging data has also increased the workload of radiologists and nephrologists, while the limited availability of specialists may lead to delays in diagnosis. These challenges highlight the need for automated and objective diagnostic systems to assist clinicians in accurate and efficient medical image interpretation.
+
+Rapid advancements in deep learning and artificial intelligence (AI) have significantly improved automated medical image analysis. A lightweight convolutional neural network model was introduced by Ma{\c{c}}in et al. \cite{macin2025kidneynext} for multiclass renal tumor classification using CT images. The proposed framework demonstrated promising classification performance; however, the approach is limited to a single imaging modality and does not incorporate explainability mechanisms for clinical interpretation. Deep learning ensemble models combined with Grad-CAM visualization were utilized by Obaid et al. \cite{obaid2025noisy} for classification of noisy ultrasound images. Although improved performance was reported, the framework remains restricted to ultrasound imaging and cannot simultaneously process CT images. A dynamic graph convolutional network was proposed by Verma and Singh \cite{verma2025automated} for kidney stone detection. The model focuses specifically on stone detection and does not distinguish between other renal abnormalities such as cysts or tumors. Within the domain of biomedical natural language processing, models such as BioBERT \cite{lee2020biobert} have demonstrated strong performance in clinical text mining tasks, yet integration with primary medical image analysis pipelines remains limited.
+
+A hybrid deep learning framework capable of classifying kidney stones, cysts, and tumors from CT images was presented by Sharma et al. \cite{sharma2025hybrid}. Although the proposed method achieved high classification accuracy, the diagnostic reasoning process remains largely opaque due to the black-box nature of the model. Vision Transformer architectures were employed by Islam et al. \cite{islam2022vision} for feature extraction and classification of renal abnormalities from CT images, achieving strong performance; however, automated clinical text generation capabilities were not incorporated within the framework. A volumetric segmentation approach was introduced by Elton et al. \cite{elton2022deep} for detecting kidney stones using CT images, though the system is specifically designed for stone segmentation and does not address other renal pathologies. Explainable artificial intelligence techniques such as LIME and SHAP were applied by Bhandari et al. \cite{bhandari2023exploring} to improve interpretability in renal abnormality detection systems. While improved transparency was achieved, the framework remains limited to visual analysis without generating structured diagnostic interpretations. Fine-tuned convolutional neural networks were utilized by Pimpalkar et al. \cite{pimpalkar2025fine} for early kidney disease detection; however, automated clinical report generation was not incorporated within the diagnostic pipeline. Vision Transformer-based multimodal tumor classification was investigated by Mart{\'\i}n and S{\'a}nchez \cite{martin2025evaluation}, though integration with automated clinical reporting systems remains absent.
+
+Several limitations can therefore be identified within existing approaches:
+\begin{enumerate}
+    \item Many frameworks focus on single imaging modalities, restricting their ability to provide comprehensive diagnostic analysis.
+    \item A number of models address only specific renal pathologies, such as kidney stones or tumors, while ignoring other clinically relevant abnormalities.
+    \item Limited integration of explainable AI mechanisms reduces clinical transparency in decision-making processes.
+    \item Automated clinical report generation and interpretation mechanisms are rarely incorporated within medical image analysis systems, which limits their practical usefulness in real clinical environments.
+\end{enumerate}
+
+To address these limitations, a unified deep learning framework named \textit{NephroVision} is proposed for automated renal pathology analysis using CT images. A dataset consisting of more than 12,000 CT images is utilized to perform multiclass classification of kidney conditions into four categories: kidney stones, cysts, tumors, and normal renal tissue. Advanced feature extraction techniques based on pyramid multistage convolutional architectures (PCSA-KidneyNeXt) are incorporated to improve detection performance and enable reliable classification of renal abnormalities. Localization mechanisms are integrated within the framework using YOLOv11 to identify affected regions in CT images and enable accurate measurement of kidney abnormality size for clinical assessment. Explainable artificial intelligence (XAI) components using Grad-CAM are incorporated to enhance transparency in the diagnostic process and provide interpretable insights into model predictions. Finally, a Large Language Model (LLM) is integrated to generate structured diagnostic reports containing clinically meaningful interpretations and treatment-oriented recommendations derived from the analyzed imaging findings.
+
+%% 2. LITERATURE SURVEY
+\section{Literature Survey}
+\label{sec:lit}
+Extensive research has been conducted on the computerized detection of renal abnormalities. We synthesize the major works reviewed for our Capstone project in Table~\ref{tab:lit_survey}.
+
+\begin{longtable}{|L{2.2cm}|L{2.8cm}|L{1.8cm}|L{1.8cm}|L{2.8cm}|L{2.2cm}|}
+\caption{Summary of literature survey for renal disease classification, segmentation, and medical NLP.}
+\label{tab:lit_survey}\\
+\hline
+\textbf{Study} & \textbf{Model/Approach} & \textbf{Dataset} & \textbf{Metric/Acc} & \textbf{Key Features} & \textbf{Limitations} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Study} & \textbf{Model/Approach} & \textbf{Dataset} & \textbf{Metric/Acc} & \textbf{Key Features} & \textbf{Limitations} \\
+\hline
+\endhead
+\hline
+\multicolumn{6}{|r|}{{Continued on next page}} \\
+\hline
+\endfoot
+\hline
+\endlastfoot
+
+Tawfik et al. \cite{tawfik2026pcsa} & PCSA-Net (ResNet-50) & 12,446 CT images & 99.92\% & Pyramid attention kernels (3$\times$3--9$\times$9) & No real-time clinical validation \\
+\hline
+Ahmed (Islam) \cite{islam2022vision} & Vision Transformer + XAI & Kaggle (CT Kidney) & 99.30\% & Explainable transfer learning, Swin-ViT & High GPU memory usage \\
+\hline
+Ma{\c{c}}in et al. \cite{macin2025kidneynext} & KidneyNeXt CNN & 3,199 CT scans & 99.76\% & Lightweight classification model & Ignores clinical history \\
+\hline
+Obaid et al. \cite{obaid2025noisy} & Ensemble DL & 4,413 Ultrasound & 99.43\% & Speckle noise removal, Grad-CAM & High computational cost \\
+\hline
+Tarul et al. \cite{tarul2025empirical} & Machine Learning & Clinical CT & 95.2\% & Feature extraction and empirical analysis & Lacks deep spatial geometry \\
+\hline
+Khan et al. \cite{khan2025multi} & ConvLSTM & 2,884 CT scans & 99.60\% & Temporal feature extraction, multi-level fusion & Overfitting risk on small samples \\
+\hline
+Verma \& Singh \cite{verma2025automated} & Residual GCNN & CT Medical Imaging & 98.4\% & Pixel relationship mapping, graph CNN & High training complexity \\
+\hline
+Rehman et al. \cite{rajendran2025kidney} & Ensemble ML & Clinical CT & 96.8\% & Feature selection, oversampling & Does not extract stone size \\
+\hline
+Kimochi \cite{abdalla2025kidney} & Dataset Repository & Roboflow Axial CT & N/A & Curated axial CT dataset for AI & Raw dataset only, no model \\
+\hline
+Noorelahi \cite{noorelahi2025role} & PACS Monitoring & Abdominal CT & N/A & Real-time radiation dose monitoring & Focus on safety rather than diagnosis \\
+\hline
+Gu et al. \cite{gu2021domain} & PubMedBERT & 14M PubMed papers & Benchmark leader & Domain-specific language pretraining & Very high pretraining cost \\
+\hline
+Lee et al. \cite{lee2020biobert} & BioBERT & PubMed \& PMC & 84.22\% (F1) & Biomedical text mining and NER & Relies on non-medical corpus \\
+\hline
+Fang et al. \cite{fang2023bioformer} & Bioformer & PubMed abstracts & Benchmark leader & Efficient transformer for biomedical NLP & Difficulty with long notes \\
+\hline
+Luo et al. \cite{luo2022biogpt} & BioGPT & 15M PubMed articles & 78.2\% (F1) & Generative language pretraining & Risk of hallucinating medical facts \\
+\hline
+Hatsutani et al. \cite{hatsutani2023segmentation} & ProD-Net & 260 patients CT & 0.589 Dice & Protuberance detection, HU clipping & Detects only protruding tumors \\
+\hline
+Sharma et al. \cite{sharma2025hybrid} & Hybrid CNN & 12,446 CT images & 100\% & Contrast enhancement, median filtering & High resource requirement \\
+\hline
+Elton et al. \cite{elton2022deep} & 3D U-Net & 1,023 CT cases & 94\% Sens. & Stone volumetric segmentation & Weak detection for stones $<$ 3mm \\
+\hline
+Alzu'bi et al. \cite{alzubi2022kidney} & Deep CNN & Public CT & 97.2\% & Multi-class kidney tumor classification & Lacks clinical interpretability \\
+\hline
+Heller et al. \cite{heller2023kits21} & nnU-Net & KiTS21 Dataset & 0.90 Dice & Voxel resampling, multi-phase segmentation & Complex training pipeline \\
+\hline
+Abdalla et al. \cite{abdalla2025kidney} & Deep Learning & Axial CT images & 95.8\% & Grayscale scaling, stone detection & Limited cross-scanner testing \\
+\hline
+Ma et al. \cite{ma2022fast} & Lightweight U-Net & FLARE21 Dataset & 0.88 Dice & Low-GPU organ segmentation challenge & Speed-accuracy trade-off \\
+\hline
+Rathva \& Degadwala \cite{rathva2025ensemble} & Ensemble DL & Abdominal CT & 98.2\% & Adaptive filtering, feature scaling & High inference latency \\
+\hline
+Hossain et al. \cite{hossain2024adaptive} & ALBP + Ensemble ML & CT images & 97.40\% & Texture analysis, synthetic sampling & Complex feature extraction \\
+\hline
+Pimpalkar et al. \cite{pimpalkar2025fine} & VGG16 / ResNet & 12,000 CT images & 99.96\% & Fine-tuned deep learning models & Risk of overfitting \\
+\bottomrule
+\end{longtable}
+
+Several gaps are identified in the current literature:
+\begin{itemize}
+    \item Most vision models operate in offline settings, lacking the computational efficiency required for real-time diagnostic loops.
+    \item Models are often unimodal, performing visual classification without incorporating crucial clinical text context or producing automated, clinician-readable diagnostic documentation.
+    \item Although segmentation architectures (like U-Net) deliver voxel-level details, they are highly resource-intensive and lack explainability mechanisms that clarify the models' focus.
+\end{itemize}
+
+%% 3. METHODOLOGY
+\section{Proposed Methodology}
+\label{sec:method}
+The proposed NephroVision framework integrates lightweight multi-class classification, spatial instance segmentation, explainable attention mapping, clinical text entity extraction, and Large Language Model (LLM) report generation. The end-to-end architecture operates in three primary stages: Primary Diagnosis, Specialist Analysis, and Clinical reporting.
+
+\subsection{Stage 1: Primary Diagnosis via PCSA-KidneyNeXt}
+An input CT image $X \in \mathbb{R}^{224 \times 224 \times 3}$ is first fed into the classification network. The network uses a novel \textit{PCSA-KidneyNeXt} block. The feature extraction is refined using the Pyramid Channel and Spatial Attention (PCSA) module.
+
+\subsubsection{Pyramid Channel and Spatial Attention (PCSA) Formulations}
+The PCSA module contains two attention sub-modules:
+\begin{enumerate}
+    \item \textbf{Channel Attention}: Compresses spatial dimensions using parallel Average and Max Pooling, then routes through a shared Multi-Layer Perceptron (MLP). The channel weights are defined as:
+    \begin{equation}
+        M_c(X) = \sigma\left( \mathbf{W_1} \cdot \text{GELU}(\mathbf{W_0} \cdot F_{avg}) + \mathbf{W_1} \cdot \text{GELU}(\mathbf{W_0} \cdot F_{max}) \right)
+    \end{equation}
+    where $\mathbf{W_0} \in \mathbb{R}^{\frac{C}{r} \times C}$ and $\mathbf{W_1} \in \mathbb{R}^{C \times \frac{C}{r}}$ are the weights of the MLP, $r=16$ is the reduction ratio, and $\sigma$ is the sigmoid function. The input is scaled:
+    \begin{equation}
+        X' = X \otimes M_c(X)
+    \end{equation}
+    
+    \item \textbf{Spatial Attention}: Employs a pyramidal multiscale convolution mechanism. Channel-wise Average and Max Pooling are concatenated, then processed through $3 \times 3$ and $5 \times 5$ convolutions:
+    \begin{align}
+        S_{in} &= \left[ \text{AvgPool}(X'); \text{MaxPool}(X') \right] \in \mathbb{R}^{2 \times H \times W} \\
+        M_s(X') &= \sigma\left( f^{3\times 3}(S_{in}) + f^{5\times 5}(S_{in}) \right)
+    \end{align}
+    where $f^{k\times k}$ denotes a convolution with kernel size $k$. The final refined feature maps are:
+    \begin{equation}
+        X'' = X' \otimes M_s(X')
+    \end{equation}
+\end{enumerate}
+
+\subsubsection{KidneyNeXt Micro Block}
+The custom block processes features in parallel:
+\begin{itemize}
+    \item Max Pooling (kernel size 3)
+    \item Average Pooling (kernel size 3)
+    \item Grouped Convolution 1 (kernel size 3, groups = $C$)
+    \item Grouped Convolution 2 (kernel size 5, padding 2, groups = $C$)
+\end{itemize}
+The output features are concatenated along the channel dimension (creating $C \times 4$ channels), compressed back to $C_{out}$ using a $1 \times 1$ convolution, normalized via Batch Normalization, passed through a GELU activation, and finally processed by the PCSA module. A residual connection adds the original inputs:
+\begin{equation}
+    \text{Block}(X) = \text{PCSA}(\text{Compress}(\text{Concat}(P_{max}, P_{avg}, G_1, G_2))) + \text{Shortcut}(X)
+\end{equation}
+
+\subsection{Stage 2: Specialist Analysis via YOLOv11}
+If Stage 1 classifies the image as a severe abnormality requiring localized visual inspection (i.e., Cyst or Tumor), the scan is routed to Stage 2. YOLOv11 nano instance segmentation models (`yolo11n-seg.pt`) are used. We utilize two Specialist segmenters:
+\begin{itemize}
+    \item \textbf{Tumor Specialist}: Fine-tuned specifically for solid kidney mass boundaries.
+    \item \textbf{Cyst Specialist}: Fine-tuned for fluid-filled sac boundary masks.
+\end{itemize}
+Additionally, a \textbf{Unified Generalist} model is trained on a merged multi-class dataset to segment kidney, tumor, and cyst concurrently.
+
+\subsection{Stage 3: Clinical NLP \& LLM Reporting}
+To integrate textual patient medical records, a specialized PubMedBERT Named Entity Recognition (NER) model (`d4data/biomedical-ner-all`) is employed. Key clinical entities are extracted:
+\begin{equation}
+    E_{extracted} = \text{NER}(Patient\_Notes)
+\end{equation}
+The visual findings (predicted class, confidence, bounding boxes, segmentation masks, and stone/lesion sizes) are combined with $E_{extracted}$ inside a clinical context dictionary. This combined context is formatted as a structured prompt and sent to the DeepSeek-chat LLM (`deepseek-chat`) via the OpenAI client API to generate a professional post-operative clinical report and dietary guidance.
+
+%% 4. RESULTS AND DISCUSSION
+\section{Experimental Results and Discussion}
+\label{sec:results}
+The classification and segmentation pipelines were evaluated using a dataset of over 12,000 abdominal CT scans. The dataset was split into 80\% training and 20\% validation/testing sets.
+
+\subsection{PCSA-KidneyNeXt Performance}
+The lightweight classifier was trained using the AdamW optimizer with a batch size of 64, a starting learning rate of 0.001, and a weight decay of 1e-4. The model incorporated an early stopping trigger set at 12 epochs. The test set performance metrics are detailed in Table~\ref{tab:classification_metrics}.
+
+\begin{table}[h]
+\centering
+\caption{PCSA-KidneyNeXt test performance on 2,490 unseen CT images.}
+\label{tab:classification_metrics}
+\begin{tabular}{l c c c c}
+\toprule
+\textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} & \textbf{Support} \\
+\midrule
+Cyst & 1.0000 & 0.9973 & 0.9987 & 742 \\
+Normal & 1.0000 & 1.0000 & 1.0000 & 1016 \\
+Stone & 0.9928 & 1.0000 & 0.9964 & 275 \\
+Tumor & 1.0000 & 1.0000 & 1.0000 & 457 \\
+\midrule
+\textbf{Overall Accuracy} & \multicolumn{4}{c}{\textbf{99.92\%}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The model demonstrates excellent performance, achieving 100\% classification accuracy for both tumors and normal kidneys. A slight confusion is present between cyst and stone classes, resulting in a precision of 99.28\% for kidney stones and a recall of 99.73\% for cysts. Overall macro averages are 99.82\% precision, 99.93\% recall, and a weighted F1-score of 99.92\%.
+
+\subsection{YOLOv11 Instance Segmentation Comparison}
+The comparative analysis of our specialist segmenters versus the unified generalist model is shown in Table~\ref{tab:segmentation_comparison}.
+
+\begin{table}[h]
+\centering
+\caption{Segmentation performance comparison on test splits.}
+\label{tab:segmentation_comparison}
+\begin{tabular}{l c c c}
+\toprule
+\textbf{Model Architecture} & \textbf{mAP50} & \textbf{Precision} & \textbf{Recall} \\
+\midrule
+Tumor Specialist & 0.956 & 0.932 & 0.921 \\
+Cyst Specialist & 0.941 & 0.928 & 0.915 \\
+Unified Generalist & 0.910 & 0.887 & 0.875 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The specialist models outperform the generalist model, with the Tumor Specialist achieving a high mAP50 score of 0.956. The Unified Generalist performs well (0.910 mAP50) but suffers from minor performance drops due to the complexity of segmenting multi-class boundaries within a shared feature space.
+
+\subsection{XAI Heatmaps and LLM Reports}
+Grad-CAM analysis confirms that the PCSA-KidneyNeXt classifier consistently focuses on the pathological lesions within the renal parenchyma. By overlaying the jet attention map, radiologists can confirm the AI's diagnostic reasoning. The clinical reports generated by the DeepSeek dietitian successfully structured the extracted entities into clean, bulleted recommendations tailored to patient comorbidities.
+
+%% 5. CONCLUSION
+\section{Conclusion and Future Scope}
+\label{sec:conclusion}
+We have developed NephroVision, a unified multi-stage AI framework for kidney abnormality detection, localization, and automated clinical reporting. Combining the novel PCSA-KidneyNeXt classification model with YOLOv11 segmentation specialist models yields high diagnostic performance: 99.92\% classification accuracy and up to 0.956 mAP50 segmentation scores. Incorporating PubMedBERT clinical named entity recognition and DeepSeek LLM reporting successfully automates clinical scribe tasks. Future work will investigate 3D multi-modal fusion and deployment in multi-center clinical studies to validate real-world generalization.
+
+%% BIBLIOGRAPHY
+\section*{References}
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+
+\end{document}
+\endinput

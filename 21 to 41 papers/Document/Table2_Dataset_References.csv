@@ -1,0 +1,19 @@
+#,Dataset Name,Type,Official Link,Papers Using It
+1,KiTS19 - Kidney Tumor Segmentation Challenge 2019,Public challenge (CT),https://kits19.grand-challenge.org/,"Papers 43, 52, 53"
+2,KiTS21 - Kidney Tumor Segmentation Challenge 2021,Public challenge (CT),https://kits21.grand-challenge.org/,"Papers 44, 52"
+3,Synapse Multi-organ Segmentation Dataset,Public (CT),https://www.synapse.org/#!Synapse:syn3193805/wiki/217789,"Papers 45, 49"
+4,ISIC 2018 Skin Lesion Segmentation Challenge,Public challenge (Dermoscopy),https://challenge.isic-archive.com/landing/2018/,"Papers 45, 49"
+5,BUSI - Breast Ultrasound Images Dataset,Public (Ultrasound),https://www.sciencedirect.com/science/article/pii/S2352340919312181,Paper 48
+6,BUS Dataset (breast ultrasound),Public (Ultrasound),https://github.com/ozan-oktay/Attention-Gated-Networks,Paper 48
+7,Dataset B (breast ultrasound - MMU),Public (Ultrasound),http://www2.docm.mmu.ac.uk/STAFF/M.Yap/dataset.php,Paper 48
+8,CT KIDNEY DATASET: Normal-Cyst-Tumor-Stone (Kaggle),Public (CT),https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone,"Papers 46, 47"
+9,CVC-ClinicDB (colonoscopy polyp segmentation),Public (Colonoscopy),https://polyp.grand-challenge.org/CVCClinicDB/,Paper 49
+10,NIDDK/CRISP MRI Dataset (Polycystic Kidney Disease),Public (MRI),https://www.niddkrepository.org/studies/crisp/,Paper 42
+11,TCGA-KIRC / TCGA-KIRP (The Cancer Genome Atlas - Kidney),Public (Pathology/CT/Genomics),https://portal.gdc.cancer.gov/,Paper 52 (survey)
+12,C4KC-KiTS (CT for Kidney Cancer - TCIA),Public (CT),https://www.cancerimagingarchive.net/collection/c4kc-kits/,Paper 52 (survey)
+13,Kidney Cancer Histopathology Dataset (Almukadi et al.),Semi-public (Google Drive),https://drive.google.com/drive/folders/1BQZGKHKOUji9rDA5IVltlLnXLk7_Elic,Paper 59
+14,Li et al. Kidney and Stone CT Dataset (Zenodo),Public open-source (CT),https://zenodo.org/record/6042410,Paper 60
+15,"Private KUB X-ray Dataset (Nguyen et al., Vietnam)",Private (X-ray),Not publicly available,Paper 54
+16,"Private Renal Tumor Ultrasound Dataset (Gao et al., Nanchang Univ.)",Private (Ultrasound),Not publicly available (IRB: IIT2023174),Paper 56
+17,"Private Multi-center CTU Dataset (Liang, 5 Chinese hospitals)",Private (CT multi-phase),Not publicly available,Paper 61
+18,Private PCNL Clinical Dataset (Elmaagac et al.),Private (clinical records),Not publicly available,Paper 51

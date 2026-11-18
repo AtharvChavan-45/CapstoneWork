@@ -1,0 +1,147 @@
+% ==============================================================================
+% TABLE: Summary of Comparative and Benchmarking Studies Grouped by Dataset
+% Longtable Version (Spans across pages, identical to Review Paper Table I)
+% ==============================================================================
+% Requires: \usepackage{longtable}, \usepackage{booktabs}, \usepackage{array}
+
+\begin{small}
+\begin{longtable}{p{2.5cm} p{2.0cm} p{2.5cm} p{3.0cm} p{3.6cm} p{2.2cm}}
+\caption{Summary of Reviewed and Benchmarking Studies Grouped by Dataset for Implementation} \label{tab:implementation_dataset_summary_long} \\
+
+\toprule
+\textbf{Dataset Name \& Link} & \textbf{Modality} & \textbf{Target Classes} & \textbf{Sample Size \& Breakdown} & \textbf{Performance Highlights} & \textbf{Utilizing Studies} \\
+\midrule
+\endfirsthead
+
+\multicolumn{6}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\toprule
+\textbf{Dataset Name \& Link} & \textbf{Modality} & \textbf{Target Classes} & \textbf{Sample Size \& Breakdown} & \textbf{Performance Highlights} & \textbf{Utilizing Studies} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{6}{r}{{Continued on next page}} \\
+\bottomrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+% 1. Kaggle CT Kidney Dataset
+\textbf{Kaggle CT Kidney Dataset}\newline
+\textit{(Dhaka Hospital Benchmark)} & 
+CT (Contrast \& Non-contrast) & 
+Normal, Cyst, Tumor, Stone (4 Classes) & 
+Total: 12,446 images\newline
+\textbullet~Normal: 5,077\newline
+\textbullet~Cyst: 3,709\newline
+\textbullet~Tumor: 2,283\newline
+\textbullet~Stone: 1,377 & 
+Classification accuracies ranging from 91.47\% to 99.84\%; F1-scores up to $>$0.99; provides baseline for 4-class multi-pathology classification & 
+\cite{dataset_kaggle, hossain2025detection, macin2025kidneynext, main23, tawfik2026pcsa, islam2022vision, rathva2025ensemble, tarul2025empirical, pimpalkar2025fine, khan2025multi, hossain2024adaptive, bhandari2023exploring, sharma2025hybrid, sharma22, martin2025evaluation, rajendran2025kidney, verma2025automated, verma23} \\
+\midrule
+
+% 2. Roboflow Universe
+\textbf{Roboflow Universe}\newline
+\textit{(Kidney Tumor \& Cyst Datasets)} & 
+CT (Axial Slices) & 
+Renal Tumor, Renal Cyst (Instance Bounding Boxes \& Polygon Masks) & 
+Specialized annotated cohorts for localized pathology detection and instance segmentation & 
+Directly powers YOLOv8/YOLOv11 segmentation modules; achieves instance confidence bounds of 0.95 (tumors) and 0.89 (cysts) & 
+\cite{dataset_roboflow_tumor, dataset_roboflow_cyst} \\
+\midrule
+
+% 3. KiTS19 Challenge
+\textbf{KiTS19 Challenge}\newline
+\textit{(Tumor Seg. 2019)} & 
+Corticomedullary CT & 
+Kidney, Tumor (2 Seg. Classes) & 
+300 CT cases total\newline
+(210 training / 90 testing) & 
+Kidney Dice: up to 0.974; Tumor Dice: 0.615 to 0.846; Composite Dice: 0.907 across standard U-Net/PDN baselines & 
+\cite{ji2024kits, hatsutani2023segmentation, abdelrahman2023efficientnet} \\
+\midrule
+
+% 4. KiTS21 Challenge
+\textbf{KiTS21 Challenge}\newline
+\textit{(Tumor \& Cyst Seg. 2021)} & 
+Corticomedullary CT & 
+Kidney, Tumor, Cyst (3 Seg. Classes) & 
+300 CT cases (official training cohort with multi-annotator consensus ground truth) & 
+Kidney Dice: up to 0.968; Tumor Dice: up to 0.829; Cyst Dice: up to 0.701; establishes 3D boundary segmentation baselines & 
+\cite{heller2023kits21, zhao2023automatic, chen20215d, gohil2024kits} \\
+\midrule
+
+% 5. Clinical Hospital CT Cohorts
+\textbf{KAUH \& Clinical CT Cohorts}\newline
+\textit{(Sulaimani, Zenodo, TCIA)} & 
+Abdominal CT (Enhanced \& Unenhanced) & 
+Kidney Stones, Masses, Tumors, Healthy Parenchyma & 
+Diverse multi-institutional archives (KAUH: 8,400 images; Sulaimani: 3,364 slices; TCIA: 551 CT scans) & 
+Classification accuracy reaching 98.29\%; volumetric stone segmentation sensitivity up to 88.1\% under low contrast & 
+\cite{aljohani2025clinical, alzubi2022kidney, abdalla2025kidney, elton2022deep} \\
+\midrule
+
+% 6. FLARE Abdomen Organ Benchmark
+\textbf{FLARE Challenge Benchmark}\newline
+\textit{(Abdominal Organ Seg.)} & 
+Abdominal CT & 
+Multi-organ abdominal segmentation (Kidneys, Liver, Spleen, Pancreas) & 
+Multi-center abdominal CT cases optimized for low GPU memory budgets & 
+Kidney Dice: 77.8\% to 85.2\%; establishes memory-efficient, fast abdominal organ localization standards & 
+\cite{ma2022fast} \\
+\midrule
+
+% 7. Multi-Center Ultrasound Repository
+\textbf{Multi-Center US Repository}\newline
+\textit{(Ultrasound Acoustic Set)} & 
+Ultrasound (Grayscale B-mode) & 
+Cysts, Stones, Tumors (3 Classes) & 
+$>$10,000 multi-center ultrasound frames with acoustic noise & 
+Peak F1-score of 0.95; provides comparative benchmark for cross-modality (US vs. CT) and Grad-CAM interpretability & 
+\cite{obaid2025noisy} \\
+\midrule
+
+% 8. Epidemiological & Cancer Registries
+\textbf{NHANES \& SEER Registries}\newline
+\textit{(Epidemiological \& Oncology)} & 
+Epidemiological surveys \& oncological follow-up records & 
+Renal Calculi Prevalence (NHANES); RCC Patient Survival (SEER) & 
+NHANES: 12,110 participants;\newline
+SEER: $>$22,000 renal cell carcinoma patient records & 
+Establishes epidemiological baseline for stone prevalence (8.8\%) and survival prognostication AUC of 0.746 & 
+\cite{scales2012prevalence, wang2022web} \\
+\midrule
+
+% 9. Biomedical NLP & Clinical Text
+\textbf{Biomedical NLP \& Clinical Corpora}\newline
+\textit{(PubMed, MIMIC, Reports)} & 
+Biomedical Literature \& EHR Clinical Notes & 
+Diagnostic Impression, Clinical Entities, Disease Stratification & 
+Up to 14M PubMed abstracts / 4.5B words; specialized radiological impression-finding corpora & 
+Powers LLM-assisted radiology report generation; validated domain representations for structured text synthesis & 
+\cite{gu2021domain, lee_biobert, fang2023bioformer, luo2022biogpt, liu2024bootstrapping} \\
+\midrule
+
+% 10. PACS Radiation Infrastructure
+\textbf{PACS Infrastructure}\newline
+\textit{(Abdominal CT Dose Archive)} & 
+CT / PACS Metadata & 
+Radiation Dose Parameters, Acquisition Protocol & 
+200+ clinical abdominal CT series with real-time dose telemetry & 
+Demonstrates integration feasibility within clinical PACS environments and dose monitoring compliance & 
+\cite{noorelahi2025role} \\
+\midrule
+
+% 11. Foundational Vision & Survey Benchmarks
+\textbf{Foundational Vision/XAI \& Surveys}\newline
+\textit{(No Primary Empirical Dataset)} & 
+Multimodal (CT, MRI, X-ray, Microscopic) & 
+Methodological Benchmarking, Visual Explanation, SOTA Reviews & 
+Systematic syntheses reviewing 100+ diagnostic papers; foundational transfer learning baselines & 
+Establishes theoretical foundations for CNN feature extraction, ViT tokenization, Swin attention, and Grad-CAM localization & 
+\cite{litjens2017survey, sloan2024automated, kumar2024comprehensive, aburass2025vision, lecun2015deep, kermany2018identifying, dosovitskiy2020image, liu2021swin, selvaraju2017grad, holzinger2019causability} \\
+
+\end{longtable}
+\end{small}

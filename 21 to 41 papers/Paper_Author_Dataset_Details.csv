@@ -1,0 +1,18 @@
+ID,Author,Dataset Details & Link
+1,Michael Y. Chen,"Private dataset (Clinical data from 27 patients, radical/partial nephrectomy) | Not Available"
+2,Sania Akhtar,"Custom curated dataset (7,201 images) | Not Available"
+3,Soumya C. Sreenivas,MACCROBAT/AGBONNET clinical entities | https://doi.org/10.6084/m9.figshare.9764942.v2
+4,Sheshang Degadwala,"Kidney stone detection models (CT, ultrasound, X-ray) | No direct Dataset link"
+5,Mansourah Aljohani,Kidney Tumor Dataset | https://github.com/DaliaAlzubi/KidneyTumor
+6,Alqahtani et al.,"Mixed: Elazığ Fethi Sekin Hospital (3,199), Kaggle (12,446), KAUH Jordan (7,770) | Not Available"
+7,Tawfik et al.,CT Kidney Dataset (Normal/Cyst/Tumor/Stone) | https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone
+8,"Ahmed, N.",CT Kidney Dataset (Normal/Cyst/Tumor/Stone) | https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone
+10,"Obaid, W., et al.",Kidney Stone Ultrasound Dataset (Roboflow) | https://universe.roboflow.com/kidney-ktlmt/kidney-stone-ultrasound; https://universe.roboflow.com/proyecto-1/tesis-iz9ji
+11,"Khan, S. U. R., et al.",CT Kidney Dataset (Normal/Cyst/Tumor/Stone) | https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone
+12,Verma & Singh,Kidney Disease Detection Repository | https://github.com/VS-EYE/KidneyDiseaseDetection.git
+13,"Khan, S. U. R., et al. (Alt ID)",Private dataset | Not Available
+16,"Scales Jr, C.D., et al.",NHANES 2007-2010 Survey | https://www.cdc.gov/nchs/nhanes/index.htm
+17,"Wang, J., et al.","SEER Database (Surveillance, Epidemiology, and End Results, 22,000+ records) | https://seer.cancer.gov/"
+18,"Islam, M.N., et al.",CT Kidney Dataset (Normal/Cyst/Tumor/Stone) | https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone
+19,"Rajendran, M.P., et al.",CT Kidney Dataset (Normal/Cyst/Tumor/Stone) | https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone
+20,"Noorelahi, Y., et al.","Retrospective study (200 patients, abdominal CT protocols in PACS) | Not Available"

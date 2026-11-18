@@ -1,0 +1,935 @@
+
+--- PAGE 0 ---
+1
+Deep Learning-Based Kidney Disease Diagnosis: A
+Comprehensive Survey of CT Imaging, Multi-Class
+Classification, Explainability, and Surgical Planning
+Frameworks
+Atharv Ashwin Chavan 1, Yash Sagar Kumbhoje 2, Pradnya Ravindra Shikalgar 3,
+Kanishka Subhash Gavali 4, and Prof. Mrs. Gautami G. Shingan 5
+Department of Computer Science & Engineering, KES’s Rajarambapu Institute of Technology, Rajaramnagar,
+India
+12303116@ritindia.edu 22303117@ritindia.edu 32303121@ritindia.edu 42303122@ritindia.edu
+Abstract—Kidney diseases present a significant global health
+challenge, traditionally requiring time-intensive manual interpre-
+tation of radiological imaging. Deep learning (DL) has emerged as
+a transformative approach for the automated diagnosis, segmen-
+tation, and prognostic evaluation of renal pathologies. However,
+existing literature often isolates single tasks, lacking a cohesive
+review of multi-class classification and surgical planning integra-
+tion. This survey systematically reviews 63 recent studies focusing
+on DL applications in kidney disease diagnosis, primarily utilizing
+CT imaging. We analyze core architectural evolutions, spanning
+convolutional neural networks (CNNs) to hybrid Transformer
+models, and evaluate their performance on benchmark datasets.
+Furthermore, we critically examine the integration of Explainable
+AI (XAI) and the transition from isolated bounding-box detection
+to holistic, 3D multimodal clinical frameworks. We identify
+current research gaps, proposing a unified framework to bridge
+the gap between computational accuracy and clinical utility.
+Index Terms—Deep Learning, Kidney Disease, Computed To-
+mography (CT), Explainable AI (XAI), Vision Transformers,
+Surgical Planning.
+I. INTRODUCTION
+Kidney diseases, encompassing both neoplastic formations
+(such as renal cell carcinoma) and non-neoplastic conditions
+(such as nephrolithiasis and complex cysts), represent a mount-
+ing global health challenge. Precise and timely diagnostic
+workflows are critical for patient survival and effective surgi-
+cal intervention. Traditionally, the identification, staging, and
+volumetric analysis of these pathologies have relied almost
+exclusively on the manual inspection of Computed Tomogra-
+phy (CT) and Magnetic Resonance Imaging (MRI) scans by
+expert radiologists. This conventional paradigm is inherently
+subjective, highly time-consuming, and susceptible to inter-
+observer variability, particularly when differentiating subtle
+malignant subtypes or delineating complex, multi-focal tumor
+boundaries for partial nephrectomies.
+In recent years, the integration of deep learning (DL)
+into medical image analysis has fundamentally disrupted this
+diagnostic bottleneck [1]. DL architectures, specifically those
+engineered for advanced computer vision tasks, excel at ex-
+tracting high-dimensional, non-linear semantic features from
+complex anatomical structures. While early computational
+applications in nephrology focused predominantly on binary
+classification (e.g., normal versus abnormal tissue), the current
+clinical frontier demands highly granular multi-class classi-
+fication, exact 3D volumetric segmentation for preoperative
+planning, and robust algorithmic interpretability. A vast and
+accelerating body of recent literature has empirically validated
+the efficacy of these automated approaches across diverse
+clinical datasets, varying noise profiles, and different stages
+of disease progression [2]–[9].
+Despite accelerating algorithmic advancements, a critical
+translational gap remains between high-performing computa-
+tional models and their actual deployment in clinical environ-
+ments. Many contemporary models function as opaque ”black
+boxes” [10], lacking the diagnostic explainability required to
+build trust among medical practitioners. Furthermore, diagnos-
+tic networks are frequently trained on narrow, homogeneous
+datasets, which severely limits their ability to generalize across
+diverse clinical hardware and disparate patient demographics.
+This survey comprehensively synthesizes the methodolo-
+gies, computational complexities, and clinical integrations of
+63 recent DL frameworks. By meticulously analyzing the
+trajectory from traditional convolutional networks to advanced
+hybrid Transformer models, this paper aims to establish a
+clear taxonomy of current progress. Ultimately, we identify
+existing structural gaps and chart the necessary trajectory
+toward clinically viable, explainable AI (XAI) systems that
+integrate seamlessly into real-world renal care pipelines.
+II. SURVEYMETHODOLOGY
+To ensure a rigorous, transparent, and reproducible review
+of the current landscape, a systematic literature search was
+conducted following the Preferred Reporting Items for Sys-
+tematic Reviews and Meta-Analyses (PRISMA) guidelines.
+A. Search Strategy and Selection Criteria
+The primary literature search was executed across major sci-
+entific databases, including IEEE Xplore, PubMed/MEDLINE,
+--- PAGE 1 ---
+2
+SpringerLink, and arXiv. The search was chronologically
+restricted to publications from the last five years to capture the
+most contemporary, state-of-the-art DL architectures. The core
+Boolean search string utilized combinations of the following
+keywords: (”Deep Learning” OR ”CNN” OR ”Transformer”
+OR ”YOLO”) AND (”Kidney Disease” OR ”Renal Tumor”
+OR ”Kidney Stone”) AND (”CT Imaging” OR ”Segmentation”
+OR ”Classification” OR ”Multi-class”).
+Initial screening yielded a substantial corpus of prelimi-
+nary articles. These were subsequently evaluated against strict
+inclusion criteria: (1) empirical utilization of deep learning
+models on renal imaging modalities, (2) clear, quantitative
+reporting of performance metrics (e.g., Accuracy, Dice Simi-
+larity Coefficient, Intersection over Union), and (3) direct rel-
+evance to multi-class classification, volumetric segmentation,
+or surgical planning integration.
+Records identified throuhdatabase searching :
+IEEE Xplore
+PubMed
+Scopus
+ACM Digital Library
+arXiv
+Google Scholar
+( n ≈ 480 )
+Records screened basedon title and abstract
+( n ≈ 320 )
+Records screened basedon title and abstract
+( n ≈ 160 )
+✖
+Records excluded
+Non-renal focuss
+No deep learningcomponent
+( n ≈ 240 )
+📖
+Full-text articlesassessed for eligibility
+( n ≈ 80 )
+✖
+Full-text articlesexcluded 
+No quantitativemetrics
+Traditional machinelearning only 
+Non -English papers
+( n ≈ 30 )
+Studies included inqualitative andquantitative review 
+( n ≈ 50 )
+IdentificationScreeninhgEligibilityIncluded
+Fig. 1. PRISMA flow diagram detailing the systematic literature search,
+screening, and selection process for the 63 included studies.
+B. Data Extraction and Matrix Synthesis
+Following the removal of duplicates, non-peer-reviewed
+preprints lacking methodological rigor, and studies with insuf-
+ficient computational detail, 63 primary papers were selected
+for deep extraction. For each study, data was systematically
+mapped into a comprehensive literature matrix. The extracted
+parameters include the imaging modality, primary pathology
+focus, dataset characteristics (e.g., benchmark challenge data
+versus proprietary clinical data), core model architecture, com-
+putational complexity, integration of Explainable AI (XAI),
+and identified deployment limitations.
+III. KEYDATASETS ANDBENCHMARKS
+The evolution of deep learning in renal imaging is in-
+trinsically linked to the availability of large-scale, anno-
+tated datasets. Historically, algorithmic development was con-
+strained by small, proprietary clinical datasets, which limited
+reproducibility and generalizability. The introduction of open-
+source challenges has since standardized benchmarking for
+segmentation and classification tasks.
+A. The KiTS Challenge Series
+The Kidney Tumor Segmentation (KiTS) challenges rep-
+resent the most significant catalyst for standardizing renal
+imaging benchmarks.
+•KiTS19:Introduced by Heller et al. [?], this dataset pro-
+vided 210 high-quality, multiphase CT scans with voxel-
+level annotations for both the kidney and renal tumors. It
+established the foundational baseline for 3D segmentation
+architectures, predominantly evaluating variations of the
+3D U-Net.
+•KiTS21:An expansion of its predecessor, KiTS21 [11]
+introduced a more complex hierarchy of annotations,
+incorporating multiple annotators to account for inter-
+observer variability. The dataset shifted the focus from
+simple bounding-box detection to highly granular, multi-
+class semantic segmentation, making it the primary
+benchmark for the majority of the state-of-the-art seg-
+mentation frameworks reviewed in this survey.
+B. Kaggle CT Kidney Dataset
+While KiTS focuses heavily on segmentation, the Kaggle
+CT Kidney Dataset [?] has become a standard benchmark for
+multi-class classification. It typically comprises thousands of
+2D axial slices categorized into four primary classes: Normal,
+Cyst, Tumor, and Stone. Models evaluated on this dataset,
+such as those utilizing attention-enhanced networks, frequently
+report accuracy metrics exceeding 95%, demonstrating robust
+capability in distinguishing distinct pathologies from 2D slices.
+C. Proprietary and Multimodal Data
+Despite the prevalence of public datasets, several studies
+rely on proprietary, multi-center clinical data to validate mod-
+els in real-world scenarios. For instance, frameworks designed
+for surgical planning or multimodal integration (combining CT
+with MRI) often utilize private datasets to capture a broader
+spectrum of patient demographics and scanning hardware
+variations [12], [13]. However, the reliance on private data
+introduces significant challenges in algorithmic transparency
+and peer-review reproducibility.
+--- PAGE 2 ---
+3
+Primay  Renal Imaging Datasets
+2D Multi-Class
+Classification
+(Public Repositories)
+3D Volumetric
+Segmentation
+(KiTS Challenges) 
+KiTS19:
+210 Scans , 3D CT ,
+Binary Tumor/kidney
+Segmentation
+KiTS21:
+300 Scans , 3D CT ,
+Multi-class (Tumor,
+kidney, cyst), Multi-
+annotator
+Kaggle CT Kidney :
+Thousands of 2D 
+slices 4 Classes (Normal,
+Cyst, Tumor, Stone).
+Private Clinical Hubs:
+CT + MRI Fusion,
+Patient-specific
+Surgical Demographics
+Multimodal &
+Clinical 
+( Proprietary Data )
+Fig. 2. Taxonomy of primary datasets utilized in renal deep learning frameworks, categorized by spatial dimension, task, and annotation complexity.
+IV. DEEPLEARNINGARCHITECTURES: A CATEGORICAL
+REVIEW
+The computational approach to renal imaging has undergone
+a significant paradigm shift over the last five years. Early
+diagnostic automation relied heavily on classical machine
+learning, utilizing hand-crafted feature extraction methods
+such as Gray-Level Co-occurrence Matrices (GLCM) paired
+with Support Vector Machines [14]. While interpretable, these
+methods lacked the semantic depth required to navigate the
+high variability of renal pathologies across diverse patient
+demographics.
+The advent of deep learning largely replaced these classical
+pipelines. Based on our systematic review of 63 studies,
+contemporary architectures can be distinctly categorized by
+their foundational feature-extraction mechanisms into three
+evolutionary stages: Convolutional Neural Networks (CNNs),
+pure Vision Transformers (ViTs), and emerging Hybrid CNN-
+Transformer frameworks. Figure 3 provides a structural taxon-
+omy of these approaches, further subdivided by their primary
+clinical task and functional mechanisms.
+A. Convolutional Neural Networks (CNNs)
+CNNs remain the foundational backbone of medical image
+analysis due to their inherent translation invariance and effi-
+ciency in extracting localized spatial hierarchies. Within renal
+applications, they are primarily deployed across two functional
+domains.
+3D Volumetric Segmentation:For spatial boundary map-
+ping, the U-Net architecture and its 3D variants have dom-
+inated benchmark leaderboards. The symmetric encoder-
+decoder structure effectively recovers spatial resolution lost
+during downsampling [15]. Recent optimizations focus on
+structurally modifying this core. For instance, the ASD-Net
+introduces an asymmetric spatial-channel convolution module
+to better capture irregular tumor boundaries [16], while other
+frameworks integrate Convolutional Block Attention Modules
+(CBAM) to suppress background parenchymal noise and high-
+light critical regions of interest [17].
+Rapid Triage Classification:For multi-class classification,
+lightweight CNNs are prioritized for their high-throughput
+inference capabilities. Beyond these specialized boundary-
+mapping networks, numerous studies have successfully de-
+ployed traditional, lightweight CNN variants and ensemble
+methods to establish foundational diagnostic baselines for gen-
+eral renal abnormality detection [18]–[25]. Architectures like
+KidneyNeXt leverage pyramid channel and spatial attention
+networks to achieve rapid diagnostic triage on standard clinical
+hardware, efficiently categorizing 2D axial slices into normal,
+cyst, tumor, or stone classifications [26].
+B. Vision Transformers (ViTs)
+Despite their success, CNNs are fundamentally limited by
+their localized receptive fields. They struggle to model long-
+range global dependencies—such as the spatial relationship
+between a multi-focal renal cell carcinoma and the broader
+urinary tract.
+Global Context Modeling:Vision Transformers address
+this limitation by treating images as sequences of flattened
+patches, applying self-attention mechanisms to weigh the
+global context of the entire scan simultaneously [27]. Pure
+attention networks allow the model to understand holistic
+anatomical relationships.
+--- PAGE 3 ---
+4
+Deep Learning in Renal AI
+CNN-Based
+Classification
+U-Net 
+Segmentation
+Vision 
+Transformers (ViT)
+Hybrid &
+ Ensemble
+NLP / 
+Non-Imaging
+Models: 
+KidneyNeXt,
+PCSA-Net,
+DBAR-Net
+Models: 
+ASD-Net,
+EfficientNet U-Net,
+DAE-Former
+Models: 
+MSKd_Net,
+Hierarchical ViT
+Models: 
+CNN-Attn-LSTM,
+DenseNet + 
+EfficientNet
+Models: 
+BERT,
+BioBERT,
+PubMedBERT
+Dataset: 
+Kaggle CT
+Kidney
+Dataset: 
+KITS19 /
+KITS21
+Dataset: 
+CT / 
+Synapse
+Dataset: 
+Mixed CT 
+Dataset: 
+Clinical Text
+Renal Focus Segmentation Transformers Hybrid /
+Ensemble 
+NLP / Non-
+Imaging 
+Fig. 3. Taxonomy of deep learning architectures utilized in renal disease diagnosis, categorized by foundational feature-extraction mechanisms and their
+functional application.
+Patch-Based Multi-Scale ViTs:Frameworks utilizing Swin
+Transformers attempt to reintroduce a degree of spatial hierar-
+chy into the attention mechanism. However, pure Transformer
+models remain notoriously data-hungry and computationally
+expensive, often requiring massive pre-training datasets that
+are scarce in specialized medical domains.
+C. Hybrid CNN-Transformer Architectures
+To bridge the gap between local precision and global con-
+textual awareness, the current state-of-the-art has converged on
+Hybrid CNN-Transformer architectures. These models lever-
+age CNN encoders to extract fine-grained, high-resolution
+local features and utilize Transformer modules to capture
+global semantic relationships.
+Cascaded Fusion:Several notable frameworks highlight
+this synthesis through sequential processing. The H2Former
+introduces a cascaded hybrid network that continuously passes
+CNN and Transformer representations back and forth, achiev-
+ing superior performance on complex medical image segmen-
+tation tasks [28].
+Dual Attention & Routing:Other architectures focus on
+optimizing the attention bottleneck. The DAE-Former utilizes
+a dual attention-guided efficient Transformer to provide multi-
+organ contouring with highly accurate spatial mapping [29].
+More recently, architectures like BRAU-Net++ have integrated
+Bi-Level Routing Attention into a U-shaped topology, sig-
+nificantly reducing the quadratic computational complexity
+of traditional self-attention while maintaining state-of-the-art
+Dice scores on renal benchmarks [30].
+By fusing these modalities, hybrid networks represent the
+most promising computational foundation for the unified clin-
+ical pipelines required in modern nephrology.
+V. EXPLAINABILITY ANDCLINICALTRUSTWORTHINESS
+State-of-the-art performance on benchmark datasets does
+not, by itself, justify clinical deployment. As deep learning
+architectures approach diagnostic parity with specialist ra-
+diologists in renal imaging tasks, the central question has
+shifted fromhow accurate?tohow trustworthy?Explainable
+AI (XAI) sits at the heart of this transition: it provides
+the interpretive scaffolding through which complex model
+decisions can be audited, validated, and ultimately trusted by
+the clinicians who act on them. This section examines why
+transparency is a non-negotiable requirement in nephrology-
+oriented AI, evaluates the practical landscape of post-hoc
+visualization and inherently interpretable design, and considers
+how these tools together support a collaborative, human-in-the-
+loop clinical workflow.
+--- PAGE 4 ---
+5
+A. Why Explainability Matters in Surgical Planning
+High Dice scores and classification accuracies are nec-
+essary but insufficient criteria for surgical AI. In nephrol-
+ogy, automated outputs directly shape high-stakes procedu-
+ral decisions—from preoperative planning for Percutaneous
+Nephrolithotomy (PCNL) to intraoperative guidance during
+robot-assisted partial nephrectomies [31]. Under these condi-
+tions, an unexplained prediction carries genuine clinical risk:
+if a model flags a renal mass without indicating which imaging
+features drove that classification, the clinician has no reliable
+means to confirm or contest it [10].
+This accountability gap is not merely philosophical. A
+comparative study on stone-free rate prediction demonstrated
+that large language models, despite their broad linguistic capa-
+bilities, failed to outperform validated clinical scoring systems
+precisely because their reasoning chains were opaque and
+could not be subjected to clinical scrutiny [32]. The authors
+identified non-transparency as a primary barrier to adoption—
+a finding that generalises across deep learning modalities in
+urological AI. XAI addresses this by transforming black-box
+predictions into auditable, spatially grounded justifications,
+repositioning automated systems as decision-support tools
+rather than autonomous diagnostic agents.
+B. Gradient-Based Visualizations: Grad-CAM and Variants
+Gradient-weighted Class Activation Mapping (Grad-CAM)
+remains the most widely adopted post-hoc interpretability
+technique in renal imaging, owing to its architectural agnos-
+ticism and low implementation overhead. By back-projecting
+the spatial gradients of the final convolutional layer onto the in-
+put image, Grad-CAM generates coarse localization heatmaps
+that identify the anatomical regions most influential to a
+given prediction. In CT-based renal analysis, this mechanism
+offers clinicians a rapid visual sanity check: does the model’s
+activation align with the pathological region, or is it responding
+to irrelevant background structure?
+Multi-center 3D CNN frameworks have leveraged these
+maps to establish explainable visual correlations between
+lesion size and detection confidence across heterogeneous
+imaging protocols [13]. Attention-augmented detectors sim-
+ilarly employ spatial and channel attention outputs to confirm
+that network focus concentrates on calcified stone deposits
+or irregular tumor margins rather than adjacent parenchymal
+tissue [33]. The DAE-Former architecture goes a step further,
+demonstrating that Transformer-based attention maps can be
+inherently gradient-interpretable, providing multi-organ con-
+touring outputs with built-in spatial accountability for radiation
+dose planning [29].
+Nonetheless, gradient-based explanations carry well-
+documented limitations. Their spatial resolution is constrained
+by the receptive field of the final convolutional stage, and
+they are susceptible to highlighting imaging features that are
+statistically correlated with the target class without being
+causally responsible for the pathology. This distinction—
+correlation versus causation in saliency mapping—remains an
+open research problem and motivates the exploration of more
+structurally integrated interpretability approaches.
+C. Inherent Interpretability vs. Post-Hoc Analysis
+Post-hoc methods like Grad-CAM and SHAP (SHapley
+Additive exPlanations) offer broad applicability across pre-
+trained networks, but their explanations are approximations
+of decisions already made. A fundamentally different design
+philosophy embeds interpretability into the architecture itself,
+ensuring that the reasoning process is transparent by construc-
+tion rather than reconstructed after the fact.
+Convolutional Block Attention Modules (CBAM) and Bi-
+Level Routing Attention (BRA), as deployed in hybrid CNN-
+Transformer segmentation networks, produce explicit spatial
+focus matrices at each feature extraction stage [30]. The prac-
+tical implication is that a radiologist reviewing such a model’s
+output can trace exactly which spatial regions were weighted
+at each processing layer, rather than relying on a single ter-
+minal heatmap. This architectural transparency is particularly
+valuable in multi-class scenarios: in the CNN-Attention-LSTM
+framework for sequential kidney stone detection, the integrated
+attention outputs identify high-activation stone positions slice-
+by-slice, constructing an auditable diagnostic chain across
+volumetric CT series [34].
+At the other end of the interpretability spectrum, classi-
+cal feature engineering approaches—such as Gray-Level Co-
+occurrence Matrix (GLCM) texture analysis combined with
+statistical feature selection (POE+ACC)—offer fully determin-
+istic, rule-based transparency [14]. This drive for architec-
+tural transparency, alternative structured feature extraction, and
+domain-adapted text-vision models is similarly documented
+across a wide swath of earlier computational frameworks
+and hybrid benchmarks [35]–[42]. These methods produce
+inherently interpretable decision boundaries but sacrifice the
+semantic depth and contextual sensitivity that deep represen-
+tations provide. In practice, neither extreme is universally op-
+timal; the appropriate balance depends on the clinical task, the
+regulatory environment, and the degree of radiologist oversight
+available. Hybrid approaches that pair deep visual features
+with structured, interpretable output heads represent the most
+pragmatic direction for near-term clinical deployment.
+D. Human-AI Collaboration and Standardisation
+The practical goal of XAI in renal diagnostics is not to
+make every model decision comprehensible in isolation, but
+to calibrate how much autonomy clinicians should delegate
+to automated systems across different task types. For routine
+multi-class triage on standard CT protocols, a well-validated
+model with Grad-CAM outputs may provide sufficient trans-
+parency. For edge cases—atypical tumor morphologies, multi-
+component calculi, or post-operative anatomy—clinician over-
+ride supported by detailed attention maps becomes essential.
+Embedding XAI into the clinical workflow shifts the ra-
+diologist’s role from exhaustive manual screening to targeted
+validation of AI-highlighted anomalies [15]. This redistribu-
+tion of cognitive load is clinically meaningful: it reduces
+interpretation fatigue in high-volume imaging centres while
+preserving the specialist judgment that automated systems
+cannot yet replicate. The limiting factor is not technical capa-
+bility but the absence of standardised interpretability protocols.
+--- PAGE 5 ---
+6
+As a systematic review of hybrid CNN-Transformer models
+across 112 studies confirmed, most architectures are evalu-
+ated without consistent XAI benchmarks, making cross-study
+comparison of trustworthiness claims difficult [43]. Emerging
+frameworks such as Causal Representation Learning (CRL)
+offer a principled route toward standardisation by formalising
+the causal reasoning that links imaging features to clinical
+outcomes, though their integration into production medical AI
+pipelines remains an active area of development.
+VI. A PROPOSEDUNIFIEDCLINICALFRAMEWORK
+The preceding sections have documented substantial
+progress across individual diagnostic tasks—classification,
+segmentation, NLP, and interpretability—yet the practical gap
+between algorithmic benchmarks and operational clinical tools
+remains wide. This section pivots from retrospective synthesis
+to a prospective architectural proposal. Serving as a roadmap
+for future researchers, this proposed pipeline is a conceptual
+synthesis of the best-performing models identified in Sec-
+tion IV. We introduce a theoretical three-stage multimodal
+framework designed to unify renal triage, surgical boundary
+mapping, and automated clinical reporting within a single
+coherent pipeline, culminating in an interactive dashboard that
+addresses both the computational and workflow demands of
+active nephrological practice.
+A. The Three-Stage Clinical Gap
+The fragmentation of current renal AI is not merely a
+modelling limitation—it reflects a systemic disconnect in how
+the field has framed the clinical problem. Classification net-
+works are optimised for category discrimination; segmentation
+models for spatial precision; NLP systems for unstructured
+text. None of these, individually, addresses the full diagnostic
+cycle that a nephrologist must navigate:What is the pathology?
+Where exactly are its margins? And what does the patient’s
+clinical history tell us about management?
+A model that achieves 99% accuracy on the Kaggle CT
+Kidney dataset [44] provides no direct guidance on whether a
+2.8 cm renal mass requires immediate surgical intervention
+or active surveillance. Conversely, a highly accurate vol-
+umetric segmentation model for the KiTS challenges [11]
+produces surgical masks without the accompanying multi-
+class discrimination needed to guide pre-operative planning
+for heterogeneous pathologies. These isolated strengths, when
+combined with the lack of native integration with patient
+health records, produce a workflow that demands substan-
+tial radiologist synthesis—precisely the burden that clinical
+AI should reduce. The conceptual framework proposed here
+(Figure 4) explicitly targets this translational gap by treating
+detection, surgical mapping, and automated reporting as de-
+pendent, sequentially coupled stages rather than independent
+computational problems.
+B. Stage 1: Automated Renal Pathology Classification
+The first stage functions as a high-throughput triage
+gate. Hospital Picture Archiving and Communication Sys-
+tems (PACS) process substantial daily imaging volumes, and
+the practical viability of any AI-assisted workflow depends
+on architectures lightweight enough to operate within stan-
+dard clinical computational budgets. Drawing on the Kid-
+neyNeXt backbone augmented with Pyramid Channel and
+Spatial Attention (PCSA) modules [26], [45], this stage
+would theoretically perform rapid multi-class categorisation
+based on the benchmark capabilities of these architectures
+across the four clinically relevant renal pathology categories—
+normal parenchyma, complex cysts, calcified stones, and solid
+malignancies—on standard 12,446-image CT datasets.
+Critically, this classification stage is not an end-point but a
+gating mechanism. Normal findings are logged and discharged
+from further processing; critical findings—tumour or obstruct-
+ing calculus detections—conditionally route the imaging data
+to Stage 2. This conditional architecture ensures that com-
+putationally expensive segmentation resources are deployed
+selectively, preserving system throughput without sacrificing
+diagnostic coverage.
+C. Stage 2: Real-Time Surgical Boundary Segmentation
+Preoperative planning for robot-assisted partial nephrectomy
+or PCNL demands spatial precision that extends well be-
+yond what classification outputs provide. Surgeons require
+exact tumour margins, stone dimensions, and proximity to
+collecting system structures to minimise parenchymal sacrifice
+and reduce vascular complication risk. This stage addresses
+that need through real-time instance segmentation, propos-
+ing YOLOv11-based architectures adapted for medical imag-
+ing [46].
+The case for a YOLO-family approach over traditional
+3D U-Nets rests on practical clinical deployment constraints.
+While architectures such as ASD-Net [16] or the spatial-
+channel attention enhanced U-Net [17] deliver strong Dice
+performance on KiTS benchmarks, their 3D volumetric con-
+volutions introduce inference latencies that are incompatible
+with real-time surgical guidance. A streamlined single-stage
+detector, operating on axial CT slices with CBAM-augmented
+attention, translates bounding box predictions into actionable
+surgical boundary masks at frame rates appropriate for intra-
+operative use, delivering the low-latency spatial feedback that
+the clinical environment demands.
+D. Stage 3: Clinical NLP Integration
+The third stage addresses a dimension of clinical AI that
+the imaging literature has largely treated as peripheral: the
+structured representation of unstructured clinical knowledge.
+Radiological reports, referring physician notes, and laboratory
+results contain contextual information—prior stone episodes,
+family history of renal cell carcinoma, eGFR trajectories—that
+no amount of CT pixel analysis can replicate. Integrating this
+textual context into the diagnostic workflow requires domain-
+adapted biomedical language models.
+By deploying PubMedBERT [47] fine-tuned for clinical
+Named Entity Recognition (NER), this stage would theoreti-
+cally ingest the unstructured patient health record alongside the
+visual metadata produced in Stages 1 and 2. The NLP engine
+--- PAGE 6 ---
+7
+Fig. 4.Proposed Unified Clinical Pipeline.The theoretical three-stage multimodal framework integrates lightweight CT classification for rapid triage
+(Stage 1), YOLO-based real-time boundary segmentation triggered by critical findings (Stage 2), and PubMedBERT-driven clinical NLP for automated report
+generation (Stage 3). All outputs converge in an interactive clinical dashboard.
+extracts structured clinical entities—pathology type, anatomi-
+cal location, relevant comorbidities, and urgency indicators—
+and maps them against the imaging findings. A confirmed 3 cm
+lower-pole renal mass, when cross-referenced with a clinical
+note documenting haematuria and elevated creatinine, yields
+a materially different management recommendation than the
+same imaging finding in an asymptomatic screening context.
+This multimodal synthesis is precisely the integration that
+current literature identifies as absent from deployed renal AI
+systems [48].
+E. The Integrated Clinical Dashboard
+The technical outputs of the three stages described above
+are clinically meaningful only if they are accessible and
+interpretable at the point of care. The proposed dashboard
+consolidates four information streams into a single interface:
+the original DICOM CT slice; the Grad-CAM interpretability
+overlay from Stage 1; the YOLO-generated surgical boundary
+masks from Stage 2; and the structured clinical metadata
+compiled by Stage 3. This co-presentation is deliberate—
+it enables the reviewing nephrologist or urologist to cross-
+validate the automated findings against the original imaging
+and the patient’s clinical context without navigating multiple
+systems.
+The design principle underlying this dashboard is epistemic
+transparency: every automated output is accompanied by its
+visual justification, and the clinician retains final authority at
+each decision point. This architecture directly addresses the
+accountability concerns raised in Section V, embedding XAI
+not as a post-development afterthought but as a structural
+component of the clinical interface. Integration with HL7
+FHIR standards ensures that dashboard outputs feed directly
+into existing hospital information systems, avoiding the man-
+ual transcription overhead that represents one of the most
+persistent barriers to AI adoption in clinical settings [13].
+VII. REAL-WORLDDEPLOYMENTCHALLENGES
+Demonstrating strong performance on curated benchmark
+datasets is a necessary but insufficient condition for clinical
+deployment. The gap between a model that achieves 99%
+accuracy on the Kaggle CT Kidney dataset and one that func-
+tions reliably across the heterogeneous conditions of a busy
+district general hospital is substantial, and the literature has
+only recently begun to address it systematically. This section
+examines the three most consequential barriers: distributional
+generalisation, the mismatch between algorithmic and clinical
+metrics, and the engineering complexity of PACS integration.
+A. Data Generalisation and Modality Shifts
+The majority of high-performing renal AI models are trained
+and validated on a small number of well-curated repositories.
+The Kaggle CT Kidney dataset [44], [49] and the KiTS
+challenge cohorts [11] have been invaluable for establishing
+algorithmic baselines, but their controlled acquisition condi-
+tions do not reflect the scanner heterogeneity encountered in
+routine clinical imaging. Slice thickness, reconstruction kernel,
+contrast phase, and vendor-specific HU calibration all vary
+--- PAGE 7 ---
+8
+substantially across institutions, and these variations system-
+atically degrade model performance in ways that benchmark
+evaluations do not capture [15].
+This reliance on homogeneous training data or single-
+modality captures is a prevalent limitation observed across
+a broad spectrum of current multi-task, super-resolution, and
+volumetric segmentation literature [50]–[57].
+The multi-phase nature of renal CT protocols compounds
+this problem. Models trained primarily on portal venous
+or nephrographic phase acquisitions frequently fail on non-
+contrast studies, where calculi are most visible but soft-tissue
+contrast is limited, and on arterial phase acquisitions, where
+vascular anatomy introduces confounding HU patterns [13],
+[58]. Without prospective multi-centre validation incorporating
+the full range of acquisition protocols encountered in clinical
+practice, published performance figures should be interpreted
+with caution. The models reviewed in this survey that ex-
+plicitly report external validation—notably the multi-centre
+3D CNN of Liang et al. [13] and the DBAR-Net of Sharon
+and Anbarasi [59]—represent the direction that the field must
+move, but they remain the exception rather than the rule.
+B. Algorithmic vs. Clinical Metrics
+The standard performance vocabulary of deep learning—
+Dice Similarity Coefficient, Intersection over Union, macro
+F1-score—was designed to measure spatial or categorical
+alignment between model outputs and annotated ground truth.
+These metrics are well-suited to comparing architectures on a
+fixed dataset, but they are poor proxies for the outcomes that
+matter clinically.
+Consider a model that achieves a Dice score of 0.92 on kid-
+ney tumour segmentation. That figure may reflect near-perfect
+delineation of a large, well-defined clear cell carcinoma while
+entirely missing a 4 mm satellite lesion at the tumour margin—
+a miss that has negligible impact on the aggregate score but
+significant implications for resection completeness [17], [60].
+Equally, a stone detection model reporting 96% accuracy may
+perform adequately on stones larger than 5 mm while failing
+on sub-3 mm calculi that are clinically relevant for PCNL
+access planning [58]. The disconnect is systematic: optimising
+for pixel-level metrics during training does not guarantee that
+the resulting model behaviour aligns with surgical priorities.
+Addressing this requires a fundamental shift in how renal
+AI is evaluated. Clinical validation studies should incorpo-
+rate task-specific metrics: stone-free rate prediction, surgical
+margin clearance rates, reduction in time-to-report, and inter-
+observer variability across radiologist cohorts [61]. Progress in
+this direction is slow—partly because such endpoints require
+prospective clinical trial infrastructure—but it is a prerequisite
+for regulatory approval and sustainable clinical adoption.
+C. PACS Integration and Computational Overhead
+Even a model that satisfies both generalisation and clin-
+ical validity requirements faces a third class of challenge:
+the practical engineering of integration into legacy hospital
+infrastructure. Most deployed clinical imaging systems were
+not designed with deep learning inference in mind, and
+retrofitting AI processing into existing PACS workflows intro-
+duces non-trivial latency, data governance, and interoperability
+constraints.
+Large-scale 3D architectures—volumetric U-Net variants,
+multi-scale Vision Transformers—typically require enterprise-
+grade GPU hardware (e.g., NVIDIA A100 or Tesla-class
+accelerators) to maintain inference speeds compatible with
+clinical workflows [29], [31]. The majority of district-level
+clinical environments lack this infrastructure, and even where
+it exists, the overhead of routing DICOM data to GPU-
+equipped inference servers introduces latency that may be
+unacceptable for time-sensitive applications such as emer-
+gency renal colic triage [58]. Model compression techniques—
+quantisation, knowledge distillation, and pruning—offer par-
+tial mitigation, but their application to medical imaging models
+requires careful validation to ensure that compression does
+not disproportionately degrade performance on the rare but
+clinically critical edge cases [10].
+Interoperability presents a parallel challenge. Clinical AI
+outputs must be delivered in formats that integrate natively
+with hospital information systems and downstream docu-
+mentation workflows. The HL7 FHIR standard provides a
+structured mechanism for this integration, and its adoption by
+frameworks such as the multi-centre urinary disease detection
+system of Liang et al. [13] demonstrates that PACS-compatible
+deployment is achievable. Scaling this approach across diverse
+institutional environments, each with different legacy system
+configurations, nonetheless remains a substantial engineering
+undertaking that the research community has yet to address
+systematically [62].
+VIII. CONCLUSION
+A. Summary of Findings
+This survey has traced the progression of deep learning in
+renal imaging from early CNN-based multi-class classifiers
+through to the current generation of hybrid Vision Transformer
+and attention-augmented architectures. Several clear trajecto-
+ries emerge from the literature. First, raw classification and
+segmentation accuracy—while still improving—is no longer
+the primary differentiator between architectures; the field is
+increasingly stratified by computational efficiency, architec-
+tural interpretability, and demonstrated robustness to domain
+shift. Second, the adoption of Explainable AI has moved from
+optional enhancement to practical necessity: models deployed
+in surgical planning contexts without transparent decision
+mechanisms face significant barriers to clinical acceptance,
+regardless of their benchmark performance. Third, and most
+significantly, the prevailing model-centric framing of renal
+AI—in which each architecture is evaluated in isolation on a
+static dataset—is increasingly misaligned with the integrated,
+multimodal nature of actual clinical workflows.
+The reviewed literature also reveals persistent structural
+gaps. Multi-centre external validation remains rare. Clinical
+outcome metrics are seldom reported alongside algorithmic
+ones. NLP integration with imaging pipelines is largely theo-
+retical in existing publications. These gaps are not incidental;
+they reflect the boundary between what is tractable as a
+--- PAGE 8 ---
+9
+machine learning problem and what is required for clinical
+translation.
+B. Clinical Outlook
+The trajectory of renal AI points unambiguously toward
+multimodal integration. The isolated successes documented
+across classification, segmentation, and language modelling
+are necessary precursors, but they become clinically trans-
+formative only when composed into coherent diagnostic
+pipelines. The unified framework proposed in Section VI
+represents one such composition: a sequentially coupled sys-
+tem in which lightweight classification gates downstream
+segmentation, segmentation outputs inform report generation,
+and all findings are presented through an interpretable, PACS-
+integrated interface.
+Realising this vision requires progress on multiple fronts
+simultaneously—generalisation, evaluation methodology, and
+systems engineering—none of which can be solved by al-
+gorithmic innovation alone. It demands prospective clinical
+collaborations, standardised benchmarking protocols, and reg-
+ulatory frameworks adapted to the iterative nature of deployed
+AI. The role of the nephrologist and urologist in this process is
+not diminished by automation; it is recentred. Human clinical
+judgment remains the validating authority for AI outputs, and
+designing systems that honour that authority—through trans-
+parency, appropriate uncertainty communication, and genuine
+human override capacity—is the most consequential design
+challenge facing renal AI today.
+REFERENCES
+[1] S. Degadwala, “A review on kidney stone detection using ml and dl
+techniques,” 2024.
+[2] M. Aljohani, “Clinical-oriented hierarchical machine learning frame-
+work for early kidney tumor detection and malignant subtype classi-
+fication,”Tomography, 2025.
+[3] W. Obaidet al., “Noisy ultrasound kidney image classifications,”Ultra-
+sound Image Analysis (Vol. 6, No. 8), 2025.
+[4] S. U. R. Khanet al., “Multi-level feature fusion network,”Computers
+in Biology and Medicine, 2025.
+[5] S. Verma and P. K. Singh, “Automated kidney stone detection using
+dgrgcnn,”Biomedical Materials & Devices, 2025.
+[6] M. U. Rehmanet al., “Kidney stone detection: A comprehensive
+analysis,” SSRN Tech Rep, Tech. Rep., 2024.
+[7] C. Scales Jret al., “Prevalence of kidney stones in the united states,”
+European Urology, 2012.
+[8] J. Wanget al., “Survival prediction model for renal carcinoma,”Scientific
+Reports, 2022.
+[9] M. Rajendranet al., “Kidney stone detection using machine learning,”
+inAIP Conference, 2025.
+[10] A. Kadhim and A. Mohammed, “Machine learning and deep learning
+approaches for kidney cancer detection: A survey,”arXiv preprint, 2024.
+[11] N. Helleret al., “The kits21 challenge,”arXiv, 2023.
+[12] M. Y . Chen, “Rapid segmentation of renal tumours to calculate volume
+using 3d interpolation,” 2021.
+[13] Y . Liang, “Multi-center 3d cnn with cross-attention fusion for urinary
+system disease detection,”arXiv preprint, 2025.
+[14] H. Farjadet al., “Ct-based kidney stone identification using glcm texture
+features and classical ml classifiers,”arXiv preprint, 2021.
+[15] A. Abdelrahman and S. Viriri, “Deep learning-based methods for kidney
+tumor segmentation: A survey,”arXiv preprint, 2022.
+[16] Z. Jiet al., “Asd-net: a novel u-net based asymmetric spatial-channel
+convolution network,”Medical & Biological Engineering & Computing,
+vol. 62, pp. 1673–1687, 2024.
+[17] S. Gohil and A. Lad, “Kidney and kidney tumor segmentation using
+spatial and channel attention enhanced u-net,” PDEU Technical Report
+/ KiTS21 Submission, Tech. Rep., 2024.
+[18] D. Alzu’biet al., “Kidney tumor detection and classification,”Journal
+of Healthcare Engineering, 2022.
+[19] M. Bhandariet al., “Lightweight cnn model accurately identifying renal
+abnormalities,”Applied Sciences, 2023.
+[20] V . Rathva and D. Degadwala, “Ensemble deep learning for enhanced
+ct-scan kidney stone classification,”Int J Sci Res Sci&Technol, 2025.
+[21] T. Tarulet al., “Empirical analysis of kidney stone detection,”LNNS,
+vol. 1495, 2025.
+[22] A. Pimpalkaret al., “Fine-tuned deep learning models for early detec-
+tion,”Scientific Reports, 2025.
+[23] A. Abdelrahman and S. Viriri, “Efficientnet family u-net models for
+semantic segmentation,”Frontiers, 2023.
+[24] T. Zhaoet al., “Automatic renal mass segmentation and classification,”
+Frontiers in Oncology, 2023.
+[25] Z. Chen and H. Liu, “5d cascaded semantic segmentation for kidney
+tumor cyst,” inKiTS Challenge, 2021.
+[26] A. Alqahtaniet al., “Kidneynext: A lightweight cnn for multi-class renal
+tumor classification,”PubMed Central, 2025.
+[27] M. Islamet al., “Vision transformer for kidney detection,”ResearchGate,
+2022.
+[28] Heet al., “H2former: An h2 hybrid cnn-transformer network for medical
+image segmentation,”arXiv preprint, 2023.
+[29] R. Azadet al., “Dae-former: Dual attention-guided efficient transformer
+for medical image segmentation,”arXiv preprint arXiv:2212.13504v3,
+2023.
+[30] Lanet al., “Brau-net++: U-shaped hybrid cnn-transformer network for
+medical image segmentation,”arXiv preprint, 2024.
+[31] D. Liet al., “Automatic kidney and kidney stone segmentation using
+deep learning for pcnl preoperative planning,”arXiv preprint, 2022.
+[32] Elmaa ˘gac ¸et al., “Comparison of scoring systems and chatgpt for
+predicting stone-free rate after percutaneous nephrolithotomy,”Clinical
+Urology Preprints, 2026.
+[33] Sajidet al., “Yolov8-cbam: Attention-enhanced object detection for
+multi-class kidney disease on ct,”arXiv preprint, 2026.
+[34] A. H. J. AL-EBADAet al., “Hybrid cnn-attention-lstm architecture
+for automated kidney stone detection,”Engineering and Technology
+Journal, vol. 11, no. 01, pp. 8720–8729, 2026.
+[35] T. Hossainet al., “Adaptive local binary pattern: A novel feature
+descriptor,”arXiv, 2024.
+[36] D. Eltonet al., “Deep learning for stone detection,”Medical Physics,
+2022.
+[37] J. Leeet al., “Biobert: Pretrained language model,”Bioinformatics,
+2020.
+[38] L. Fanget al., “Bioformer: Efficient transformer,”arXiv, 2023.
+[39] R. Luoet al., “Biogpt: Generative transformer,”Briefings in Bioinfor-
+matics, 2022.
+[40] T. Hatsutaniet al., “Protuberance detection network (pdn),” inMICCAI,
+2023.
+[41] K. Sharmaet al., “Hybrid deep learning framework,”arXiv, 2025.
+[42] Mart ´ın and J. S ´anchez, “Evaluation of vision transformers for multi-
+modal classification,”arXiv, 2025.
+[43] Papanastasiouet al., “Systematic review: Hybrid cnn-transformer models
+for medical image analysis,”arXiv preprint, 2024.
+[44] N. Ahmed, “Ct kidney dataset (normal, cyst, tumor and stone),” Kaggle
+Dataset, 2021.
+[45] H. M. Tawfiket al., “Pcsa-net: Pyramid channel and spatial attention
+network,”Scientific Reports, 2026.
+[46] S. Akhtar, “Yolov11-samnet: A hybrid detection and segmentation
+framework for urine sediment analysis,” 2026.
+[47] Y . Guet al., “Domain-specific pretraining (pubmedbert),”ACM
+HEALTH, 2021.
+[48] S. C. Sreenivas, “Enhancing clinical named entity recognition via fine-
+tuned bert and dictionary-infused retrieval-augmented generation,” 2025.
+[49] M. N. Hossainet al., “Detection and classification of kidney disease
+from ct images: An automated deep learning approach,”Technologies,
+vol. 13, no. 11, p. 508, 2025.
+[50] P. Abdallaet al., “Axial ct imaging dataset,”Data in Brief, 2025.
+[51] J. Maet al., “The flare challenge,”Medical Image Analysis, 2022.
+[52] G. Mac ¸inet al., “Kidneynext (clinical validation study),”Journal of
+Clinical Medicine, 2025.
+[53] Xieet al., “Seru: A cascaded se-resnext u-net for kidney and tumor
+segmentation from ct images,”arXiv preprint, 2020.
+[54] P. Nguyenet al., “Super-resolution and attention-enhanced yolov7 for
+kidney stone detection on x-ray,”arXiv preprint, 2025.
+[55] Gaoet al., “Multitask deep learning for ultrasound-based renal tumor
+segmentation and classification,”arXiv preprint, 2026.
+--- PAGE 9 ---
+10
+[56] Chenet al., “Gl-unet: Global-local u-net for ultrasound-based kidney
+and parenchyma segmentation,”arXiv preprint, 2023.
+[57] J. Sherryl and T. Jaya, “Ied-resunet: Improved edge detection resunet
+for multi-class kidney disease classification,”arXiv preprint, 2022.
+[58] Y . Yeet al., “Automated kidney stone detection in non-contrast ct using
+yolov8,”arXiv preprint, 2026.
+[59] J. J. Sharon and L. J. Anbarasi, “An attention enhanced dilated bottleneck
+network for kidney disease classification,”Scientific Reports, vol. 15, p.
+9865, 2025.
+[60] A. Rajet al., “Deep learning-based total kidney volume segmentation in
+polycystic kidney disease,”Diagnostics, vol. 12, no. 5, p. 1159, 2022.
+[61] Y . Noorelahiet al., “Pacs and ct dose monitoring,”Abdominal Radiol-
+ogy, 2025.
+[62] M. Ali and Z. Zhang, “A comprehensive review of yolo architecture
+evolution: From yolov1 to yolov11,”arXiv preprint, 2024.

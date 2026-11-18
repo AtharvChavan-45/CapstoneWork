@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Capstone Project Presentation - AI-Based Kidney Abnormality Detection, Segmentation, Explainability, and Clinical Decision Support System">
+    <title>Capstone Project Presentation - NephroVision</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top-level Slide Deck Container -->
+    <main class="slide-deck" id="presentation-deck">
+        <!-- Abstract Background Glowing Effects -->
+        <div class="bg-glow"></div>
+        <div class="bg-glow-2"></div>
+
+        <!-- Slides Container -->
+        <div class="slide-container">
+            
+            <!-- SLIDE 1 — TITLE & PROJECT INTRODUCTION -->
+            <section class="slide active" id="slide-1">
+                <div class="title-layout">
+                    <span class="badge badge-cyan" style="margin-bottom: 1.5rem; font-size: 0.9rem;">Capstone Project Presentation</span>
+                    <h1 class="title-header">AI-Based Kidney Abnormality Detection, Segmentation, Explainability & Clinical Decision Support System</h1>
+                    <p class="title-subtitle">An Integrated Deep Learning and Biomedical NLP Framework for Kidney CT Analysis</p>
+                    
+                    <div class="title-meta-grid">
+                        <span class="badge badge-cyan">Medical Image Analysis</span>
+                        <span class="badge badge-green">Deep Learning</span>
+                        <span class="badge badge-red">Explainable AI</span>
+                        <span class="badge badge-purple">Biomedical NLP</span>
+                        <span class="badge badge-yellow">Generative AI</span>
+                        <span class="badge badge-cyan">Interactive 3D Visualization</span>
+                    </div>
+
+                    <div class="card w-65" style="margin-bottom: 2.5rem; border-color: rgba(0, 210, 255, 0.25);">
+                        <div class="card-title">🎯 Project Objective</div>
+                        <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-main);">
+                            Develop an integrated AI-assisted system that analyzes kidney CT scans, detects abnormalities, segments pathological regions, explains predictions, quantifies pathology extent, extracts clinical information, and provides context-aware recommendations.
+                        </p>
+                    </div>
+
+                    <div class="title-footer">
+                        <div><strong>Target Classes:</strong> Cyst | Normal | Stone | Tumor</div>
+                        <div>Advisor Eval Mode • August 2026</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 2 — PROBLEM STATEMENT & MOTIVATION -->
+            <section class="slide" id="slide-2">
+                <header class="slide-header">
+                    <h2><span class="accent">02.</span> Problem Statement & Motivation</h2>
+                    <p class="slide-subtitle">Understanding the clinical gaps in current renal diagnosis workflows</p>
+                </header>
+                <div class="slide-body grid-2">
+                    <div class="card flex-col">
+                        <div class="card-title text-red">🚨 Current Siloed Workflow & Challenges</div>
+                        <ul class="custom-list alert">
+                            <li><strong>Time Intensive:</strong> Manual interpretation of multi-slice CT scans causes clinical delays.</li>
+                            <li><strong>Lack of Spatial Mapping:</strong> Standalone classification lists categories but fails to map pathology boundaries.</li>
+                            <li><strong>Black-Box Predictions:</strong> High-accuracy deep models lack explainability, hindering clinical trust.</li>
+                            <li><strong>Separated Context:</strong> Patient clinical notes and imaging data are processed in disconnected systems.</li>
+                            <li><strong>Inaccurate Assessment:</strong> Qualitative staging lacks exact volumetric or area ratio measurements.</li>
+                            <li><strong>Tool Disjointedness:</strong> Multiple separate models do not provide a unified diagnostic workflow.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card flex-col">
+                        <div class="card-title text-green">💡 Proposed Integrated Framework (NephroVision)</div>
+                        <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            Establish a single consolidated AI pipeline connecting image vision with generative medical advice:
+                        </p>
+                        <div class="card" style="background: rgba(0, 255, 170, 0.03); border-color: rgba(0, 255, 170, 0.15); padding: 1rem;">
+                            <ul class="custom-list success" style="font-size: 0.9rem;">
+                                <li><strong>CT Classification</strong> via PCSA-KidneyNeXt module (99.92% Acc).</li>
+                                <li><strong>Explainability</strong> via target layer Grad-CAM visual heatmaps.</li>
+                                <li><strong>Localization</strong> via conditional YOLOv11 segmentation routing.</li>
+                                <li><strong>Quantification</strong> via OpenCV contour pixel ratio calculations.</li>
+                                <li><strong>Entity Parsing</strong> via Biomedical NER from clinical history text.</li>
+                                <li><strong>Generative Advisory</strong> using DeepSeek API context-aware diets.</li>
+                                <li><strong>Interactive Graphics</strong> via Plotly 3D spatial reconstructions.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3 — PROJECT OBJECTIVES -->
+            <section class="slide" id="slide-3">
+                <header class="slide-header">
+                    <h2><span class="accent">03.</span> Project Objectives</h2>
+                    <p class="slide-subtitle">Methodological milestones of the developed framework</p>
+                </header>
+                <div class="slide-body grid-4">
+                    <div class="card flex-col">
+                        <div class="badge badge-cyan w-40">Obj 1</div>
+                        <div class="card-title" style="margin-top: 0.5rem; margin-bottom: 0.25rem;">Multi-Class Classification</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Classify kidney CT scans into Normal, Cyst, Stone, and Tumor using KidneyNeXt.</p>
+                    </div>
+                    <div class="card flex-col">
+                        <div class="badge badge-red w-40">Obj 2</div>
+                        <div class="card-title" style="margin-top: 0.5rem; margin-bottom: 0.25rem;">Explainable AI</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Deploy Grad-CAM attention heatmaps to localize features driving model decisions.</p>
+                    </div>
+                    <div class="card flex-col">
+                        <div class="badge badge-green w-40">Obj 3</div>
+                        <div class="card-title" style="margin-top: 0.5rem; margin-bottom: 0.25rem;">Lesion Segmentation</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Segment exact boundary regions of cysts and tumors using YOLO model routing.</p>
+                    </div>
+                    <div class="card flex-col">
+                        <div class="badge badge-yellow w-40">Obj 4</div>
+                        <div class="card-title" style="margin-top: 0.5rem; margin-bottom: 0.25rem;">Area Quantification</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Calculate pathology area and pathology-to-kidney ratio via OpenCV.</p>
+                    </div>
+                    <div class="card flex-col">
+                        <div class="badge badge-purple w-40">Obj 5</div>
+                        <div class="card-title" style="margin-top: 0.5rem; margin-bottom: 0.25rem;">Clinical NLP</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Extract clinical entities and medical contexts from unstructured text notes.</p>
+                    </div>
+                    <div class="card flex-col">
+                        <div class="badge badge-yellow w-40">Obj 6</div>
+                        <div class="card-title" style="margin-top: 0.5rem; margin-bottom: 0.25rem;">AI Dietitian</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Generate personalized diabetic and renal diets using rules & DeepSeek.</p>
+                    </div>
+                    <div class="card flex-col">
+                        <div class="badge badge-cyan w-40">Obj 7</div>
+                        <div class="card-title" style="margin-top: 0.5rem; margin-bottom: 0.25rem;">Interactive 3D Plot</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Construct and render interactive 3D spatial boundaries using Plotly Scatter3D.</p>
+                    </div>
+                    <div class="card flex-col">
+                        <div class="badge badge-green w-40">Obj 8</div>
+                        <div class="card-title" style="margin-top: 0.5rem; margin-bottom: 0.25rem;">Smart Merger</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Combine cyst and tumor annotations programmatically to build a unified dataset.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4 — SYSTEM ARCHITECTURE -->
+            <section class="slide" id="slide-4">
+                <header class="slide-header">
+                    <h2><span class="accent">04.</span> Proposed System Architecture</h2>
+                    <p class="slide-subtitle">Structural framework showing Image, NLP, and Recommendation pipelines</p>
+                </header>
+                <div class="slide-body arch-visual-container">
+                    <!-- Action Toggle Button to overlay actual screenshots -->
+                    <button class="diagram-toggle-btn" onclick="toggleArchitectureDiagram('arch-drawio-overlay')">👁️ View Draw.io Diagram</button>
+                    
+                    <!-- Core CSS Architecture Flow -->
+                    <div class="grid-3" style="height: 100%; align-items: stretch;">
+                        
+                        <!-- COLUMN 1: IMAGE PROCESSING PIPELINE -->
+                        <div class="card flex-col" style="justify-content: space-between; border-color: rgba(0, 210, 255, 0.15);">
+                            <div class="badge badge-cyan" style="align-self: flex-start;">Image Pipeline</div>
+                            <div class="flow-diagram">
+                                <div class="flow-node">📥 CT Image Input</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">⚙️ Preprocessing (224×224)</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">🧠 PCSA Classifier (KidneyNeXt)</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">🔍 Grad-CAM Explainability</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">🔀 Conditional Routing</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">📐 YOLO Segmentation</div>
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 2: CLINICAL NLP PIPELINE -->
+                        <div class="card flex-col" style="justify-content: space-between; border-color: rgba(157, 78, 221, 0.15);">
+                            <div class="badge badge-purple" style="align-self: flex-start;">NLP Pipeline</div>
+                            <div class="flow-diagram" style="margin-top: 2rem;">
+                                <div class="flow-node">✍️ Unstructured Patient Notes</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">🔬 Hugging Face Tokenizer</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">🏷️ Biomedical NER Classifier</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">📋 Clinical Entity Extraction</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">🏥 Clinical Context File</div>
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 3: CLINICAL DECISION & VISUALIZATION -->
+                        <div class="card flex-col" style="justify-content: space-between; border-color: rgba(0, 255, 170, 0.15);">
+                            <div class="badge badge-green" style="align-self: flex-start;">Advisory & Visualization</div>
+                            <div class="flow-diagram" style="margin-top: 1rem;">
+                                <div class="flow-node">📊 Segmentation Masks & Ratios</div>
+                                <div class="flow-node" style="margin-top: 0.5rem;">🏥 Extracted Clinical Context</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">🤖 Rule-Based Alert Trigger</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node">💬 DeepSeek Recommendation</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-node active-node">🖥️ Interactive 3D/2D Dashboard</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Overlay Draw.io Image Container -->
+                    <div id="arch-drawio-overlay" class="arch-diagram-overlay">
+                        <!-- Use relative path to Draw.io diagram in workspace -->
+                        <img src="3dfg.drawio.png" alt="Draw.io System Architecture Diagram">
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5 — END-TO-END DATA FLOW -->
+            <section class="slide" id="slide-5">
+                <header class="slide-header">
+                    <h2><span class="accent">05.</span> End-to-End Data Flow</h2>
+                    <p class="slide-subtitle">Chronological 17-step pathway transforming raw inputs to clinical advisories</p>
+                </header>
+                <div class="slide-body grid-3">
+                    <div class="card flex-col justify-between" style="grid-column: span 2;">
+                        <div class="card-title">🔄 Sequential Diagnostic Stepper</div>
+                        <div class="stepper-container" style="height: 380px; overflow-y: auto; padding-right: 8px;">
+                            <div class="stepper-step">
+                                <div class="step-num">1</div>
+                                <div class="step-text"><strong>Input Ingestion:</strong> Ingest CT slice image and clinical history paragraph.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">2</div>
+                                <div class="step-text"><strong>RGB Conversion:</strong> Convert input grayscale CT scan matrices to 3-channel RGB.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">3</div>
+                                <div class="step-text"><strong>Spatial Resize:</strong> Clamps spatial height and width resolution to 224 × 224 pixels.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">4</div>
+                                <div class="step-text"><strong>Tensor conversion:</strong> Converts preprocessed NumPy arrays into float PyTorch tensors.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">5</div>
+                                <div class="step-text"><strong>Normalization:</strong> Standardizes tensors using ImageNet mean/standard deviation.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">6</div>
+                                <div class="step-text"><strong>PCSA Inference:</strong> Primary classifier predicts categorical class probabilities.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">7</div>
+                                <div class="step-text"><strong>Grad-CAM:</strong> Computes gradient backpropagation relative to the target feature map layer.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">8</div>
+                                <div class="step-text"><strong>Model Routing:</strong> Directs Tumor class → Tumor YOLO, Cyst class → Cyst YOLO.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">9</div>
+                                <div class="step-text"><strong>Mask Generation:</strong> Router executes inference to yield polygon boundary masks.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">10</div>
+                                <div class="step-text"><strong>Contour Extraction:</strong> Extracts closed coordinate polygon outlines from YOLO masks.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">11</div>
+                                <div class="step-text"><strong>Area Computation:</strong> Sums total pixel areas of kidney contours and pathology contours using OpenCV.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">12</div>
+                                <div class="step-text"><strong>Pathology Ratio:</strong> Computes ratio to check if tissue replacement exceeds alert thresholds.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">13</div>
+                                <div class="step-text"><strong>NER Tokenization:</strong> Passes clinical notes through the Hugging Face transformer pipeline.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">14</div>
+                                <div class="step-text"><strong>Extraction & Cleaning:</strong> Cleans WordPiece token boundaries and filters duplicate entities.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">15</div>
+                                <div class="step-text"><strong>Context Compilation:</strong> Builds the dictionary of clinical symptoms and diagnostic facts.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">16</div>
+                                <div class="step-text"><strong>DeepSeek Advisory:</strong> Combines notes, stats, and ratio to generate lifestyle recommendations.</div>
+                            </div>
+                            <div class="stepper-step">
+                                <div class="step-num">17</div>
+                                <div class="step-text"><strong>UI Composition:</strong> Renders all visual and textual results in the final dashboard.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-col">
+                        <div class="card flex-col" style="border-color: rgba(0, 210, 255, 0.25);">
+                            <div class="card-title text-cyan">📐 Pathology Ratio Calculation</div>
+                            <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted);">
+                                Calculated automatically from segmentation mask pixel counts using OpenCV contour summation:
+                            </p>
+                            <div class="code-block" style="margin-top: 0.5rem; text-align: center; font-size: 1rem; color: var(--color-cyan);">
+                                Ratio (%) = <br>
+                                (Pathology Area / Kidney Area) × 100
+                            </div>
+                        </div>
+
+                        <div class="card flex-col" style="border-color: rgba(255, 42, 109, 0.15);">
+                            <div class="card-title text-red">⚠️ Threshold Rules (Alert Trigger)</div>
+                            <ul class="custom-list alert" style="font-size: 0.85rem;">
+                                <li><strong>Ratio &gt; 30%:</strong> Alerts high risk: Recommend considering Radical Nephrectomy.</li>
+                                <li><strong>Ratio &le; 30%:</strong> Alerts moderate risk: Recommend considering Partial Nephrectomy.</li>
+                            </ul>
+                            <p style="font-size: 0.8rem; font-style: italic; color: var(--text-muted); margin-top: 0.25rem;">
+                                Note: Alert guidelines are prototype rules and not clinically validated.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 6 — DATASET & DATA PREPARATION -->
+            <section class="slide" id="slide-6">
+                <header class="slide-header">
+                    <h2><span class="accent">06.</span> Dataset & Data Preparation</h2>
+                    <p class="slide-subtitle">Programmatic merger and standardization of separate segmentation sets</p>
+                </header>
+                <div class="slide-body grid-2">
+                    <div class="card flex-col">
+                        <div class="card-title text-cyan">🔀 Smart Dataset Merger Algorithm</div>
+                        <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted);">
+                            Cyst and Tumor segmentation labels were originally annotated in separate formats. We implemented an automated dataset merger script:
+                        </p>
+                        <ul class="custom-list success" style="font-size: 0.85rem; margin-top: 0.5rem;">
+                            <li><strong>YAML Extraction:</strong> Reads individual dataset configurations and standardizes labels.</li>
+                            <li><strong>Class ID Remapping:</strong> Maps conflicting labels into a single unified key index:
+                                <ul style="margin-left: 1.5rem; margin-top: 0.25rem; list-style-type: circle; color: var(--text-muted);">
+                                    <li>Class 0 &rarr; <code>kidney</code></li>
+                                    <li>Class 1 &rarr; <code>tumor</code></li>
+                                    <li>Class 2 &rarr; <code>cyst</code></li>
+                                </ul>
+                            </li>
+                            <li><strong>Collision Prevention:</strong> Prefixes all file names with <code>tumor_</code> and <code>cyst_</code> dynamically before copying to output folders.</li>
+                            <li><strong>Auto-generation:</strong> Exports unified training/validation/test datasets and compiles a single <code>data.yaml</code> configuration file.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card flex-col">
+                        <div class="card-title">📁 Unified Dataset Architecture</div>
+                        <div class="code-block" style="font-size: 0.85rem; line-height: 1.3;">
+combined_dataset/
+├── data.yaml            # Remapped classes: [kidney, tumor, cyst]
+├── train/
+│   ├── images/          # tumor_img1.jpg, cyst_img2.jpg...
+│   └── labels/          # Remapped text coordinates files
+├── valid/
+│   ├── images/
+│   └── labels/
+└── test/
+    ├── images/
+    └── labels/
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7 — DATASET STATISTICS -->
+            <section class="slide" id="slide-7">
+                <header class="slide-header">
+                    <h2><span class="accent">07.</span> Dataset Statistics</h2>
+                    <p class="slide-subtitle">Quantitative data distribution used for classifier and segmenter training</p>
+                </header>
+                <div class="slide-body grid-3">
+                    <!-- Stat Card 1 -->
+                    <div class="card flex-col" style="justify-content: space-between;">
+                        <div>
+                            <div class="badge badge-cyan" style="margin-bottom: 0.5rem;">Dataset 1: Classifier</div>
+                            <div class="stat-large">12,446</div>
+                            <div class="stat-label">Total CT Scan Images</div>
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 0.8rem; margin-top: 1rem;">
+                            <strong>Split:</strong> 80% Train/Val (9,956) | 20% Test (2,490)<br>
+                            <strong>Details:</strong> 5,077 Normal | 3,709 Cyst | 2,283 Tumor | 1,377 Stone
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 2 -->
+                    <div class="card flex-col" style="justify-content: space-between;">
+                        <div>
+                            <div class="badge badge-purple" style="margin-bottom: 0.5rem;">Dataset 2 & 3: Segmenters</div>
+                            <div class="stat-large">5,344</div>
+                            <div class="stat-label">Unified Segmentation Images</div>
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 0.8rem; margin-top: 1rem;">
+                            <strong>Tumor Set (D2):</strong> 2,262 images (1584 Train / 338 Val / 340 Test)<br>
+                            <strong>Cyst Set (D3):</strong> 3,082 images (2158 Train / 462 Val / 462 Test)
+                        </div>
+                    </div>
+
+                    <!-- CSS Bar Charts of Class Distribution -->
+                    <div class="card flex-col">
+                        <div class="card-title">📊 Primary Class Distribution</div>
+                        <div class="bar-chart-container" style="margin-top: 0.5rem;">
+                            <div class="bar-row">
+                                <div class="bar-label">Normal</div>
+                                <div class="bar-track"><div class="bar-fill bg-fill-cyan" style="width: 100%;"></div></div>
+                                <div class="bar-value">5,077</div>
+                            </div>
+                            <div class="bar-row">
+                                <div class="bar-label">Cyst</div>
+                                <div class="bar-track"><div class="bar-fill bg-fill-green" style="width: 73%;"></div></div>
+                                <div class="bar-value">3,709</div>
+                            </div>
+                            <div class="bar-row">
+                                <div class="bar-label">Tumor</div>
+                                <div class="bar-track"><div class="bar-fill bg-fill-purple" style="width: 45%;"></div></div>
+                                <div class="bar-value">2,283</div>
+                            </div>
+                            <div class="bar-row">
+                                <div class="bar-label">Stone</div>
+                                <div class="bar-track"><div class="bar-fill bg-fill-red" style="width: 27%;"></div></div>
+                                <div class="bar-value">1,377</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 8 — MODELS & TECHNOLOGIES -->
+            <section class="slide" id="slide-8">
+                <header class="slide-header">
+                    <h2><span class="accent">08.</span> AI Models and Technology Stack</h2>
+                    <p class="slide-subtitle">Core deep learning frameworks and biomedical APIs integrated in the project</p>
+                </header>
+                <div class="slide-body grid-3">
+                    
+                    <div class="card flex-col">
+                        <div class="card-title text-cyan">👁️ Vision Intelligence</div>
+                        <ul class="custom-list success" style="font-size: 0.85rem;">
+                            <li><strong>PCSA-KidneyNeXt:</strong> Custom multi-branch classifier capturing local (group convolutions) & global textures (PCSA attention).</li>
+                            <li><strong>Grad-CAM:</strong> Explainability module targeting class-specific features at layer <code>stage4</code>.</li>
+                            <li><strong>Ultralytics YOLOv11:</strong> Active instance segmentation specialists (Tumor and Cyst).</li>
+                        </ul>
+                    </div>
+
+                    <div class="card flex-col">
+                        <div class="card-title text-purple">🧠 Biomedical NLP & GenAI</div>
+                        <ul class="custom-list success" style="font-size: 0.85rem;">
+                            <li><strong>Biomedical NER Model:</strong> Hugging Face Transformers model <code>d4data/biomedical-ner-all</code> parses raw clinical notes.</li>
+                            <li><strong>DeepSeek API:</strong> Large Language Model generates context-aware postoperative care alerts.</li>
+                            <li><strong>Rule-Based Diet Module:</strong> Keywords filter logic (e.g. mapping hypertension notes to sodium limits).</li>
+                        </ul>
+                    </div>
+
+                    <div class="card flex-col">
+                        <div class="card-title text-green">🛠️ Development & Visualization</div>
+                        <ul class="custom-list success" style="font-size: 0.85rem;">
+                            <li><strong>Core Backend:</strong> PyTorch, Torchvision, OpenCV, PIL, Python.</li>
+                            <li><strong>Visualization UI:</strong> Plotly 3D (Scatter3D geometries), Matplotlib (heatmap visualizer).</li>
+                            <li><strong>Dataset Tools:</strong> Roboflow API, YAML configs parser, automated merger.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SLIDE 9 — STAGE 1: CLASSIFICATION + EXPLAINABLE AI -->
+            <section class="slide" id="slide-9">
+                <header class="slide-header">
+                    <h2><span class="accent">09.</span> Stage 1 — Classification and Explainable AI</h2>
+                    <p class="slide-subtitle">Automated diagnosis and anatomical verification using the PCSA-KidneyNeXt backbone</p>
+                </header>
+                <div class="slide-body grid-3">
+                    <div class="card flex-col" style="grid-column: span 2;">
+                        <div class="card-title text-cyan">🧠 Classifier Workflow & Hyperparameters</div>
+                        <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            Images undergo hierarchical downsampling and spatial scaling. The classifier architecture utilizes:
+                        </p>
+                        <div class="grid-2" style="font-size: 0.85rem;">
+                            <ul class="custom-list success">
+                                <li><strong>Model Architecture:</strong> 4-stage KidneyNeXt blocks (96 &rarr; 192 &rarr; 384 &rarr; 768 channels).</li>
+                                <li><strong>Parallel Branches:</strong> Max pooling, Average pooling, 3×3 & 5×5 group convolutions.</li>
+                                <li><strong>Trainable Parameters:</strong> 2,114,580 weights.</li>
+                            </ul>
+                            <ul class="custom-list success">
+                                <li><strong>Attention Module:</strong> Pyramid Channel & Spatial Attention (PCSA).</li>
+                                <li><strong>Loss / Optimizer:</strong> CrossEntropyLoss and AdamW optimization.</li>
+                                <li><strong>Grad-CAM target:</strong> <code>pcsa_classifier.stage4</code> layer activations.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card flex-col" style="justify-content: center; align-items: center; border-color: rgba(255, 42, 109, 0.25);">
+                        <div class="badge badge-red" style="margin-bottom: 0.5rem;">Explainable AI Overlay</div>
+                        <!-- Drawing a visual flowchart representer -->
+                        <div style="font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+                            <strong>Grad-CAM Output Focus:</strong><br>
+                            Anatomically grounds neural inference, highlighting pathological tissues and disregarding scanner bed artifacts.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 10 — STAGE 2: YOLO SEGMENTATION -->
+            <section class="slide" id="slide-10">
+                <header class="slide-header">
+                    <h2><span class="accent">10.</span> Stage 2 — Pathology Segmentation</h2>
+                    <p class="slide-subtitle">Localization and boundary delineation through conditional specialist routing</p>
+                </header>
+                <div class="slide-body grid-3">
+                    <div class="card flex-col" style="grid-column: span 2;">
+                        <div class="card-title text-green">🔄 Conditional Model Routing Diagram</div>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            The diagnostic system prevents execution overhead by only activating segmentation when classification detects positive pathologies:
+                        </p>
+                        <div class="card" style="background: var(--bg-secondary);">
+                            <div class="flow-diagram" style="flex-direction: row; justify-content: center; gap: 0.5rem;">
+                                <div class="flow-node">🧠 Primary Prediction</div>
+                                <div class="flow-arrow">&rarr;</div>
+                                <div class="flex-col" style="gap: 0.5rem;">
+                                    <div class="flow-node" style="border-color: var(--color-cyan);">If Tumor &rarr; YOLO Tumor</div>
+                                    <div class="flow-node" style="border-color: var(--color-green);">If Cyst &rarr; YOLO Cyst</div>
+                                    <div class="flow-node" style="border-color: var(--text-muted); opacity: 0.5;">If Normal/Stone &rarr; Skip Seg</div>
+                                </div>
+                                <div class="flow-arrow">&rarr;</div>
+                                <div class="flow-node active-node">📐 Surgical Polygons</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card flex-col">
+                        <div class="card-title">🔍 Boundary Delineation</div>
+                        <ul class="custom-list success" style="font-size: 0.82rem;">
+                            <li><strong>Tumor Segmentation:</strong> Cyan contour boundaries, with specialist confidence scores ranging from 80% to 95%.</li>
+                            <li><strong>Cyst Segmentation:</strong> Dark blue contour boundaries, with confidence levels from 60% to 89%.</li>
+                            <li><strong>Coordinates Output:</strong> Closed polygon boundaries extracted for Stage 3 sizing analysis.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 11 — STAGE 3: QUANTITATIVE PATHOLOGY ANALYSIS -->
+            <section class="slide" id="slide-11">
+                <header class="slide-header">
+                    <h2><span class="accent">11.</span> Stage 3 — Quantitative Pathology Analysis</h2>
+                    <p class="slide-subtitle">Surgical boundary and tissue replacement ratio calculations via pixel contours</p>
+                </header>
+                <div class="slide-body grid-3">
+                    <div class="card flex-col" style="grid-column: span 2;">
+                        <div class="card-title text-cyan">⚙️ Mathematical Quantification Protocol</div>
+                        <ul class="custom-list success" style="font-size: 0.85rem;">
+                            <li><strong>Contour Area Extraction:</strong> Programmatically parses the YOLO polygon masks.</li>
+                            <li><strong>OpenCV Area Function:</strong> Passes coordinate arrays to <code>cv2.contourArea()</code> to get pixel areas.</li>
+                            <li><strong>Kidney Summation:</strong> <code>Kidney Area = Σ (kidney mask pixels)</code>.</li>
+                            <li><strong>Pathology Summation:</strong> <code>Pathology Area = Σ (tumor/cyst mask pixels)</code>.</li>
+                            <li><strong>Surgical Severity Alert:</strong> Activates a radical nephrectomy warning if tissue replacement ratio exceeds 30%.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Pure CSS Donut Chart & Alerts mockup -->
+                    <div class="card flex-col align-center alert-pulse" style="justify-content: center; align-items: center;">
+                        <div class="donut-container" style="margin-bottom: 0.5rem;">
+                            <svg width="140" height="140" class="donut-svg">
+                                <circle cx="70" cy="70" r="50" class="donut-bg" />
+                                <circle cx="70" cy="70" r="50" class="donut-segment" stroke-dasharray="210 314" />
+                                <circle cx="70" cy="70" r="50" class="donut-segment-alt" stroke-dasharray="104 314" stroke-dashoffset="-210" />
+                            </svg>
+                            <div class="donut-text">34.7%<span>Tumor Area</span></div>
+                        </div>
+                        <div style="font-size: 0.75rem; text-align: center; color: var(--color-red); font-weight: bold; text-transform: uppercase;">
+                            High Ratio: Consider Radical Nephrectomy
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 12 — STAGE 4: BIOMEDICAL NLP + AI DIETITIAN -->
+            <section class="slide" id="slide-12">
+                <header class="slide-header">
+                    <h2><span class="accent">12.</span> Stage 4 — Clinical NLP & AI Dietitian</h2>
+                    <p class="slide-subtitle">Generative dietary and care suggestions from patient notes</p>
+                </header>
+                <div class="slide-body grid-3">
+                    <!-- Notes Ingestor -->
+                    <div class="card flex-col">
+                        <div class="card-title text-purple">📥 Ingested Patient Notes</div>
+                        <div class="notes-container" style="font-size: 0.8rem; height: 140px;">
+                            "Patient presents with hematuria and right-sided flank pain. Imaging reveals a 5 cm renal mass. Hypervascular mass, suspected RCC. Patient has history of Type 2 diabetes, currently controlled with Metformin."
+                        </div>
+                        <div class="card-title text-cyan" style="font-size: 1rem; margin-top: 0.8rem; margin-bottom: 0.4rem;">🔬 Extracted NER Entities</div>
+                        <div class="entity-cloud">
+                            <span class="entity-item entity-symptom">Hematuria</span>
+                            <span class="entity-item entity-symptom">Flank Pain</span>
+                            <span class="entity-item entity-anatomy">Renal Mass</span>
+                            <span class="entity-item entity-disease">RCC</span>
+                            <span class="entity-item entity-disease">Type 2 Diabetes</span>
+                            <span class="entity-item entity-drug">Metformin</span>
+                        </div>
+                    </div>
+
+                    <!-- AI Dietitian Recommendations -->
+                    <div class="card flex-col" style="grid-column: span 2; border-color: rgba(157, 78, 221, 0.25);">
+                        <div class="card-title text-purple">🤖 DeepSeek Postoperative Dietary Alert</div>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            DeepSeek API analyzes patient history and the computed pathology ratio to generate three targeted dietary recommendations:
+                        </p>
+                        <div class="card" style="background: rgba(157, 78, 221, 0.03); border-color: rgba(157, 78, 221, 0.15); padding: 0.8rem;">
+                            <ul class="custom-list success" style="font-size: 0.82rem; gap: 0.5rem; display: flex; flex-direction: column;">
+                                <li><strong>Diabetic Diet Control:</strong> Restrict simple carbohydrate intakes. Maintain strict glycemic index monitoring to preserve remaining kidney function post-nephrectomy.</li>
+                                <li><strong>Renal-Protective Focus:</strong> Restrict sodium and phosphorus intakes to control systemic blood pressure and prevent hyperfiltration in the remaining healthy kidney.</li>
+                                <li><strong>Clinical Alert:</strong> Highly hypervascular renal mass (suspected RCC) requires immediate oncology follow-up and dietary matching with cancer cachexia support guidelines.</li>
+                            </ul>
+                        </div>
+                        <p style="font-size: 0.75rem; font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">
+                            ⚠️ Warning: Generative AI suggestions are for research demonstration and do not replace professional medical advice.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 13 — QUALITATIVE RESULTS & INTERACTIVE 3D VISUALIZATION -->
+            <section class="slide" id="slide-13">
+                <header class="slide-header">
+                    <h2><span class="accent">13.</span> Qualitative Results — Integrated AI Output</h2>
+                    <p class="slide-subtitle">Visual synthesis of diagnosis, explainability overlays, and 3D spatial plot</p>
+                </header>
+                <div class="slide-body grid-2" style="height: calc(100% - 60px);">
+                    <!-- Dashboard container with toggle button -->
+                    <div class="flex-col w-65" style="height: 100%;">
+                        <div class="card flex-col" style="height: 100%; justify-content: space-between; overflow: hidden;">
+                            <div class="card-title">🖥️ Integrated Diagnostic Dashboard View
+                                <button class="diagram-toggle-btn" onclick="toggleArchitectureDiagram('dashboard-overlay')" style="top: 15px; right: 15px; font-size: 0.75rem;">👁️ Toggle Full Resolution</button>
+                            </div>
+                            
+                            <!-- Display the workspace image relative path -->
+                            <div class="img-container" style="flex-grow: 1;">
+                                <img src="CapFinal.png" alt="Integrated AI Hospital Dashboard output mock" id="dashboard-main-img">
+                            </div>
+
+                            <!-- Small visual caption -->
+                            <div style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem;">
+                                Panel includes: Original CT | Grad-CAM Overlay | Surgical Boundaries | Sizing Donut Chart
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Explanatory text card -->
+                    <div class="card flex-col w-35" style="height: 100%; justify-content: space-between; overflow-y: auto;">
+                        <div>
+                            <div class="card-title text-cyan">🌐 3D Spatial Geometry Layer</div>
+                            <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0.8rem;">
+                                Generates interactive spatial models by reading coordinate arrays extracted from the 2D segmenter output:
+                            </p>
+                            <ul class="custom-list success" style="font-size: 0.8rem;">
+                                <li><strong>Kidney Geometry:</strong> Positioned at base coordinate level Z = 0.</li>
+                                <li><strong>Pathology Layer:</strong> Displaced at Z = 5 level to differentiate depth boundaries.</li>
+                                <li><strong>Interactive Plots:</strong> Rendered in Scatter3D using Plotly with active hovering coordinate indicators.</li>
+                                <li><strong>Title Alert:</strong> Surgical recommendation rules are embedded in the dynamic plot title.</li>
+                            </ul>
+                        </div>
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 0.8rem; font-size: 0.75rem; color: var(--text-muted);">
+                            * The 3D plot is rendered dynamically inside the web interface using custom Plotly JSON configurations.
+                        </div>
+                    </div>
+
+                    <!-- Full Resolution Overlay Container -->
+                    <div id="dashboard-overlay" class="arch-diagram-overlay">
+                        <img src="CapstoneFinal.png" alt="Full Resolution Capstone Dashboard">
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 14 — QUANTITATIVE RESULTS + CURRENT STATUS -->
+            <section class="slide" id="slide-14">
+                <header class="slide-header">
+                    <h2><span class="accent">14.</span> Quantitative Evaluation & Current Progress</h2>
+                    <p class="slide-subtitle">Model evaluation matrix and pipeline completion metrics</p>
+                </header>
+                <div class="slide-body grid-2">
+                    
+                    <!-- Metrics Table -->
+                    <div class="card flex-col">
+                        <div class="card-title text-cyan">📋 Stage 1 Classifier Test Metrics</div>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-muted);">
+                                    <th style="padding: 0.5rem;">Class</th>
+                                    <th style="padding: 0.5rem;">Precision</th>
+                                    <th style="padding: 0.5rem;">Recall</th>
+                                    <th style="padding: 0.5rem;">F1-Score</th>
+                                    <th style="padding: 0.5rem;">Support</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 0.5rem; font-weight: bold;">Cyst</td>
+                                    <td style="padding: 0.5rem;">1.0000</td>
+                                    <td style="padding: 0.5rem; color: var(--color-cyan);">0.9973</td>
+                                    <td style="padding: 0.5rem;">0.9987</td>
+                                    <td style="padding: 0.5rem;">742</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 0.5rem; font-weight: bold;">Normal</td>
+                                    <td style="padding: 0.5rem;">1.0000</td>
+                                    <td style="padding: 0.5rem;">1.0000</td>
+                                    <td style="padding: 0.5rem;">1.0000</td>
+                                    <td style="padding: 0.5rem;">1,016</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 0.5rem; font-weight: bold;">Stone</td>
+                                    <td style="padding: 0.5rem; color: var(--color-cyan);">0.9928</td>
+                                    <td style="padding: 0.5rem;">1.0000</td>
+                                    <td style="padding: 0.5rem;">0.9964</td>
+                                    <td style="padding: 0.5rem;">275</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 0.5rem; font-weight: bold;">Tumor</td>
+                                    <td style="padding: 0.5rem;">1.0000</td>
+                                    <td style="padding: 0.5rem;">1.0000</td>
+                                    <td style="padding: 0.5rem;">1.0000</td>
+                                    <td style="padding: 0.5rem;">457</td>
+                                </tr>
+                                <tr style="font-weight: bold; background: var(--bg-secondary);">
+                                    <td style="padding: 0.5rem;">Accuracy</td>
+                                    <td colspan="3" style="padding: 0.5rem; text-align: center; color: var(--color-cyan);">0.9992</td>
+                                    <td style="padding: 0.5rem;">2,490</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="card" style="background: rgba(255, 183, 3, 0.03); border-color: rgba(255, 183, 3, 0.2); padding: 0.8rem; margin-top: 0.5rem;">
+                            <div style="font-size: 0.85rem; font-weight: bold; color: var(--color-yellow);">📊 Stage 2 YOLO Segmentation Metrics:</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                                Model evaluation is currently in progress. Specialize metrics (Tumor / Cyst) validation running in zero-shot test datasets.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Checklist -->
+                    <div class="card flex-col">
+                        <div class="card-title text-green">🎯 Implementation Status</div>
+                        <div class="checklist-grid">
+                            <div class="check-item"><span class="check-icon completed">✓</span> Classification Pipeline</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Grad-CAM Explainability</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Tumor Segmentation</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Cyst Segmentation</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Pathology Area Calc</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Kidney Area Calculation</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Ratio Calculation</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Donut Visualization</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Biomedical NER Parser</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Clinical Context Export</div>
+                            <div class="check-item"><span class="check-item completed">✓</span> Rule-Based Diet Module</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> DeepSeek Integration</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> 3D Spatial Plotly View</div>
+                            <div class="check-item"><span class="check-icon completed">✓</span> Automated Dataset Merger</div>
+                            <div class="check-item" style="grid-column: span 2; border-top: 1px solid var(--border-color); padding-top: 0.5rem; margin-top: 0.3rem;"><span class="check-icon in-progress">&rarr;</span> In Progress: Unified generalist model validation and clinical validation testing.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SLIDE 15 — LIMITATIONS, FUTURE WORK & CONCLUSION -->
+            <section class="slide" id="slide-15">
+                <header class="slide-header">
+                    <h2><span class="accent">15.</span> Limitations, Future Work & Conclusion</h2>
+                    <p class="slide-subtitle">Critical review and translational roadmap of the research prototype</p>
+                </header>
+                <div class="slide-body grid-3">
+                    
+                    <div class="card flex-col">
+                        <div class="card-title text-red">⚠️ Identified Limitations</div>
+                        <ul class="custom-list alert" style="font-size: 0.8rem;">
+                            <li>Quantitative segmentation evaluations (mAP, IoU, Dice) are still being finalized.</li>
+                            <li>Current 3D spatial plot relies on Z-displaced 2D polygons rather than multi-slice volumetric CT stacking.</li>
+                            <li>OpenCV area is measured in pixels rather than physical coordinates using DICOM spacing data.</li>
+                            <li>Severity threshold rules require validation against established clinical renal guidelines.</li>
+                            <li>Research prototype only; requires multi-institutional testing.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card flex-col">
+                        <div class="card-title text-cyan">🔮 Planned Future Works</div>
+                        <ul class="custom-list success" style="font-size: 0.8rem;">
+                            <li>Train the unified generalist (Tumor + Cyst) model and export test matrix.</li>
+                            <li>Delineate and map physical boundaries in mm using slice parameters from DICOM file tags.</li>
+                            <li>Implement actual volumetric 3D reconstruction by stacking adjacent CT slices.</li>
+                            <li>Build automated structured medical report exports for hospital information systems.</li>
+                            <li>Deploy model in a secure web dashboard with patient data compliance framework.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card flex-col" style="justify-content: space-between; border-color: rgba(0, 210, 255, 0.25);">
+                        <div>
+                            <div class="card-title text-cyan">🏁 Summary & Takeaways</div>
+                            <p style="font-size: 0.82rem; line-height: 1.5; color: var(--text-muted);">
+                                Our framework transforms isolated diagnoses into a unified clinical assistant pipeline:
+                            </p>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem; font-weight: bold; color: var(--text-main);">
+                                CT Scan &rarr; Classifier &rarr; Grad-CAM &rarr; YOLO &rarr; OpenCV area &rarr; NER Parsing &rarr; DeepSeek &rarr; 3D Graphics.
+                            </p>
+                        </div>
+                        <div style="font-size: 0.8rem; font-weight: 500; color: var(--color-cyan); line-height: 1.3; border-top: 1px solid var(--border-color); padding-top: 0.8rem;">
+                            "Proposed framework proves vision, attention maps, NLP, and LLMs can merge into a single clinical context-aware system."
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <!-- BOTTOM NAVIGATION CONTROLS BAR -->
+        <footer class="slide-controls">
+            <div class="controls-left">
+                <button class="control-btn" id="prev-btn">◀ Previous</button>
+                <button class="control-btn" id="next-btn">Next ▶</button>
+                <button class="control-btn" id="autoplay-btn">⚙️ Autoplay</button>
+            </div>
+            
+            <div class="slide-indicator">
+                Slide <span id="cur-slide">1</span> / <span id="total-slides">15</span>
+            </div>
+
+            <div class="controls-right">
+                <button class="control-btn" id="fullscreen-btn">📺 Full Screen</button>
+                <button class="control-btn active-btn" id="index-btn">☰ Slides Index</button>
+            </div>
+        </footer>
+
+        <!-- SLIDES INDEX SIDEBAR MENU -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Slide Navigator</h3>
+                <button class="sidebar-close" id="sidebar-close">&times;</button>
+            </div>
+            <nav class="sidebar-menu" id="sidebar-menu">
+                <!-- Dynamically generated menu items will append here -->
+            </nav>
+        </aside>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
